@@ -8,7 +8,7 @@
 [![PWA Ready](https://img.shields.io/badge/PWA-Ready-blue.svg)](https://whatowear.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Private-red.svg)](LICENSE)
 
 </div>
 
