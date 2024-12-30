@@ -39,8 +39,8 @@
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/whatToWear.git
-cd whatToWear
+git clone https://github.com/yourusername/DressSmart.git
+cd DressSmart
 ```
 
 2. Install dependencies
