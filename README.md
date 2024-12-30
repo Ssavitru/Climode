@@ -21,9 +21,9 @@
 - 🌐 **Multilingual**: Supports English, French, Spanish, German, Italian, and Arabic
 - 📱 **PWA Support**: Install and use offline on any device
 
-<div align="center">
-  <img src="public/og-image.jpg" alt="Clima App Screenshot" width="600"/>
-</div>
+![image](https://github.com/user-attachments/assets/179d4efe-c400-47cf-a3cc-192633e6f742)
+
+
 
 ## 🚀 Getting Started
 
