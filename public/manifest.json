@@ -1,0 +1,68 @@
+{
+  "name": "DressSmart",
+  "short_name": "DressSmart",
+  "description": "Get personalized clothing recommendations based on real-time weather data",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait",
+  "dir": "ltr",
+  "scope": "/",
+  "lang": "en",
+  "display_override": ["standalone", "minimal-ui"],
+  "categories": ["lifestyle", "weather", "clothing"],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "handle_links": "preferred",
+  "id": "/",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "DressSmart Home Screen"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Check Weather",
+      "url": "/?action=check",
+      "description": "Check today's weather and clothing recommendations"
+    }
+  ],
+  "prefer_related_applications": false
+}
