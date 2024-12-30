@@ -46,21 +46,6 @@ import Image from "next/image";
 import { AuthorWidget } from "@/components/credits";
 import cn from "classnames";
 
-const getCurrentPosition = (): Promise<GeolocationPosition> => {
-  return new Promise((resolve, reject) => {
-    if (!("geolocation" in navigator)) {
-      reject(new Error("Geolocation is not supported"));
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(resolve, reject, {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    });
-  });
-};
-
 export default function Home() {
   const [language, updateLanguage] = useLanguage();
   const searchParams = useSearchParams();
@@ -212,11 +197,19 @@ export default function Home() {
 
   // Get the weather data for the selected date
   const selectedWeather = useMemo(() => {
-    if (!isLoading || !weatherData) return currentWeather;
+    if (isLoading || !weatherData) return currentWeather;
 
+    const today = new Date().toDateString();
+    const selectedDateString = selectedDate.toDateString();
+
+    // If selected date is today, use current weather
+    if (selectedDateString === today) {
+      return currentWeather;
+    }
+
+    // Otherwise look for the date in forecast data
     const found = weatherData.find(
-      (data) =>
-        new Date(data.date).toDateString() === selectedDate.toDateString(),
+      (data) => new Date(data.date).toDateString() === selectedDateString
     );
 
     return found || currentWeather;

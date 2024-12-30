@@ -11,7 +11,7 @@ export function AuthorWidget({ language = "en" }: AuthorWidgetProps) {
   const t = translations[language];
 
   return (
-    <div className="flex flex-col lg:flex-row items-start font-normal justify-start rounded-lg gap-0 lg:gap-1 text-xs text-white/80">
+    <div className="flex flex-col lg:flex-row items-center font-normal justify-start rounded-lg gap-0 lg:gap-1 text-xs text-white/80">
       <p className="text-center lg:text-left font-display mb-1 lg:mb-0">
         {t.app.slogan}
       </p>

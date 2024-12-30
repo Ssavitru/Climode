@@ -1,17 +1,46 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import {  useState, useEffect, useMemo, useRef } from "react";
 import { translations, type Language } from "@/i18n";
+import { motion } from "framer-motion";
 
 interface DateSliderProps {
   onDateChange: (date: Date) => void;
-  language?: Language;
+  selectedDate?: Date;
+  language: Language;
 }
 
-export function DateSlider({ onDateChange, language = "en" }: DateSliderProps) {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const NewYearBadge = ({ date }: { date: number }) => {
+  return (
+    <div className="badge-container ml-1">
+      <div >
+    
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ 
+          scale: [0.8, 1.1, 1],
+          opacity: 1,
+        }}
+        transition={{ 
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0.23, 1, 0.32, 1],
+        }}
+        className="inline-flex items-center justify-baseline px-2 py-0.5 -top-px rounded-full gradient-animation text-xs font-semibold text-black shadow-lg border border-yellow-200/30 relative z-10"
+      >
+        <span className="translate-y-px">
+          {date}
+        </span>
+      </motion.div>
+    </div> 
+    </div>
+  );
+};
+
+export function DateSlider({ onDateChange, selectedDate = new Date(), language }: DateSliderProps) {
   const [showLeftShadow, setShowLeftShadow] = useState(false);
   const [showRightShadow, setShowRightShadow] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const currentTranslations = translations[language];
 
@@ -20,7 +49,7 @@ export function DateSlider({ onDateChange, language = "en" }: DateSliderProps) {
     const today = new Date();
 
     // Generate 7 days
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 6; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       result.push(date);
@@ -55,8 +84,11 @@ export function DateSlider({ onDateChange, language = "en" }: DateSliderProps) {
     };
   }, []);
 
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
     onDateChange(date);
   };
 
@@ -88,41 +120,52 @@ export function DateSlider({ onDateChange, language = "en" }: DateSliderProps) {
       "dec",
     ] as const;
     const monthIndex = date.getMonth();
-    return currentTranslations.date.months.short[
-      months[monthIndex] as keyof typeof currentTranslations.date.months.short
+    return currentTranslations.date.months.long[
+      months[monthIndex] as keyof typeof currentTranslations.date.months.long
     ];
+  };
+
+  const isSameDay = (date1: Date, date2: Date) => {
+    return date1.toDateString() === date2.toDateString();
   };
 
   const isToday = (date: Date) => {
     const today = new Date();
-    return date.toDateString() === today.toDateString();
+    return isSameDay(date, today);
   };
 
   return (
     <div className="relative w-full overflow-hidden glass-card rounded-3xl">
       <div
         ref={scrollRef}
-        className="flex md:grid md:grid-cols-7 gap-2 p-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+        className="flex md:grid md:grid-cols-6 gap-2 p-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
       >
         {dates.map((date) => (
           <button
             key={date.toISOString()}
             onClick={() => handleDateSelect(date)}
             className={`flex-shrink-0 w-[calc(100%/4-0.5rem)] md:w-auto flex flex-col shadow-xl items-center justify-center p-2 rounded-xl transition-colors snap-center ${
-              date.toDateString() === selectedDate.toDateString()
+              isSameDay(date, selectedDate)
                 ? "bg-white/20 text-white"
                 : "hover:bg-white/10 text-white/80"
             }`}
             dir={language === "ar" ? "rtl" : "ltr"}
           >
-            <span className="text-xs font-medium font-display">
+            <span className="text-sm font-medium font-display">
               {formatDay(date)}
             </span>
             <span className="text-lg font-bold">{formatDate(date)}</span>
             {!isToday(date) ? (
-              <span className="text-xs font-display">{formatMonth(date)}</span>
+              <>
+                <span className="text-sm font-display">
+                  {formatMonth(date)}
+                  {!isToday(date) && isLoaded && date.getDate() === 1 && date.getMonth() === 0 && (
+                    <NewYearBadge date={date.getFullYear()} />
+                  )}
+                </span>
+              </>
             ) : (
-              <span className="text-xs text-white/60 font-display">
+              <span className="text-sm text-white/80 font-display">
                 {currentTranslations.date.today}
               </span>
             )}

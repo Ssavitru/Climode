@@ -103,11 +103,223 @@ body {
   display: none;  /* Chrome, Safari and Opera */
 }
 
+.gradient-animation {
+  background: linear-gradient(90deg, 
+    #FFD700 0%,
+    #FDB931 50%,
+    #FFD700 100%
+  );
+  background-size: 200% 100%;
+  animation: goldShine 4s linear infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-animation::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 75%
+  );
+  animation: glareEffect 5s ease-in-out infinite;
+  transform: translateX(-100%) rotate(45deg);
+}
+
+@keyframes glareEffect {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  30%, 100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+@keyframes goldShine {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes firework {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.2) rotate(-15deg);
+  }
+  40% {
+    transform: scale(1) rotate(0deg);
+  }
+  60% {
+    transform: scale(1.1) rotate(15deg);
+  }
+  80% {
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.firework-emoji {
+  display: inline-block;
+  animation: firework 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.star-left {
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: starDance 1.5s ease-in-out infinite;
+}
+
+.star-right {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: starDance 1.5s ease-in-out infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes starDance {
+  0%, 100% {
+    transform: translateY(-50%) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2) rotate(15deg);
+  }
+}
+
+.stars-container {
+  position: absolute;
+  inset: -4px;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0.7;
+}
+
+.star {
+  position: absolute;
+  font-size: 8px;
+  animation: starTwinkle 2s ease-in-out infinite;
+  color: #FFD700;
+  text-shadow: 0 0 2px rgba(255, 215, 0, 0.8);
+}
+
+.star:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+.star:nth-child(2) { top: 30%; left: 60%; animation-delay: 0.4s; }
+.star:nth-child(3) { top: 50%; left: 40%; animation-delay: 0.8s; }
+.star:nth-child(4) { top: 40%; left: 80%; animation-delay: 1.2s; }
+.star:nth-child(5) { top: 60%; left: 30%; animation-delay: 1.6s; }
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.badge-container {
+  position: relative;
+  display: inline-flex;
+  filter: contrast(1.2);
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before,
+.glow-effect::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 215, 0, 0.3) 0%,
+    rgba(253, 185, 49, 0.2) 50%,
+    transparent 100%
+  );
+  border-radius: 9999px;
+  z-index: -1;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.glow-effect::after {
+  filter: blur(8px);
+  animation: glowPulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before,
+.glow-effect::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 215, 0, 0.3) 0%,
+    rgba(253, 185, 49, 0.2) 50%,
+    transparent 100%
+  );
+  border-radius: 9999px;
+  z-index: -1;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.glow-effect::after {
+  filter: blur(8px);
+  animation: glowPulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
   }
 }

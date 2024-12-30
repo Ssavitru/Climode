@@ -278,6 +278,9 @@ export async function GET(request: Request): Promise<NextResponse> {
     const processedForecasts = forecastData.list.reduce(
       (acc: { [key: string]: any }, item: any) => {
         const date = item.dt_txt.split(" ")[0];
+        // Skip today's data since we have current weather
+        if (date === today) return acc;
+
         const hour = new Date(item.dt * 1000).getHours();
         const isDaytime = hour >= 6 && hour <= 18;
 
@@ -327,126 +330,98 @@ export async function GET(request: Request): Promise<NextResponse> {
       {},
     );
 
-    // Convert processed data to final format
-    const forecasts: ProcessedForecast[] = Object.values(
-      processedForecasts,
-    ).map((forecast: any) => {
-      const isToday = forecast.date === today;
-      const dayTemp =
-        forecast.dayTemps.length > 0
-          ? forecast.dayTemps.reduce((a: number, b: number) => a + b, 0) /
-            forecast.dayTemps.length
-          : forecast.temps.reduce((a: number, b: number) => a + b, 0) /
-            forecast.temps.length;
+    // Convert processed data to final format and ensure unique dates
+    const forecasts: ProcessedForecast[] = Object.values(processedForecasts)
+      .map((forecast: any) => {
+        const dayTemp =
+          forecast.dayTemps.length > 0
+            ? forecast.dayTemps.reduce((a: number, b: number) => a + b, 0) /
+              forecast.dayTemps.length
+            : forecast.temps.reduce((a: number, b: number) => a + b, 0) /
+              forecast.temps.length;
 
-      // Get most common daytime condition
-      const conditions = forecast.dayConditions.reduce(
-        (acc: any, curr: any) => {
-          const key = `${curr.id}-${curr.icon}`;
-          acc[key] = acc[key] || { count: 0, condition: curr };
-          acc[key].count++;
-          return acc;
-        },
-        {},
-      );
+        // Get most common daytime condition
+        const conditions = forecast.dayConditions.reduce(
+          (acc: any, curr: any) => {
+            const key = `${curr.id}-${curr.icon}`;
+            acc[key] = acc[key] || { count: 0, condition: curr };
+            acc[key].count++;
+            return acc;
+          },
+          {},
+        );
 
-      const conditionValues = Object.values(conditions);
-      const mostCommonCondition =
-        conditionValues.length > 0
-          ? conditionValues.reduce((a: any, b: any) =>
-              a.count > b.count ? a : b,
-            ).condition
-          : {
-              id: 801, // Default to "Partly Cloudy" instead of "Clear"
-              description: "partly cloudy",
-              icon: "02d", // Icon for partly cloudy
-              clouds: 20, // Some clouds
-              hour: new Date().getHours(), // Use current hour
-            };
+        const conditionValues = Object.values(conditions);
+        const mostCommonCondition =
+          conditionValues.length > 0
+            ? conditionValues.reduce((a: any, b: any) =>
+                a.count > b.count ? a : b,
+              ).condition
+            : {
+                id: 801,
+                description: "partly cloudy",
+                icon: "02d",
+                clouds: 20,
+                hour: new Date().getHours(),
+              };
 
-      // Calculate UV index
-      const uvIndices = forecast.dayConditions.map((condition: any) =>
-        calculateUVIndex(condition.hour, condition.clouds, condition.id),
-      );
+        // Calculate UV index
+        const uvIndices = forecast.dayConditions.map((condition: any) =>
+          calculateUVIndex(condition.hour, condition.clouds, condition.id),
+        );
 
-      const avgUvIndex =
-        uvIndices.length > 0
-          ? Math.round(
-              uvIndices.reduce((a: number, b: number) => a + b, 0) /
-                uvIndices.length,
-            )
-          : 0;
+        const avgUvIndex =
+          uvIndices.length > 0
+            ? Math.round(
+                uvIndices.reduce((a: number, b: number) => a + b, 0) /
+                  uvIndices.length,
+              )
+            : 0;
 
-      // Calculate precipitation
-      const maxPrecipChance = Math.min(
-        100,
-        Math.round(Math.max(...forecast.precipitations) * 100),
-      );
-      const totalRainVolume = forecast.rain.reduce(
-        (a: number, b: number) => a + b,
-        0,
-      );
+        // Calculate precipitation
+        const maxPrecipChance = Math.min(
+          100,
+          Math.round(Math.max(...forecast.precipitations) * 100),
+        );
+        const totalRainVolume = forecast.rain.reduce(
+          (a: number, b: number) => a + b,
+          0,
+        );
 
-      return {
-        date: forecast.date,
-        location: forecast.location,
-        temperature: isToday ? currentData.main.temp : dayTemp,
-        feelsLike: isToday ? currentData.main.feels_like : dayTemp,
-        tempMin: forecast.tempMin,
-        tempMax: forecast.tempMax,
-        tempAvg: dayTemp,
-        humidity: isToday
-          ? currentData.main.humidity
-          : Math.round(
-              forecast.humidities.reduce((a: number, b: number) => a + b, 0) /
-                forecast.humidities.length,
-            ),
-        pressure: isToday
-          ? currentData.main.pressure
-          : Math.round(
-              forecast.pressures.reduce((a: number, b: number) => a + b, 0) /
-                forecast.pressures.length,
-            ),
-        windSpeed: isToday
-          ? currentData.wind.speed * 3.6
-          : forecast.windSpeeds.reduce((a: number, b: number) => a + b, 0) /
+        return {
+          date: forecast.date,
+          location: forecast.location,
+          temperature: dayTemp,
+          feelsLike: dayTemp,
+          tempMin: forecast.tempMin,
+          tempMax: forecast.tempMax,
+          tempAvg: dayTemp,
+          humidity: Math.round(
+            forecast.humidities.reduce((a: number, b: number) => a + b, 0) /
+              forecast.humidities.length,
+          ),
+          pressure: Math.round(
+            forecast.pressures.reduce((a: number, b: number) => a + b, 0) /
+              forecast.pressures.length,
+          ),
+          windSpeed:
+            forecast.windSpeeds.reduce((a: number, b: number) => a + b, 0) /
             forecast.windSpeeds.length,
-        precipitation: isToday
-          ? currentData.rain?.["1h"]
-            ? 100
-            : 0
-          : maxPrecipChance,
-        rainVolume: isToday ? currentData.rain?.["1h"] || 0 : totalRainVolume,
-        uvIndex: isToday
-          ? calculateUVIndex(
-              new Date(currentData.dt * 1000).getHours(),
-              currentData.clouds.all,
-              currentData.weather[0].id,
-            )
-          : avgUvIndex,
-        sunrise:
-          (currentData.sys.sunrise +
-            (isToday ? 0 : forecast.dayOffset * 24 * 60 * 60)) *
-          1000,
-        sunset:
-          (currentData.sys.sunset +
-            (isToday ? 0 : forecast.dayOffset * 24 * 60 * 60)) *
-          1000,
-        weather: isToday
-          ? {
-              description: currentData.weather[0].description,
-              icon: currentData.weather[0].icon,
-              name: getConditionName(currentData.weather[0].id),
-            }
-          : {
-              description: mostCommonCondition.description,
-              icon: mostCommonCondition.icon.endsWith("n")
-                ? mostCommonCondition.icon.replace("n", "d")
-                : mostCommonCondition.icon,
-              name: getConditionName(mostCommonCondition.id),
-            },
-      };
-    });
+          precipitation: maxPrecipChance,
+          rainVolume: totalRainVolume,
+          uvIndex: avgUvIndex,
+          sunrise: currentData.sys.sunrise * 1000,
+          sunset: currentData.sys.sunset * 1000,
+          weather: {
+            description: mostCommonCondition.description,
+            icon: mostCommonCondition.icon.endsWith("n")
+              ? mostCommonCondition.icon.replace("n", "d")
+              : mostCommonCondition.icon,
+            name: getConditionName(mostCommonCondition.id),
+          },
+        };
+      })
+      .filter((forecast) => forecast.date !== today); // Ensure we exclude today's data
 
     // Add 2 more days for weekly forecast
     if (weekly && forecasts.length >= 2) {
@@ -464,7 +439,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     return NextResponse.json({
       current: currentProcessed,
-      forecast: [currentProcessed, ...future],
+      forecast: future,
     });
   } catch (error) {
     console.error("Weather API Error:", error);
