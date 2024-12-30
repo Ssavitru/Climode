@@ -9,6 +9,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-Private-red.svg)](LICENSE)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/254ea4df-b2e8-48d4-8330-66f4e70b9c47/deploy-status)](https://app.netlify.com/sites/clima-staging/deploys)
 
 </div>
 
