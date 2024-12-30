@@ -233,16 +233,17 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     // Add forecast readings for today
     const todayForecasts = forecastData.list.filter(
-      (item) => item.dt_txt.split(" ")[0] === today,
+      (item: any) => item.dt_txt.split(" ")[0] === today,
     );
 
-    todayForecasts.forEach((item) => {
+    todayForecasts.forEach((item: any) => {
       const hour = new Date(item.dt * 1000).getHours();
       const isDaytime = hour >= 6 && hour <= 18;
 
       todayReadings.temps.push(item.main.temp);
 
       if (isDaytime) {
+        // @ts-expect-error
         todayReadings.dayTemps.push(item.main.temp);
       }
     });
@@ -354,6 +355,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         const conditionValues = Object.values(conditions);
         const mostCommonCondition =
           conditionValues.length > 0
+          // @ts-expect-error
             ? conditionValues.reduce((a: any, b: any) =>
                 a.count > b.count ? a : b,
               ).condition
