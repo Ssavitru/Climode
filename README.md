@@ -8,7 +8,7 @@
 [![PWA Ready](https://img.shields.io/badge/PWA-Ready-blue.svg)](https://whatowear.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Private-red.svg)](LICENSE)
 
 </div>
 
@@ -21,9 +21,9 @@
 - 🌐 **Multilingual**: Supports English, French, Spanish, German, Italian, and Arabic
 - 📱 **PWA Support**: Install and use offline on any device
 
-<div align="center">
-  <img src="public/og-image.jpg" alt="Clima App Screenshot" width="600"/>
-</div>
+![image](https://github.com/user-attachments/assets/179d4efe-c400-47cf-a3cc-192633e6f742)
+
+
 
 ## 🚀 Getting Started
 
@@ -39,8 +39,8 @@
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/whatToWear.git
-cd whatToWear
+git clone https://github.com/yourusername/DressSmart.git
+cd DressSmart
 ```
 
 2. Install dependencies
@@ -135,7 +135,7 @@ Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTIN
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is <b>private</b>.
 
 ## 🙏 Acknowledgments
 
