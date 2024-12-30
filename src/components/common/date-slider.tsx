@@ -37,9 +37,10 @@ const NewYearBadge = ({ date }: { date: number }) => {
   );
 };
 
-export function DateSlider({ onDateChange, selectedDate = new Date(), language }: DateSliderProps) {
+export function DateSlider({ onDateChange, language }: DateSliderProps) {
   const [showLeftShadow, setShowLeftShadow] = useState(false);
   const [showRightShadow, setShowRightShadow] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoaded, setIsLoaded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const currentTranslations = translations[language];
@@ -59,7 +60,6 @@ export function DateSlider({ onDateChange, selectedDate = new Date(), language }
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
-
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
 
     // Show left shadow if we've scrolled right
@@ -90,6 +90,7 @@ export function DateSlider({ onDateChange, selectedDate = new Date(), language }
 
   const handleDateSelect = (date: Date) => {
     onDateChange(date);
+    setSelectedDate(date);
   };
 
   const formatDate = (date: Date) => {
@@ -133,7 +134,6 @@ export function DateSlider({ onDateChange, selectedDate = new Date(), language }
     const today = new Date();
     return isSameDay(date, today);
   };
-
   return (
     <div className="relative w-full overflow-hidden glass-card rounded-3xl">
       <div
