@@ -243,7 +243,7 @@ export async function GET(request: Request): Promise<NextResponse> {
       todayReadings.temps.push(item.main.temp);
 
       if (isDaytime) {
-        // @ts-expect-error
+        // @ts-expect-error need to deploy v1 asap, going to fix all ts error later
         todayReadings.dayTemps.push(item.main.temp);
       }
     });
@@ -355,7 +355,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         const conditionValues = Object.values(conditions);
         const mostCommonCondition =
           conditionValues.length > 0
-          // @ts-expect-error
+          // @ts-expect-error need to deploy v1 asap, going to fix all ts error later
             ? conditionValues.reduce((a: any, b: any) =>
                 a.count > b.count ? a : b,
               ).condition
