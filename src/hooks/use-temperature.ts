@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-type TemperatureUnit = 'C' | 'F';
+type TemperatureUnit = "C" | "F";
 
 interface TemperatureState {
   unit: TemperatureUnit;
@@ -11,11 +11,12 @@ interface TemperatureState {
 export const useTemperatureUnit = create<TemperatureState>()(
   persist(
     (set) => ({
-      unit: 'C',
-      toggleUnit: () => set((state) => ({ unit: state.unit === 'C' ? 'F' : 'C' })),
+      unit: "C",
+      toggleUnit: () =>
+        set((state) => ({ unit: state.unit === "C" ? "F" : "C" })),
     }),
     {
-      name: 'temperature-unit',
-    }
-  )
+      name: "temperature-unit",
+    },
+  ),
 );

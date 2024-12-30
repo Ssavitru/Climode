@@ -1,4 +1,4 @@
-import { useCountryName } from '@/hooks/useCountryName';
+import { useCountryName } from "@/hooks/useCountryName";
 
 interface LocationDisplayProps {
   city?: string;
@@ -6,9 +6,13 @@ interface LocationDisplayProps {
   className?: string;
 }
 
-export function LocationDisplay({ city, country, className = '' }: LocationDisplayProps) {
-  const translatedCountry = useCountryName(country || '', 'en');
-  
+export function LocationDisplay({
+  city,
+  country,
+  className = "",
+}: LocationDisplayProps) {
+  const translatedCountry = useCountryName(country || "", "en");
+
   if (!city || !country) return null;
 
   return (

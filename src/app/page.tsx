@@ -1,62 +1,62 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { motion, LayoutGroup } from 'framer-motion';
+import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import { motion, LayoutGroup } from "framer-motion";
 import { WiThermometer, WiRefresh } from "react-icons/wi";
 import { FaFan } from "react-icons/fa";
-import { translations, type Language } from '@/i18n';
+import { translations, type Language } from "@/i18n";
 import { getClothingRecommendations } from "@/lib/clothing-recommendations";
-import { useWeather } from '@/hooks/useWeather';
-import { useCountryName } from '@/hooks/useCountryName';
-import { useLanguage } from '@/hooks/useLanguage';
+import { useWeather } from "@/hooks/useWeather";
+import { useCountryName } from "@/hooks/useCountryName";
+import { useLanguage } from "@/hooks/useLanguage";
 
 // Common components
-import { 
+import {
   AnimatedValue,
   DateSlider,
   LanguageSelector,
   ModelImage,
   OutfitList,
   TimeAgo,
-} from '@/components/common';
+} from "@/components/common";
 
 // Location components
-import { LocationSearch } from '@/components/location';
-import { FormattedCountry } from '@/components/location/formatted-country';
+import { LocationSearch } from "@/components/location";
+import { FormattedCountry } from "@/components/location/formatted-country";
 
 // Temperature components
-import { 
+import {
   TemperaturePreference,
   TemperatureValue,
   TemperatureToggle,
-  TemperatureUnit
-} from '@/components/temperature';
+  TemperatureUnit,
+} from "@/components/temperature";
 
 // Weather components
-import { 
+import {
   WeatherIcon,
   WeatherBackground,
   SecondaryWeatherData,
   RainIcon,
   HumidityIcon,
   UVIcon,
-} from '@/components/weather';
+} from "@/components/weather";
 
-import Image from 'next/image';
-import { AuthorWidget } from '@/components/credits';
+import Image from "next/image";
+import { AuthorWidget } from "@/components/credits";
 
 const getCurrentPosition = (): Promise<GeolocationPosition> => {
   return new Promise((resolve, reject) => {
-    if (!('geolocation' in navigator)) {
-      reject(new Error('Geolocation is not supported'));
+    if (!("geolocation" in navigator)) {
+      reject(new Error("Geolocation is not supported"));
       return;
     }
 
     navigator.geolocation.getCurrentPosition(resolve, reject, {
       enableHighAccuracy: true,
       timeout: 5000,
-      maximumAge: 0
+      maximumAge: 0,
     });
   });
 };
@@ -64,65 +64,81 @@ const getCurrentPosition = (): Promise<GeolocationPosition> => {
 export default function Home() {
   const [language, updateLanguage] = useLanguage();
   const searchParams = useSearchParams();
-  
-  const formatLocationString = (name: string, countryCode: string, lang: string) => {
+
+  const formatLocationString = (
+    name: string,
+    countryCode: string,
+    lang: string,
+  ) => {
     try {
-      const countryName = new Intl.DisplayNames([lang], { type: 'region' }).of(countryCode);
+      const countryName = new Intl.DisplayNames([lang], { type: "region" }).of(
+        countryCode,
+      );
       return `${name}, ${countryName}`;
     } catch (error) {
       return `${name}, ${countryCode}`;
     }
   };
 
-  const [location, setLocation] = useState<{ name: string; country: string } | null>(null);
-  const [locationString, setLocationString] = useState('');
+  const [location, setLocation] = useState<{
+    name: string;
+    country: string;
+  } | null>(null);
+  const [locationString, setLocationString] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [tempUnit, setTempUnit] = useState<'C' | 'F'>('C');
-  const [tempPreference, setTempPreference] = useState<'cold' | 'normal' | 'hot'>('normal');
+  const [tempUnit, setTempUnit] = useState<"C" | "F">("C");
+  const [tempPreference, setTempPreference] = useState<
+    "cold" | "normal" | "hot"
+  >("normal");
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentOutfitIndex, setCurrentOutfitIndex] = useState(0);
   const [isAutoLocating, setIsAutoLocating] = useState(true);
   const currentTranslations = translations[language] || translations.en;
-  
+
   // Use the weather hook with city and country
-  const weatherLocation = useMemo(() => 
-    location ? { city: location.name, country: location.country } : null,
-    [location?.name, location?.country]
+  const weatherLocation = useMemo(
+    () =>
+      location ? { city: location.name, country: location.country } : null,
+    [location?.name, location?.country],
   );
 
   const { currentWeather, weatherData, error, isLoading, refetch } = useWeather(
     weatherLocation,
     true,
-    language
+    language,
   );
   const NUMBER_OF_OUTFITS = 10;
 
   // Initialize from localStorage
   useEffect(() => {
     const initializeFromStorage = () => {
-      const saved = localStorage.getItem('lastLocation');
+      const saved = localStorage.getItem("lastLocation");
       if (saved) {
         try {
           const loc = JSON.parse(saved);
           setLocation(loc);
-          const formatted = formatLocationString(loc.name, loc.country, language);
+          const formatted = formatLocationString(
+            loc.name,
+            loc.country,
+            language,
+          );
           setLocationString(formatted);
           setIsAutoLocating(false);
         } catch (error) {
-          console.error('Error parsing saved location:', error);
+          console.error("Error parsing saved location:", error);
         }
       } else {
         setIsAutoLocating(true);
       }
     };
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       initializeFromStorage();
     }
   }, [language]); // Re-run when language changes
 
   useEffect(() => {
-    const storedLanguage = localStorage.getItem('language');
+    const storedLanguage = localStorage.getItem("language");
     if (storedLanguage) {
       updateLanguage(storedLanguage as Language);
     }
@@ -131,8 +147,12 @@ export default function Home() {
   // Save location to localStorage whenever it changes
   useEffect(() => {
     if (location) {
-      localStorage.setItem('lastLocation', JSON.stringify(location));
-      const formatted = formatLocationString(location.name, location.country, language);
+      localStorage.setItem("lastLocation", JSON.stringify(location));
+      const formatted = formatLocationString(
+        location.name,
+        location.country,
+        language,
+      );
       setLocationString(formatted);
     }
   }, [location, language]);
@@ -145,49 +165,65 @@ export default function Home() {
       try {
         // Check if geolocation is supported
         if (!navigator.geolocation) {
-          throw new Error('Geolocation is not supported');
+          throw new Error("Geolocation is not supported");
         }
 
         // Check permission status
-        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-        
+        const permissionStatus = await navigator.permissions.query({
+          name: "geolocation",
+        });
+
         // Only proceed if permission is granted
-        if (permissionStatus.state === 'granted') {
+        if (permissionStatus.state === "granted") {
           setIsAutoLocating(true);
-          
+
           const position = await getCurrentPosition();
           const { latitude, longitude } = position.coords;
-          const response = await fetch(`/api/reverse-geocoding?lat=${latitude}&lon=${longitude}`);
-          
-          if (!response.ok) throw new Error('Failed to get location');
-          
+          const response = await fetch(
+            `/api/reverse-geocoding?lat=${latitude}&lon=${longitude}`,
+          );
+
+          if (!response.ok) throw new Error("Failed to get location");
+
           const data = await response.json();
           const newLocation = {
             name: data.name,
-            country: data.country
+            country: data.country,
           };
           setLocation(newLocation);
-          const countryName = formatLocationString(data.name, data.country, language);
+          const countryName = formatLocationString(
+            data.name,
+            data.country,
+            language,
+          );
           setLocationString(`${data.name}, ${countryName}`);
         } else {
           // If permission not granted, try to use saved location
-          const saved = localStorage.getItem('lastLocation');
+          const saved = localStorage.getItem("lastLocation");
           if (saved) {
             const savedLocation = JSON.parse(saved);
             setLocation(savedLocation);
-            const countryName = formatLocationString(savedLocation.name, savedLocation.country, language);
+            const countryName = formatLocationString(
+              savedLocation.name,
+              savedLocation.country,
+              language,
+            );
             setLocationString(`${savedLocation.name}, ${countryName}`);
           }
           setIsAutoLocating(false);
         }
       } catch (error) {
-        console.error('Auto-location failed:', error);
+        console.error("Auto-location failed:", error);
         // If auto-location fails and we have a saved location, use that
-        const saved = localStorage.getItem('lastLocation');
+        const saved = localStorage.getItem("lastLocation");
         if (saved) {
           const savedLocation = JSON.parse(saved);
           setLocation(savedLocation);
-          const countryName = formatLocationString(savedLocation.name, savedLocation.country, language);
+          const countryName = formatLocationString(
+            savedLocation.name,
+            savedLocation.country,
+            language,
+          );
           setLocationString(`${savedLocation.name}, ${countryName}`);
         }
       } finally {
@@ -200,16 +236,20 @@ export default function Home() {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    if (params.has('city') && params.has('country')) {
+    if (params.has("city") && params.has("country")) {
       const newLocation = {
-        name: params.get('city') || '',
-        country: params.get('country') || '',
-        state: params.get('state') || undefined
+        name: params.get("city") || "",
+        country: params.get("country") || "",
+        state: params.get("state") || undefined,
       };
       setLocation(newLocation);
       // Update locationString with localized country name
       if (newLocation.country) {
-        const countryName = formatLocationString(newLocation.name, newLocation.country, language);
+        const countryName = formatLocationString(
+          newLocation.name,
+          newLocation.country,
+          language,
+        );
         setLocationString(`${newLocation.name}, ${countryName}`);
       }
     }
@@ -217,15 +257,22 @@ export default function Home() {
 
   const handleLanguageChange = (newLanguage: Language) => {
     updateLanguage(newLanguage);
-    localStorage.setItem('language', newLanguage);
+    localStorage.setItem("language", newLanguage);
     // Dispatch custom event for same-window updates
-    window.dispatchEvent(new Event('languageChange'));
+    window.dispatchEvent(new Event("languageChange"));
   };
 
-  const handleLocationSelect = (newLocation: { name: string; country: string }) => {
+  const handleLocationSelect = (newLocation: {
+    name: string;
+    country: string;
+  }) => {
     setIsAutoLocating(false); // Ensure we stop auto-locating
     setLocation(newLocation);
-    const countryName = formatLocationString(newLocation.name, newLocation.country, language);
+    const countryName = formatLocationString(
+      newLocation.name,
+      newLocation.country,
+      language,
+    );
     setLocationString(`${newLocation.name}, ${countryName}`);
     setLastUpdated(new Date());
   };
@@ -242,36 +289,36 @@ export default function Home() {
   // Get the weather data for the selected date
   const selectedWeather = useMemo(() => {
     if (isLoading || !weatherData) return currentWeather;
-    
-    const found = weatherData.find(data => 
-      new Date(data.date).toDateString() === selectedDate.toDateString()
+
+    const found = weatherData.find(
+      (data) =>
+        new Date(data.date).toDateString() === selectedDate.toDateString(),
     );
-    
+
     return found || currentWeather;
   }, [weatherData, currentWeather, selectedDate, isLoading]);
-
 
   // Add function to get question mark with proper spacing
   const getQuestionMark = (lang: string) => {
     switch (lang) {
-      case 'fr':
-        return ' ?'; // French uses space before question mark
-      case 'ar':
-        return '؟'; // Arabic question mark, no space needed
-      case 'es':
-        return '?'; // Spanish question mark at start and end
+      case "fr":
+        return " ?"; // French uses space before question mark
+      case "ar":
+        return "؟"; // Arabic question mark, no space needed
+      case "es":
+        return "?"; // Spanish question mark at start and end
       default:
-        return '?'; // No space for other languages
+        return "?"; // No space for other languages
     }
   };
 
   // Add function to format the date text with proper RTL/LTR handling
   const formatDateQuestion = (lang: string, dateText: string) => {
     switch (lang) {
-      case 'ar':
+      case "ar":
         // For Arabic, we want the question mark at the end but the date before the "في"
         return `${currentTranslations.app?.whatToWear} ${dateText}${getQuestionMark(lang)}`;
-      case 'es':
+      case "es":
         // For Spanish, we want the question mark at both start and end
         return `${currentTranslations.app?.whatToWear} ${dateText}${getQuestionMark(lang)}`;
       default:
@@ -279,83 +326,80 @@ export default function Home() {
     }
   };
 
-
   const getDateText = (date: Date) => {
     const today = new Date();
     if (date.toDateString() === today.toDateString()) {
       return currentTranslations.date.today.toLowerCase();
-    } else if (date.toDateString() === new Date(today.setDate(today.getDate() + 1)).toDateString()) {
+    } else if (
+      date.toDateString() ===
+      new Date(today.setDate(today.getDate() + 1)).toDateString()
+    ) {
       return currentTranslations.date.tomorrow.toLowerCase();
     } else {
-      return date.toLocaleDateString(language, { weekday: 'long' }).toLowerCase();
+      return date
+        .toLocaleDateString(language, { weekday: "long" })
+        .toLowerCase();
     }
   };
 
   const getWindStyle = (speed: number) => {
     if (speed === 0) return {};
-    
+
     // Calculate animation duration based on wind speed
     // Faster wind = shorter duration (faster spin)
-    const duration = Math.max(0.5, 5 - (speed / 10));
-    
+    const duration = Math.max(0.5, 5 - speed / 10);
+
     return {
       animation: `spin ${duration}s linear infinite`,
     };
   };
 
   const formattedLocation = {
-    name: selectedWeather?.location?.split(', ')[0] || '',
-    countryCode: selectedWeather?.location?.split(', ')[1] || ''
+    name: selectedWeather?.location?.split(", ")[0] || "",
+    countryCode: selectedWeather?.location?.split(", ")[1] || "",
   };
 
   return (
     <main className="relative min-h-screen">
       {/* Language Selector */}
       <div className="absolute top-4 right-4 z-50 mr-4">
-        <LanguageSelector
-          value={language}
-          onChange={handleLanguageChange}
-        />
+        <LanguageSelector value={language} onChange={handleLanguageChange} />
       </div>
 
       {/* Background */}
       {locationString && (
-        <WeatherBackground
-          city={locationString}
-         
-          language={language}
-        />
+        <WeatherBackground city={locationString} language={language} />
       )}
 
       {/* Content */}
       <div className="relative z-10 min-h-screen px-0 md:px-4 py-12 sm:p-8">
         <div className="max-w-[1024px] mx-auto w-full">
-          <div dir="ltr" className="flex flex-col xl:flex-row xl:justify-between xl:items-end gap-4 mb-8 px-4">
+          <div
+            dir="ltr"
+            className="flex flex-col xl:flex-row xl:justify-between xl:items-end gap-4 mb-8 px-4"
+          >
             <div className="w-full xl:w-1/2 ">
-            <div className="flex items-start justify-start">
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                className="-translate-y-[6px] mr-1"
-                width={50}
-                height={50}
-              />
-            <h1 className="text-4xl font-bold text-white sm:text-left">
-              <span className="text-white font-display">
-              DressSmart
-              </span>
-            
-              <AuthorWidget language={language} />
-          
-            </h1>
+              <div className="flex items-start justify-start">
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  className="-translate-y-[6px] mr-1"
+                  width={50}
+                  height={50}
+                />
+                <h1 className="text-4xl font-bold text-white sm:text-left">
+                  <span className="text-white font-display">DressSmart</span>
+
+                  <AuthorWidget language={language} />
+                </h1>
+              </div>
             </div>
-            </div>
-          
+
             <div className="w-full xl:w-1/2 p-4 px-0 space-y-6 z-50 rounded-xl">
               <div className="flex flex-col space-y-4">
                 <div className="flex items-center justify-se">
                   <div className="flex-1">
-                    <LocationSearch 
+                    <LocationSearch
                       onLocationSelect={handleLocationSelect}
                       isAutoLocating={isAutoLocating}
                       defaultLocation={locationString}
@@ -399,7 +443,10 @@ export default function Home() {
                     {/* Weather Details */}
                     <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
                       {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="flex flex-col items-center gap-2">
+                        <div
+                          key={i}
+                          className="flex flex-col items-center gap-2"
+                        >
                           <div className="h-8 w-8 bg-white/10 rounded-lg animate-pulse" />
                           <div className="h-4 w-16 bg-white/10 rounded-lg animate-pulse" />
                         </div>
@@ -411,10 +458,13 @@ export default function Home() {
                     {/* Temperature Preference */}
                     <div>
                       <div className="h-7 w-32 bg-white/10 rounded-lg animate-pulse mx-auto mb-4" />
-                      
+
                       <div className="grid grid-cols-3 justify-center gap-4">
                         {Array.from({ length: 3 }).map((_, i) => (
-                          <div key={i} className="h-10 w-full bg-white/10 rounded-xl animate-pulse" />
+                          <div
+                            key={i}
+                            className="h-10 w-full bg-white/10 rounded-xl animate-pulse"
+                          />
                         ))}
                       </div>
                     </div>
@@ -426,7 +476,10 @@ export default function Home() {
                       <div className="h-7 w-64 bg-white/10 rounded-lg animate-pulse mx-auto mb-4" />
                       <div className="grid grid-cols-2 gap-4">
                         {Array.from({ length: 2 }).map((_, index) => (
-                          <div key={index} className="h-[600px] w-full bg-white/10 rounded-xl animate-pulse" />
+                          <div
+                            key={index}
+                            className="h-[600px] w-full bg-white/10 rounded-xl animate-pulse"
+                          />
                         ))}
                       </div>
                     </div>
@@ -435,15 +488,19 @@ export default function Home() {
               </div>
             ) : !locationString && !isLoading && !isAutoLocating ? (
               <div className="text-center py-12 glass-card rounded-3xl">
-                <p className="text-white/80">{currentTranslations?.app?.noLocation}</p>
+                <p className="text-white/80">
+                  {currentTranslations?.app?.noLocation}
+                </p>
               </div>
             ) : error ? (
               <div className="text-center py-12 glass-card rounded-3xl mt-8">
                 <div className="flex flex-col items-center gap-6">
                   <div className="flex flex-col items-center gap-2">
-                    <p className="text-white/80">{currentTranslations?.app?.error}</p>
+                    <p className="text-white/80">
+                      {currentTranslations?.app?.error}
+                    </p>
                   </div>
-                  <button 
+                  <button
                     onClick={handleRetry}
                     className="px-8 py-2  bg-white/10 hover:bg-white/20 text-white/80 transition-colors rounded-xl"
                   >
@@ -456,44 +513,73 @@ export default function Home() {
                 <div className="glass-card p-6 rounded-3xl pt-8">
                   <div className="grid grid-cols-1 sm:grid-cols-1 gap-6">
                     {/* Left Column */}
-                    <div dir={'ltr'}>
+                    <div dir={"ltr"}>
                       {/* Temperature Display */}
                       {locationString && (
-                          <div className="flex flex-col items-center mb-4">
-                            <div className="flex items-center justify-center gap-2">
-                              <span className="text-2xl font-medium text-white font-display">
-                                {formattedLocation.name}
-                                {formattedLocation.countryCode && (
-                                  <>, <FormattedCountry countryCode={formattedLocation.countryCode} language={language} /></>
-                                )}
-                              </span>
-                            </div>
-                            <TimeAgo 
-                              date={lastUpdated} 
-                              className="text-sm text-white/60 mt-0"
-                              language={language}
-                            />
+                        <div className="flex flex-col items-center mb-4">
+                          <div className="flex items-center justify-center gap-2">
+                            <span className="text-2xl font-medium text-white font-display">
+                              {formattedLocation.name}
+                              {formattedLocation.countryCode && (
+                                <>
+                                  ,{" "}
+                                  <FormattedCountry
+                                    countryCode={formattedLocation.countryCode}
+                                    language={language}
+                                  />
+                                </>
+                              )}
+                            </span>
                           </div>
-                        )}
-                      <div className={`${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
-                        <motion.div layout className="flex justify-center items-center">
+                          <TimeAgo
+                            date={lastUpdated}
+                            className="text-sm text-white/60 mt-0"
+                            language={language}
+                          />
+                        </div>
+                      )}
+                      <div
+                        className={`${language === "ar" ? "flex-row-reverse" : "flex-row"}`}
+                      >
+                        <motion.div
+                          layout
+                          className="flex justify-center items-center"
+                        >
                           <motion.div layout>
-                            <WeatherIcon 
-                              condition={selectedWeather?.weather?.icon || '01d'} 
+                            <WeatherIcon
+                              condition={
+                                selectedWeather?.weather?.icon || "01d"
+                              }
                               className="w-16 h-16 -translate-y-1 -translate-x-2"
-                              isNight={selectedWeather?.weather?.icon?.endsWith('n') || false}
+                              isNight={
+                                selectedWeather?.weather?.icon?.endsWith("n") ||
+                                false
+                              }
                             />
                           </motion.div>
                           <motion.div layout className="flex flex-col">
                             <motion.div layout className="flex gap-[8px]">
-                              <TemperatureValue 
-                                value={Math.round(tempUnit === 'C' ? selectedWeather.temperature : (selectedWeather.temperature * 9/5) + 32)} 
+                              <TemperatureValue
+                                value={Math.round(
+                                  tempUnit === "C"
+                                    ? selectedWeather.temperature
+                                    : (selectedWeather.temperature * 9) / 5 +
+                                        32,
+                                )}
                                 className="text-7xl font-bold"
                                 language={language}
                               />
-                              <motion.div layout className="flex gap-2 -translate-x-2">
-                                <motion.span layout className="text-2xl font-bold -translate-y-2 translate-x-1">°</motion.span>
-                                <TemperatureToggle 
+                              <motion.div
+                                layout
+                                className="flex gap-2 -translate-x-2"
+                              >
+                                <motion.span
+                                  layout
+                                  className="text-2xl font-bold -translate-y-2 translate-x-1"
+                                >
+                                  °
+                                </motion.span>
+                                <TemperatureToggle
                                   onChange={setTempUnit}
                                   language={language}
                                 />
@@ -502,75 +588,147 @@ export default function Home() {
                           </motion.div>
                         </motion.div>
                       </div>
-                      <motion.div 
-                        layout 
+                      <motion.div
+                        layout
                         className=" text-sm text-white/80 text-center -mt-2 mb-2 grid-cols-1 font-display"
                         transition={{ duration: 0.2 }}
                       >
-                        {currentTranslations?.weather.descriptions[selectedWeather?.weather?.description.replace(' ', '').toLowerCase()]}
+                        {
+                          currentTranslations?.weather.descriptions[
+                            selectedWeather?.weather?.description
+                              .replace(" ", "")
+                              .toLowerCase()
+                          ]
+                        }
                       </motion.div>
                       <div className="text-sm text-white/60 text-center mt-1">
-                        {currentTranslations?.weather.feelsLike}{' '}
-                        <AnimatedValue 
-                          value={Math.round(tempUnit === 'C' ? selectedWeather.feelsLike : (selectedWeather.feelsLike * 9/5) + 32)} 
-                        />°{tempUnit}
+                        {currentTranslations?.weather.feelsLike}{" "}
+                        <AnimatedValue
+                          value={Math.round(
+                            tempUnit === "C"
+                              ? selectedWeather.feelsLike
+                              : (selectedWeather.feelsLike * 9) / 5 + 32,
+                          )}
+                        />
+                        °{tempUnit}
                       </div>
-                   
 
                       {/* Secondary Weather Data */}
                       <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-6">
                         <SecondaryWeatherData
                           label={currentTranslations?.weather.min}
-                          icon={<WiThermometer className="w-8 h-8 text-blue-300" />}
-                          value={<AnimatedValue value={tempUnit === 'C' ? selectedWeather.tempMin : (selectedWeather.tempMin * 9/5) + 32} unit={`°${tempUnit}`} />}
+                          icon={
+                            <WiThermometer className="w-8 h-8 text-blue-300" />
+                          }
+                          value={
+                            <AnimatedValue
+                              value={
+                                tempUnit === "C"
+                                  ? selectedWeather.tempMin
+                                  : (selectedWeather.tempMin * 9) / 5 + 32
+                              }
+                              unit={`°${tempUnit}`}
+                            />
+                          }
                         />
                         <SecondaryWeatherData
                           label={currentTranslations?.weather.max}
-                          icon={<WiThermometer className="w-8 h-8 text-red-300" />}
-                          value={<AnimatedValue value={tempUnit === 'C' ? selectedWeather.tempMax : (selectedWeather.tempMax * 9/5) + 32} unit={`°${tempUnit}`} />}
+                          icon={
+                            <WiThermometer className="w-8 h-8 text-red-300" />
+                          }
+                          value={
+                            <AnimatedValue
+                              value={
+                                tempUnit === "C"
+                                  ? selectedWeather.tempMax
+                                  : (selectedWeather.tempMax * 9) / 5 + 32
+                              }
+                              unit={`°${tempUnit}`}
+                            />
+                          }
                         />
                         <SecondaryWeatherData
                           label={currentTranslations?.weather.wind}
-                          icon={<FaFan className="w-6 h-6 text-white transition-all" style={getWindStyle(selectedWeather.windSpeed)} />}
-                          value={<AnimatedValue value={selectedWeather.windSpeed} unit={` ${currentTranslations?.weather.windSpeed}`} language={language} />}
+                          icon={
+                            <FaFan
+                              className="w-6 h-6 text-white transition-all"
+                              style={getWindStyle(selectedWeather.windSpeed)}
+                            />
+                          }
+                          value={
+                            <AnimatedValue
+                              value={selectedWeather.windSpeed}
+                              unit={` ${currentTranslations?.weather.windSpeed}`}
+                              language={language}
+                            />
+                          }
                         />
                         <SecondaryWeatherData
                           label={currentTranslations?.weather.rain}
-                          icon={<RainIcon value={selectedWeather.precipitation} />}
-                          value={<AnimatedValue value={selectedWeather.precipitation} unit="%"/>}
+                          icon={
+                            <RainIcon value={selectedWeather.precipitation} />
+                          }
+                          value={
+                            <AnimatedValue
+                              value={selectedWeather.precipitation}
+                              unit="%"
+                            />
+                          }
                         />
                         <SecondaryWeatherData
                           label={currentTranslations?.weather.humidity}
-                          icon={<HumidityIcon value={selectedWeather.humidity} />}
-                          value={<AnimatedValue value={selectedWeather.humidity} unit="%"/>}
+                          icon={
+                            <HumidityIcon value={selectedWeather.humidity} />
+                          }
+                          value={
+                            <AnimatedValue
+                              value={selectedWeather.humidity}
+                              unit="%"
+                            />
+                          }
                         />
                         <SecondaryWeatherData
                           label={currentTranslations?.weather.uvIndex}
                           icon={<UVIcon value={selectedWeather.uvIndex} />}
-                          value={<AnimatedValue value={selectedWeather.uvIndex} />}
+                          value={
+                            <AnimatedValue value={selectedWeather.uvIndex} />
+                          }
                         />
                       </div>
                     </div>
-                     {/* Right Column */}
-                     <div>
+                    {/* Right Column */}
+                    <div>
                       {/* Secondary Weather Data */}
 
                       <div className="w-full h-px bg-white/10 my-4" />
-                      <h3 className="text-lg font-semibold text-white mb-4 text-center font-display">{currentTranslations?.app?.temperaturePreference}</h3>
-                   
-                       <div className="mb-4">
-                        <TemperaturePreference onChange={setTempPreference} language={language} />
+                      <h3 className="text-lg font-semibold text-white mb-4 text-center font-display">
+                        {currentTranslations?.app?.temperaturePreference}
+                      </h3>
+
+                      <div className="mb-4">
+                        <TemperaturePreference
+                          onChange={setTempPreference}
+                          language={language}
+                        />
                       </div>
 
                       <div className="w-full h-px bg-white/10 my-4" />
-                      <h3 className="text-lg font-semibold text-white mb-4 text-center font-display">{formatDateQuestion(language, getDateText(selectedDate))}</h3>
-                   
-                       <div className="grid grid-cols-4 gap-4 items-start">
+                      <h3 className="text-lg font-semibold text-white mb-4 text-center font-display">
+                        {formatDateQuestion(
+                          language,
+                          getDateText(selectedDate),
+                        )}
+                      </h3>
+
+                      <div className="grid grid-cols-4 gap-4 items-start">
                         {/* Model Image Section - 1/4 on mobile, 2/4 on desktop */}
                         <div className="col-span-4 sm:col-span-2 h-fit">
-                          <div id="model-image" className="h-[400px] sm:h-[600px] w-full relative rounded-2xl overflow-hidden bg-white/5 backdrop-blur-lg">
+                          <div
+                            id="model-image"
+                            className="h-[400px] sm:h-[600px] w-full relative rounded-2xl overflow-hidden bg-white/5 backdrop-blur-lg"
+                          >
                             {selectedWeather && (
-                              <ModelImage 
+                              <ModelImage
                                 temperature={selectedWeather.temperature}
                                 weatherName={selectedWeather.weather.name}
                                 onIndexChange={setCurrentOutfitIndex}
@@ -587,15 +745,23 @@ export default function Home() {
                             <div className="h-full rounded animate-pulse" />
                           ) : selectedWeather ? (
                             <div className="space-y-4">
-                              <OutfitList 
-                                items={getClothingRecommendations({
-                                  temperature: selectedWeather.temperature,
-                                  windSpeed: selectedWeather.windSpeed,
-                                  humidity: selectedWeather.humidity,
-                                  isRaining: selectedWeather.precipitation > 60,
-                                  unit: tempUnit,
-                                  uv: selectedWeather.uvIndex ?? (selectedWeather.temperature >= 25 ? 3 : 1)
-                                }, tempPreference)}
+                              <OutfitList
+                                items={getClothingRecommendations(
+                                  {
+                                    temperature: selectedWeather.temperature,
+                                    windSpeed: selectedWeather.windSpeed,
+                                    humidity: selectedWeather.humidity,
+                                    isRaining:
+                                      selectedWeather.precipitation > 60,
+                                    unit: tempUnit,
+                                    uv:
+                                      selectedWeather.uvIndex ??
+                                      (selectedWeather.temperature >= 25
+                                        ? 3
+                                        : 1),
+                                  },
+                                  tempPreference,
+                                )}
                                 language={language}
                               />
                             </div>
@@ -605,31 +771,40 @@ export default function Home() {
 
                       {/* Pagination Indicators */}
                       <div className="flex justify-center gap-2 mt-6">
-                        {Array.from({ length: NUMBER_OF_OUTFITS }).map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentOutfitIndex(index)}
-                            className={`w-2 h-2 rounded-full transition-all hover:bg-white hover:animate-pulse ${
-                              index === currentOutfitIndex ? 'bg-white w-6' : 'bg-white/50'
-                            }`}
-                            aria-label={`Go to outfit ${index + 1}`}
-                          />
-                        ))}
+                        {Array.from({ length: NUMBER_OF_OUTFITS }).map(
+                          (_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentOutfitIndex(index)}
+                              className={`w-2 h-2 rounded-full transition-all hover:bg-white hover:animate-pulse ${
+                                index === currentOutfitIndex
+                                  ? "bg-white w-6"
+                                  : "bg-white/50"
+                              }`}
+                              aria-label={`Go to outfit ${index + 1}`}
+                            />
+                          ),
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            ) : !isLoading && error && (
-              <div className="text-center py-12 glass-card rounded-3xl mt-6">
-                <p className="text-white/80">{currentTranslations?.app?.error}</p>
-                <button 
-                  onClick={handleRetry}
-                  className="px-8 py-2 mt-4  bg-white/10 hover:bg-white/20 text-white/80 transition-colors rounded-xl"
-                >
-                  {currentTranslations?.app?.retry}
-                </button>
-              </div>
+            ) : (
+              !isLoading &&
+              error && (
+                <div className="text-center py-12 glass-card rounded-3xl mt-6">
+                  <p className="text-white/80">
+                    {currentTranslations?.app?.error}
+                  </p>
+                  <button
+                    onClick={handleRetry}
+                    className="px-8 py-2 mt-4  bg-white/10 hover:bg-white/20 text-white/80 transition-colors rounded-xl"
+                  >
+                    {currentTranslations?.app?.retry}
+                  </button>
+                </div>
+              )
             )}
           </main>
         </div>

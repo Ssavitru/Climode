@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface TemperatureToggleProps {
-  onChange: (unit: 'C' | 'F') => void;
+  onChange: (unit: "C" | "F") => void;
 }
 
 export function TemperatureToggle({ onChange }: TemperatureToggleProps) {
-  const [unit, setUnit] = useState<'C' | 'F'>('C');
+  const [unit, setUnit] = useState<"C" | "F">("C");
 
   useEffect(() => {
-    const savedUnit = localStorage.getItem('temperatureUnit') as 'C' | 'F';
+    const savedUnit = localStorage.getItem("temperatureUnit") as "C" | "F";
     if (savedUnit) {
       setUnit(savedUnit);
       onChange(savedUnit);
@@ -18,9 +18,9 @@ export function TemperatureToggle({ onChange }: TemperatureToggleProps) {
   }, [onChange]);
 
   const toggleUnit = () => {
-    const newUnit = unit === 'C' ? 'F' : 'C';
+    const newUnit = unit === "C" ? "F" : "C";
     setUnit(newUnit);
-    localStorage.setItem('temperatureUnit', newUnit);
+    localStorage.setItem("temperatureUnit", newUnit);
     onChange(newUnit);
   };
 

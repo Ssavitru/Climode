@@ -1,4 +1,4 @@
-import { Language } from '@/types';
+import { Language } from "@/types";
 
 interface LocationSuggestionItemProps {
   city: string;
@@ -9,23 +9,25 @@ interface LocationSuggestionItemProps {
   isSelected?: boolean;
 }
 
-export function LocationSuggestionItem({ 
-  city, 
-  country, 
-  state, 
-  language, 
+export function LocationSuggestionItem({
+  city,
+  country,
+  state,
+  language,
   onClick,
-  isSelected = false 
+  isSelected = false,
 }: LocationSuggestionItemProps) {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       onClick();
     }
   };
 
   // Use Intl.DisplayNames to get localized country name
-  const countryName = new Intl.DisplayNames([language], { type: 'region' }).of(country);
+  const countryName = new Intl.DisplayNames([language], { type: "region" }).of(
+    country,
+  );
 
   return (
     <div
@@ -34,7 +36,7 @@ export function LocationSuggestionItem({
       onClick={onClick}
       onKeyDown={handleKeyDown}
       className={`px-4 py-2 cursor-pointer rounded-md transition-colors ${
-        isSelected ? 'bg-white/20' : 'hover:bg-white/10'
+        isSelected ? "bg-white/20" : "hover:bg-white/10"
       }`}
     >
       <span className="font-medium">{city}</span>

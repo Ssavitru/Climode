@@ -12,7 +12,7 @@ export const translations = {
       temperaturePreferences: {
         COLD_RESISTANT: "Cold resistant",
         NORMAL: "Normal",
-        COLD_SENSITIVE: "Cold sensitive"
+        COLD_SENSITIVE: "Cold sensitive",
       },
       whatToWear: "What should I wear for",
       languages: {
@@ -21,15 +21,15 @@ export const translations = {
         es: "Español",
         de: "Deutsch",
         it: "Italiano",
-        ar: "العربية"
+        ar: "العربية",
       },
-      outfitSuggestion: 'Outfit Suggestion',
+      outfitSuggestion: "Outfit Suggestion",
       createdBy: "Created by",
-      allRightsReserved: "All rights reserved"
+      allRightsReserved: "All rights reserved",
     },
     location: {
       search: "Enter location...",
-      detecting: "Detecting location..."
+      detecting: "Detecting location...",
     },
     weather: {
       lastUpdated: "Last updated",
@@ -59,7 +59,7 @@ export const translations = {
         rainy: "Rainy",
         windy: "Windy",
         veryWindy: "Very windy",
-        humid: "Humid"
+        humid: "Humid",
       },
       descriptions: {
         clearsky: "Clear sky",
@@ -117,8 +117,8 @@ export const translations = {
         warmGloves: "Insulated gloves for freezing temperatures",
         coldGloves: "Warm gloves for cold weather",
         windGloves: "Light gloves for wind protection",
-        optionalGloves: "Light gloves, optional for comfort"
-      }
+        optionalGloves: "Light gloves, optional for comfort",
+      },
     },
     date: {
       today: "Today",
@@ -131,8 +131,8 @@ export const translations = {
           wed: "Wed",
           thu: "Thu",
           fri: "Fri",
-          sat: "Sat"
-        }
+          sat: "Sat",
+        },
       },
       months: {
         short: {
@@ -147,107 +147,98 @@ export const translations = {
           sep: "Sep",
           oct: "Oct",
           nov: "Nov",
-          dec: "Dec"
-        }
-      }
+          dec: "Dec",
+        },
+      },
     },
     temperature: {
       units: {
         celsius: "°C",
-        fahrenheit: "°F"
+        fahrenheit: "°F",
       },
       preferences: {
         cold: "Cold",
         normal: "Comfortable",
-        warm: "Warm"
-      }
+        warm: "Warm",
+      },
     },
     clothing: {
-      hat: 'Hat',
-      jacket: 'Jacket',
-      gloves: 'Gloves',
-      scarf: 'Scarf',
-      tshirt: 'T-Shirt',
-      socks: 'Socks',
-      shirt: 'Shirt',
-      pants: 'Pants',
-      shoes: 'Shoes',
-      sweater: 'Sweater',
-      umbrella: 'Umbrella',
-      sunglasses: 'Sunglasses',
-      shorts: 'Shorts',
-      optional: 'Optional',
-      essential: 'Essential',
-      recommended: 'Recommended'
+      hat: "Hat",
+      jacket: "Jacket",
+      gloves: "Gloves",
+      scarf: "Scarf",
+      tshirt: "T-Shirt",
+      socks: "Socks",
+      shirt: "Shirt",
+      pants: "Pants",
+      shoes: "Shoes",
+      sweater: "Sweater",
+      umbrella: "Umbrella",
+      sunglasses: "Sunglasses",
+      shorts: "Shorts",
+      optional: "Optional",
+      essential: "Essential",
+      recommended: "Recommended",
     },
     clothingDesc: {
-      shirt: [
-        "Casual long-sleeve button-up",
-        "Technical fabric smart shirt"
-      ],
+      shirt: ["Casual long-sleeve button-up", "Technical fabric smart shirt"],
       tshirt: [
         "Soft cotton basic tee",
         "Moisture-wicking technical tee",
-        "Lightweight comfort t-shirt"
+        "Lightweight comfort t-shirt",
       ],
-      pants: [
-        "Comfortable regular-fit jeans",
-        "Lightweight breathable pants"
-      ],
-      shoes: [
-        "Waterproof sturdy shoes",
-        "Lightweight breathable trainers"
-      ],
+      pants: ["Comfortable regular-fit jeans", "Lightweight breathable pants"],
+      shoes: ["Waterproof sturdy shoes", "Lightweight breathable trainers"],
       jacket: [
         "Waterproof windbreaker jacket",
         "Light water-repellent bomber",
-        "Warm fleece-lined coat"
+        "Warm fleece-lined coat",
       ],
       sweater: [
         "Merino wool breathable sweater",
         "Fleece-lined hoodie",
-        "Lightweight fine knit pullover"
+        "Lightweight fine knit pullover",
       ],
       scarf: [
         "Soft warm wool scarf",
         "Versatile neck gaiter",
-        "Lightweight windproof wrap"
+        "Lightweight windproof wrap",
       ],
       gloves: [
         "Touchscreen waterproof gloves",
         "Warm wool mittens",
-        "Technical windproof gloves"
+        "Technical windproof gloves",
       ],
       hat: [
         "Fleece-lined wool beanie",
         "Light UV-protective cap",
-        "Stylish bucket hat"
+        "Stylish bucket hat",
       ],
       socks: [
         "Moisture-wicking athletic socks",
         "Warm merino wool socks",
-        "Comfortable cotton blend socks"
+        "Comfortable cotton blend socks",
       ],
       umbrella: [
         "Compact automatic umbrella",
         "Windproof travel umbrella",
-        "Large sturdy umbrella"
+        "Large sturdy umbrella",
       ],
       sunglasses: [
         "UV400 protection sunglasses",
         "Polarized sport sunglasses",
-        "Classic aviator shades"
+        "Classic aviator shades",
       ],
       shorts: [
         "Quick-dry athletic shorts",
         "Comfortable cotton shorts",
-        "Lightweight cargo shorts"
-      ]
+        "Lightweight cargo shorts",
+      ],
     },
     priority: {
-      high: 'Essential',
-      medium: 'Recommended',
-      low: 'Optional'
+      high: "Essential",
+      medium: "Recommended",
+      low: "Optional",
     },
     ModelImage: {
       findingOutfit: "Finding the perfect outfit...",
@@ -258,12 +249,12 @@ export const translations = {
       providedBy: "AI Generated",
       providedByPexels: "Provided by Pexels",
       providedByPixabay: "Provided by Pixabay",
-      defaultImage: "AI Model"
+      defaultImage: "AI Model",
     },
     credits: {
       photoBy: "Photo by",
-      providedBy: "Provided by Pixabay"
-    }
+      providedBy: "Provided by Pixabay",
+    },
   },
   fr: {
     app: {
@@ -278,7 +269,7 @@ export const translations = {
       temperaturePreferences: {
         COLD_RESISTANT: "Résistant au froid",
         NORMAL: "Normal",
-        COLD_SENSITIVE: "Sensible au froid"
+        COLD_SENSITIVE: "Sensible au froid",
       },
       whatToWear: "Que devrais-je porter pour",
       languages: {
@@ -287,15 +278,15 @@ export const translations = {
         es: "Español",
         de: "Deutsch",
         it: "Italiano",
-        ar: "العربية"
+        ar: "العربية",
       },
-      outfitSuggestion: 'Suggestion de Tenue',
+      outfitSuggestion: "Suggestion de Tenue",
       createdBy: "Créé par",
-      allRightsReserved: "Tous droits réservés"
+      allRightsReserved: "Tous droits réservés",
     },
     location: {
       search: "Entrer un lieu...",
-      detecting: "Détection du lieu..."
+      detecting: "Détection du lieu...",
     },
     weather: {
       lastUpdated: "Dernière mise à jour",
@@ -325,7 +316,7 @@ export const translations = {
         rainy: "Pluvieux",
         windy: "Venté",
         veryWindy: "Très venteux",
-        humid: "Humide"
+        humid: "Humide",
       },
       descriptions: {
         clearsky: "Ciel dégagé",
@@ -383,8 +374,8 @@ export const translations = {
         warmGloves: "Gants isolés pour températures glaciales",
         coldGloves: "Gants chauds pour temps froid",
         windGloves: "Gants légers pour protection contre le vent",
-        optionalGloves: "Gants légers, optionnels pour le confort"
-      }
+        optionalGloves: "Gants légers, optionnels pour le confort",
+      },
     },
     date: {
       today: "Aujourd'hui",
@@ -397,8 +388,8 @@ export const translations = {
           wed: "Mer",
           thu: "Jeu",
           fri: "Ven",
-          sat: "Sam"
-        }
+          sat: "Sam",
+        },
       },
       months: {
         short: {
@@ -413,107 +404,107 @@ export const translations = {
           sep: "Sep",
           oct: "Oct",
           nov: "Nov",
-          dec: "Déc"
-        }
-      }
+          dec: "Déc",
+        },
+      },
     },
     temperature: {
       units: {
         celsius: "°C",
-        fahrenheit: "°F"
+        fahrenheit: "°F",
       },
       preferences: {
         cold: "Froid",
         normal: "Confortable",
-        warm: "Chaud"
-      }
+        warm: "Chaud",
+      },
     },
     clothing: {
-      hat: 'Chapeau',
-      jacket: 'Veste',
-      gloves: 'Gants',
-      scarf: 'Écharpe',
-      tshirt: 'T-Shirt',
-      socks: 'Chaussettes',
-      shirt: 'Chemise',
-      pants: 'Pantalon',
-      shoes: 'Chaussures',
-      sweater: 'Pull',
-      umbrella: 'Parapluie',
-      sunglasses: 'Lunettes de soleil',
-      shorts: 'Short',
-      optional: 'Optionnel',
-      essential: 'Essentiel',
-      recommended: 'Recommandé'
+      hat: "Chapeau",
+      jacket: "Veste",
+      gloves: "Gants",
+      scarf: "Écharpe",
+      tshirt: "T-Shirt",
+      socks: "Chaussettes",
+      shirt: "Chemise",
+      pants: "Pantalon",
+      shoes: "Chaussures",
+      sweater: "Pull",
+      umbrella: "Parapluie",
+      sunglasses: "Lunettes de soleil",
+      shorts: "Short",
+      optional: "Optionnel",
+      essential: "Essentiel",
+      recommended: "Recommandé",
     },
     clothingDesc: {
       shirt: [
         "Chemise décontractée à manches longues",
-        "Chemise élégante en tissu technique"
+        "Chemise élégante en tissu technique",
       ],
       tshirt: [
         "T-shirt basique en coton doux",
         "T-shirt technique anti-transpiration",
-        "T-shirt léger et confortable"
+        "T-shirt léger et confortable",
       ],
       pants: [
         "Jean coupe régulière confortable",
-        "Pantalon léger et respirant"
+        "Pantalon léger et respirant",
       ],
       shoes: [
         "Chaussures imperméables et robustes",
-        "Baskets légères et respirantes"
+        "Baskets légères et respirantes",
       ],
       jacket: [
         "Veste imperméable coupe-vent",
         "Blouson léger et déperlant",
-        "Veste chaude doublée polaire"
+        "Veste chaude doublée polaire",
       ],
       sweater: [
         "Pull en laine mérinos respirant",
         "Sweat à capuche doublé molleton",
-        "Pull léger en maille fine"
+        "Pull léger en maille fine",
       ],
       scarf: [
         "Écharpe en laine douce et chaude",
         "Tour de cou multifonction",
-        "Foulard léger coupe-vent"
+        "Foulard léger coupe-vent",
       ],
       gloves: [
         "Gants tactiles et imperméables",
         "Mitaines en laine chaude",
-        "Gants techniques coupe-vent"
+        "Gants techniques coupe-vent",
       ],
       hat: [
         "Bonnet en laine doublé polaire",
         "Casquette légère anti-UV",
-        "Bob élégant"
+        "Bob élégant",
       ],
       socks: [
         "Chaussettes de sport anti-transpiration",
         "Chaussettes chaudes en laine mérinos",
-        "Chaussettes confortables en coton"
+        "Chaussettes confortables en coton",
       ],
       umbrella: [
         "Parapluie compact automatique",
         "Parapluie de voyage coupe-vent",
-        "Grand parapluie robuste"
+        "Grand parapluie robuste",
       ],
       sunglasses: [
         "Lunettes de soleil protection UV400",
         "Lunettes de sport polarisées",
-        "Lunettes aviateur classiques"
+        "Lunettes aviateur classiques",
       ],
       shorts: [
         "Short de sport séchage rapide",
         "Short en coton confortable",
-        "Short cargo léger"
-      ]
+        "Short cargo léger",
+      ],
     },
     priority: {
-      high: 'Essentiel',
-      medium: 'Recommandé',
-      low: 'Optionnel'
+      high: "Essentiel",
+      medium: "Recommandé",
+      low: "Optionnel",
     },
     ModelImage: {
       findingOutfit: "Recherche de la tenue parfaite...",
@@ -524,12 +515,12 @@ export const translations = {
       providedBy: "AI Généré",
       providedByPexels: "Fourni par Pexels",
       providedByPixabay: "Fourni par Pixabay",
-      defaultImage: "Modèle IA"
+      defaultImage: "Modèle IA",
     },
     credits: {
       photoBy: "Photo par",
-      providedBy: "Fourni par Pixabay"
-    }
+      providedBy: "Fourni par Pixabay",
+    },
   },
   es: {
     app: {
@@ -544,7 +535,7 @@ export const translations = {
       temperaturePreferences: {
         COLD_RESISTANT: "Resistente al frío",
         NORMAL: "Normal",
-        COLD_SENSITIVE: "Sensible al frío"
+        COLD_SENSITIVE: "Sensible al frío",
       },
       whatToWear: "¿Qué debo vestir para",
       languages: {
@@ -553,15 +544,15 @@ export const translations = {
         es: "Español",
         de: "Deutsch",
         it: "Italiano",
-        ar: "العربية"
+        ar: "العربية",
       },
-      outfitSuggestion: 'Sugerencia de Traje',
+      outfitSuggestion: "Sugerencia de Traje",
       createdBy: "Creado por",
-      allRightsReserved: "Todos los derechos reservados"
+      allRightsReserved: "Todos los derechos reservados",
     },
     location: {
       search: "Ingresar ubicación...",
-      detecting: "Detectando ubicación..."
+      detecting: "Detectando ubicación...",
     },
     weather: {
       lastUpdated: "Última actualización",
@@ -591,7 +582,7 @@ export const translations = {
         rainy: "Lluvioso",
         windy: "Ventoso",
         veryWindy: "Muy ventoso",
-        humid: "Húmedo"
+        humid: "Húmedo",
       },
       descriptions: {
         clearsky: "Cielo despejado",
@@ -649,8 +640,8 @@ export const translations = {
         warmGloves: "Guantes aislantes para temperaturas bajo cero",
         coldGloves: "Guantes calientes para clima frío",
         windGloves: "Guantes ligeros para protección contra el viento",
-        optionalGloves: "Guantes ligeros, opcionales para comodidad"
-      }
+        optionalGloves: "Guantes ligeros, opcionales para comodidad",
+      },
     },
     date: {
       today: "Hoy",
@@ -663,8 +654,8 @@ export const translations = {
           wed: "Mié",
           thu: "Jue",
           fri: "Vie",
-          sat: "Sáb"
-        }
+          sat: "Sáb",
+        },
       },
       months: {
         short: {
@@ -679,107 +670,107 @@ export const translations = {
           sep: "Sep",
           oct: "Oct",
           nov: "Nov",
-          dec: "Dic"
-        }
-      }
+          dec: "Dic",
+        },
+      },
     },
     temperature: {
       units: {
         celsius: "°C",
-        fahrenheit: "°F"
+        fahrenheit: "°F",
       },
       preferences: {
         cold: "Frío",
         normal: "Cómodo",
-        warm: "Caliente"
-      }
+        warm: "Caliente",
+      },
     },
     clothing: {
-      hat: 'Sombrero',
-      jacket: 'Chaqueta',
-      gloves: 'Guantes',
-      scarf: 'Bufanda',
-      tshirt: 'T-Shirt',
-      socks: 'Calcetines',
-      shirt: 'Camisa',
-      pants: 'Pantalones',
-      shoes: 'Zapatos',
-      sweater: 'Suéter',
-      umbrella: 'Paraguas',
-      sunglasses: 'Gafas de sol',
-      shorts: 'Pantalones cortos',
-      optional: 'Opcional',
-      essential: 'Esencial',
-      recommended: 'Recomendado'
+      hat: "Sombrero",
+      jacket: "Chaqueta",
+      gloves: "Guantes",
+      scarf: "Bufanda",
+      tshirt: "T-Shirt",
+      socks: "Calcetines",
+      shirt: "Camisa",
+      pants: "Pantalones",
+      shoes: "Zapatos",
+      sweater: "Suéter",
+      umbrella: "Paraguas",
+      sunglasses: "Gafas de sol",
+      shorts: "Pantalones cortos",
+      optional: "Opcional",
+      essential: "Esencial",
+      recommended: "Recomendado",
     },
     clothingDesc: {
       shirt: [
         "Camisa casual de manga larga",
-        "Camisa elegante de tejido técnico"
+        "Camisa elegante de tejido técnico",
       ],
       tshirt: [
         "Camiseta básica de algodón suave",
         "Camiseta técnica anti-sudor",
-        "Camiseta ligera y cómoda"
+        "Camiseta ligera y cómoda",
       ],
       pants: [
         "Pantalones de jean cómodo",
-        "Pantalones ligeros y transpirables"
+        "Pantalones ligeros y transpirables",
       ],
       shoes: [
         "Zapatos impermeables y robustos",
-        "Zapatillas ligeras y transpirables"
+        "Zapatillas ligeras y transpirables",
       ],
       jacket: [
         "Chaqueta impermeable cortaviento",
         "Blouson ligero y anti-lluvia",
-        "Chaqueta cálida forrada de poliéster"
+        "Chaqueta cálida forrada de poliéster",
       ],
       sweater: [
         "Suéter de lana merino transpirable",
         "Sudadera con capucha forrada de molleton",
-        "Suéter ligero de tejido fino"
+        "Suéter ligero de tejido fino",
       ],
       scarf: [
         "Bufanda de lana suave y cálida",
         "Bufanda multifuncional",
-        "Bufanda ligera cortaviento"
+        "Bufanda ligera cortaviento",
       ],
       gloves: [
         "Guantes táctiles e impermeables",
         "Guantes cálidos de lana",
-        "Guantes técnicos cortaviento"
+        "Guantes técnicos cortaviento",
       ],
       hat: [
         "Gorro de lana forrado de poliéster",
         "Gorra ligera anti-UV",
-        "Sombrero de estilo bucket"
+        "Sombrero de estilo bucket",
       ],
       socks: [
         "Calcetines deportivos anti-sudor",
         "Calcetines cálidos de lana merino",
-        "Calcetines cómodos de algodón"
+        "Calcetines cómodos de algodón",
       ],
       umbrella: [
         "Paraguas compacto automático",
         "Paraguas de viaje cortaviento",
-        "Paraguas grande y robusto"
+        "Paraguas grande y robusto",
       ],
       sunglasses: [
         "Gafas de sol protección UV400",
         "Gafas de deporte polarizadas",
-        "Gafas de aviador clásicas"
+        "Gafas de aviador clásicas",
       ],
       shorts: [
         "Pantalones cortos deportivos de secado rápido",
         "Pantalones cortos cómodos de algodón",
-        "Pantalones cortos cargo ligeros"
-      ]
+        "Pantalones cortos cargo ligeros",
+      ],
     },
     priority: {
-      high: 'Imprescindible',
-      medium: 'Recomendado',
-      low: 'Opcional'
+      high: "Imprescindible",
+      medium: "Recomendado",
+      low: "Opcional",
     },
     ModelImage: {
       findingOutfit: "Buscando el atuendo perfecto...",
@@ -790,12 +781,12 @@ export const translations = {
       providedBy: "Generado por IA",
       providedByPexels: "Proporcionado por Pexels",
       providedByPixabay: "Proporcionado por Pixabay",
-      defaultImage: "Modelo IA"
+      defaultImage: "Modelo IA",
     },
     credits: {
       photoBy: "Foto por",
-      providedBy: "Proporcionado por Pixabay"
-    }
+      providedBy: "Proporcionado por Pixabay",
+    },
   },
   de: {
     app: {
@@ -810,7 +801,7 @@ export const translations = {
       temperaturePreferences: {
         COLD_RESISTANT: "Kälteresistent",
         NORMAL: "Normal",
-        COLD_SENSITIVE: "Kälteempfindlich"
+        COLD_SENSITIVE: "Kälteempfindlich",
       },
       whatToWear: "Was sollte ich für",
       languages: {
@@ -819,15 +810,15 @@ export const translations = {
         es: "Español",
         de: "Deutsch",
         it: "Italiano",
-        ar: "العربية"
+        ar: "العربية",
       },
-      outfitSuggestion: 'Outfit-Vorschlag',
+      outfitSuggestion: "Outfit-Vorschlag",
       createdBy: "Erstellt von",
-      allRightsReserved: "Alle Rechte vorbehalten"
+      allRightsReserved: "Alle Rechte vorbehalten",
     },
     location: {
       search: "Ort eingeben...",
-      detecting: "Standort wird ermittelt..."
+      detecting: "Standort wird ermittelt...",
     },
     weather: {
       lastUpdated: "Zuletzt aktualisiert",
@@ -857,7 +848,7 @@ export const translations = {
         rainy: "Regnerisch",
         windy: "Windig",
         veryWindy: "Sehr windig",
-        humid: "Feucht"
+        humid: "Feucht",
       },
       descriptions: {
         clearsky: "Klarer Himmel",
@@ -915,8 +906,8 @@ export const translations = {
         warmGloves: "Isolierte Handschuhe für Minustemperaturen",
         coldGloves: "Warme Handschuhe für kaltes Wetter",
         windGloves: "Leichte Handschuhe für Windschutz",
-        optionalGloves: "Leichte Handschuhe, optional für Komfort"
-      }
+        optionalGloves: "Leichte Handschuhe, optional für Komfort",
+      },
     },
     date: {
       today: "Heute",
@@ -929,8 +920,8 @@ export const translations = {
           wed: "Mi",
           thu: "Do",
           fri: "Fr",
-          sat: "Sa"
-        }
+          sat: "Sa",
+        },
       },
       months: {
         short: {
@@ -945,107 +936,101 @@ export const translations = {
           sep: "Sep",
           oct: "Okt",
           nov: "Nov",
-          dec: "Dez"
-        }
-      }
+          dec: "Dez",
+        },
+      },
     },
     temperature: {
       units: {
         celsius: "°C",
-        fahrenheit: "°F"
+        fahrenheit: "°F",
       },
       preferences: {
         cold: "Kalt",
         normal: "Angenehm",
-        warm: "Warm"
-      }
+        warm: "Warm",
+      },
     },
     clothing: {
-      hat: 'Hut',
-      jacket: 'Jacke',
-      gloves: 'Handschuhe',
-      scarf: 'Schal',
-      tshirt: 'T-Shirt',
-      socks: 'Socken',
-      shirt: 'Hemd',
-      pants: 'Hose',
-      shoes: 'Schuhe',
-      sweater: 'Pullover',
-      umbrella: 'Regenschirm',
-      sunglasses: 'Sonnenbrille',
-      shorts: 'Kurze Hose',
-      optional: 'Optional',
-      essential: 'Erforderlich',
-      recommended: 'Empfohlen'
+      hat: "Hut",
+      jacket: "Jacke",
+      gloves: "Handschuhe",
+      scarf: "Schal",
+      tshirt: "T-Shirt",
+      socks: "Socken",
+      shirt: "Hemd",
+      pants: "Hose",
+      shoes: "Schuhe",
+      sweater: "Pullover",
+      umbrella: "Regenschirm",
+      sunglasses: "Sonnenbrille",
+      shorts: "Kurze Hose",
+      optional: "Optional",
+      essential: "Erforderlich",
+      recommended: "Empfohlen",
     },
     clothingDesc: {
-      shirt: [
-        "Hemd mit langen Ärmeln",
-        "Hemd aus technischem Stoff"
-      ],
+      shirt: ["Hemd mit langen Ärmeln", "Hemd aus technischem Stoff"],
       tshirt: [
         "T-Shirt aus weichem Baumwollstoff",
         "T-Shirt mit Feuchtigkeitsmanagement",
-        "T-Shirt aus leichtem Stoff"
+        "T-Shirt aus leichtem Stoff",
       ],
-      pants: [
-        "Jeans mit regulärer Passform",
-        "Leichte atmungsaktive Hose"
-      ],
+      pants: ["Jeans mit regulärer Passform", "Leichte atmungsaktive Hose"],
       shoes: [
         "Wasserdichte Schuhe",
-        "Leichte Schuhe mit guter Atmungsaktivität"
+        "Leichte Schuhe mit guter Atmungsaktivität",
       ],
       jacket: [
         "Wasserdichte Jacke",
         "Leichte Jacke mit Regenschutz",
-        "Warme Jacke mit Fleece-Futter"
+        "Warme Jacke mit Fleece-Futter",
       ],
       sweater: [
         "Pullover aus Merino-Wolle",
         "Sweatshirt mit Kapuze",
-        "Leichter Pullover aus feinem Stoff"
+        "Leichter Pullover aus feinem Stoff",
       ],
       scarf: [
         "Schal aus weicher Wolle",
         "Multifunktionsschal",
-        "Leichter Schal mit Windschutz"
+        "Leichter Schal mit Windschutz",
       ],
       gloves: [
         "Handschuhe mit Touchscreen-Funktion",
         "Warme Handschuhe aus Wolle",
-        "Handschuhe mit Windschutz"
+        "Handschuhe mit Windschutz",
       ],
       hat: [
         "Hut aus Wolle mit Fleece-Futter",
         "Leichte Mütze mit UV-Schutz",
-        "Stilvoller Bucket Hat"
+        "Stilvoller Bucket Hat",
       ],
       socks: [
         "Sportsocken mit Feuchtigkeitsmanagement",
         "Warme Socken aus Merinowolle",
-        "Bequeme Socken aus Baumwollmischung"
+        "Bequeme Socken aus Baumwollmischung",
       ],
       umbrella: [
         "Kompakter automatischer Regenschirm",
         "Windfester Reiseschirm",
-        "Großer robuster Regenschirm"
+        "Großer robuster Regenschirm",
       ],
       sunglasses: [
         "Sonnenbrille mit UV400-Schutz",
         "Polarisierte Sportbrille",
-        "Klassische Aviator-Sonnenbrille"
+        "Klassische Aviator-Sonnenbrille",
       ],
       shorts: [
         "Schnelltrocknende Sportshorts",
         "Bequeme Baumwollshorts",
-        "Leichte Cargo-Shorts"
-      ]
+        "Leichte Cargo-Shorts",
+      ],
     },
     priority: {
-      high: 'Erforderlich',
-      medium: 'Empfohlen',
-      low: 'Optional'
+      high: "Erforderlich",
+      medium: "Empfohlen",
+      low: "Optional",
     },
     ModelImage: {
       findingOutfit: "Suche das perfekte Outfit...",
@@ -1056,12 +1041,12 @@ export const translations = {
       providedBy: "Künstlich generiert",
       providedByPexels: "Bereitgestellt von Pexels",
       providedByPixabay: "Bereitgestellt von Pixabay",
-      defaultImage: "KI-Modell"
+      defaultImage: "KI-Modell",
     },
     credits: {
       photoBy: "Foto von",
-      providedBy: "Bereitgestellt von Pixabay"
-    }
+      providedBy: "Bereitgestellt von Pixabay",
+    },
   },
   it: {
     app: {
@@ -1076,7 +1061,7 @@ export const translations = {
       temperaturePreferences: {
         COLD_RESISTANT: "Resistente al freddo",
         NORMAL: "Normale",
-        COLD_SENSITIVE: "Sensibile al freddo"
+        COLD_SENSITIVE: "Sensibile al freddo",
       },
       whatToWear: "Cosa dovrei indossare per",
       languages: {
@@ -1085,15 +1070,15 @@ export const translations = {
         es: "Español",
         de: "Deutsch",
         it: "Italiano",
-        ar: "العربية"
+        ar: "العربية",
       },
-      outfitSuggestion: 'Suggerimento Outfit',
+      outfitSuggestion: "Suggerimento Outfit",
       createdBy: "Creato da",
-      allRightsReserved: "Tutti i diritti riservati"
+      allRightsReserved: "Tutti i diritti riservati",
     },
     location: {
       search: "Inserisci località...",
-      detecting: "Rilevamento posizione..."
+      detecting: "Rilevamento posizione...",
     },
     weather: {
       lastUpdated: "Ultimo aggiornamento",
@@ -1123,7 +1108,7 @@ export const translations = {
         rainy: "Piovoso",
         windy: "Ventoso",
         veryWindy: "Molto ventoso",
-        humid: "Umido"
+        humid: "Umido",
       },
       descriptions: {
         clearsky: "Cielo sereno",
@@ -1146,7 +1131,8 @@ export const translations = {
         warmHat: "Cappello caldo per clima freddo",
         sunHat: "Cappello leggero con protezione UV per clima soleggiato",
         generalHat: "Cappello basic comodo",
-        heavyCoat: "Cappotto invernale spesso isolato per temperature sotto zero",
+        heavyCoat:
+          "Cappotto invernale spesso isolato per temperature sotto zero",
         warmJacket: "Giacca calda imbottita per clima freddo",
         lightJacket: "Giacca leggera per temperature miti",
         rainJacket: "Giacca impermeabile per la pioggia",
@@ -1172,7 +1158,8 @@ export const translations = {
         regularShoes: "Scarpe comode per tutti i giorni",
         rainUmbrella: "Ombrello robusto per protezione dalla pioggia",
         optionalUmbrella: "Ombrello, opzionale per possibile pioggia",
-        sunSunglasses: "Occhiali da sole con protezione UV per clima soleggiato",
+        sunSunglasses:
+          "Occhiali da sole con protezione UV per clima soleggiato",
         optionalSunglasses: "Occhiali da sole, opzionali per comfort",
         warmScarf: "Sciarpa spessa e calda per temperature sotto zero",
         coldScarf: "Sciarpa accogliente per clima freddo",
@@ -1181,8 +1168,8 @@ export const translations = {
         warmGloves: "Guanti isolati per temperature sotto zero",
         coldGloves: "Guanti caldi per clima freddo",
         windGloves: "Guanti leggeri per protezione dal vento",
-        optionalGloves: "Guanti leggeri, opzionali per comfort"
-      }
+        optionalGloves: "Guanti leggeri, opzionali per comfort",
+      },
     },
     date: {
       today: "Oggi",
@@ -1195,8 +1182,8 @@ export const translations = {
           wed: "Mer",
           thu: "Gio",
           fri: "Ven",
-          sat: "Sab"
-        }
+          sat: "Sab",
+        },
       },
       months: {
         short: {
@@ -1211,107 +1198,101 @@ export const translations = {
           sep: "Set",
           oct: "Ott",
           nov: "Nov",
-          dec: "Dic"
-        }
-      }
+          dec: "Dic",
+        },
+      },
     },
     temperature: {
       units: {
         celsius: "°C",
-        fahrenheit: "°F"
+        fahrenheit: "°F",
       },
       preferences: {
         cold: "Freddo",
         normal: "Confortevole",
-        warm: "Caldo"
-      }
+        warm: "Caldo",
+      },
     },
     clothing: {
-      hat: 'Cappello',
-      jacket: 'Giacca',
-      gloves: 'Guanti',
-      scarf: 'Sciarpa',
-      tshirt: 'T-Shirt',
-      socks: 'Calze',
-      shirt: 'Camicia',
-      pants: 'Pantaloni',
-      shoes: 'Scarpe',
-      sweater: 'Maglione',
-      umbrella: 'Ombrello',
-      sunglasses: 'Occhiali da sole',
-      shorts: 'Pantaloncini',
-      optional: 'Opzionale',
-      essential: 'Essenziale',
-      recommended: 'Raccomandato'
+      hat: "Cappello",
+      jacket: "Giacca",
+      gloves: "Guanti",
+      scarf: "Sciarpa",
+      tshirt: "T-Shirt",
+      socks: "Calze",
+      shirt: "Camicia",
+      pants: "Pantaloni",
+      shoes: "Scarpe",
+      sweater: "Maglione",
+      umbrella: "Ombrello",
+      sunglasses: "Occhiali da sole",
+      shorts: "Pantaloncini",
+      optional: "Opzionale",
+      essential: "Essenziale",
+      recommended: "Raccomandato",
     },
     clothingDesc: {
       shirt: [
         "Camicia casual a maniche lunghe",
-        "Camicia elegante in tessuto tecnico"
+        "Camicia elegante in tessuto tecnico",
       ],
       tshirt: [
         "T-shirt in cotone morbido",
         "T-shirt tecnico anti-sudore",
-        "T-shirt leggero e comodo"
+        "T-shirt leggero e comodo",
       ],
-      pants: [
-        "Pantaloni di jeans comodi",
-        "Pantaloni leggeri e traspiranti"
-      ],
-      shoes: [
-        "Scarpe impermeabili e robuste",
-        "Scarpe leggere e traspiranti"
-      ],
+      pants: ["Pantaloni di jeans comodi", "Pantaloni leggeri e traspiranti"],
+      shoes: ["Scarpe impermeabili e robuste", "Scarpe leggere e traspiranti"],
       jacket: [
         "Giacca impermeabile",
         "Giacca leggera anti-pioggia",
-        "Giacca calda con fodera in pile"
+        "Giacca calda con fodera in pile",
       ],
       sweater: [
         "Maglione in lana merino traspirante",
         "Felpa con cappuccio foderata",
-        "Maglione leggero in tessuto fine"
+        "Maglione leggero in tessuto fine",
       ],
       scarf: [
         "Sciarpa in lana morbida e calda",
         "Sciarpa multifunzione",
-        "Sciarpa leggera anti-vento"
+        "Sciarpa leggera anti-vento",
       ],
       gloves: [
         "Guanti tattili e impermeabili",
         "Guanti caldi in lana",
-        "Guanti tecnici anti-vento"
+        "Guanti tecnici anti-vento",
       ],
       hat: [
         "Cappello in lana con fodera in pile",
         "Berretto leggero anti-UV",
-        "Cappello bucket alla moda"
+        "Cappello bucket alla moda",
       ],
       socks: [
         "Calzini sportivi anti-sudore",
         "Calzini caldi in lana merino",
-        "Calzini comodi in cotone"
+        "Calzini comodi in cotone",
       ],
       umbrella: [
         "Ombrello compatto automatico",
         "Ombrello da viaggio anti-vento",
-        "Ombrello grande e robusto"
+        "Ombrello grande e robusto",
       ],
       sunglasses: [
         "Occhiali da sole protezione UV400",
         "Occhiali sportivi polarizzati",
-        "Occhiali aviator classici"
+        "Occhiali aviator classici",
       ],
       shorts: [
         "Pantaloncini sportivi ad asciugatura rapida",
         "Pantaloncini comodi in cotone",
-        "Pantaloncini cargo leggeri"
-      ]
+        "Pantaloncini cargo leggeri",
+      ],
     },
     priority: {
-      high: 'Da indossare',
-      medium: 'Raccomandato',
-      low: 'Opzionale'
+      high: "Da indossare",
+      medium: "Raccomandato",
+      low: "Opzionale",
     },
     ModelImage: {
       findingOutfit: "Ricerca dell'outfit perfetto...",
@@ -1322,12 +1303,12 @@ export const translations = {
       providedBy: "Generato da IA",
       providedByPexels: "Fornito da Pexels",
       providedByPixabay: "Fornito da Pixabay",
-      defaultImage: "Modello IA"
+      defaultImage: "Modello IA",
     },
     credits: {
       photoBy: "Foto di",
-      providedBy: "Fornito da Pixabay"
-    }
+      providedBy: "Fornito da Pixabay",
+    },
   },
   ar: {
     app: {
@@ -1342,7 +1323,7 @@ export const translations = {
       temperaturePreferences: {
         COLD_RESISTANT: "مقاوم للبرد",
         NORMAL: "عادي",
-        COLD_SENSITIVE: "حساس للبرد"
+        COLD_SENSITIVE: "حساس للبرد",
       },
       whatToWear: "ماذا يجب أن أرتدي في",
       languages: {
@@ -1351,15 +1332,15 @@ export const translations = {
         es: "Español",
         de: "Deutsch",
         it: "Italiano",
-        ar: "العربية"
+        ar: "العربية",
       },
-      outfitSuggestion: 'اقتراح زي',
+      outfitSuggestion: "اقتراح زي",
       createdBy: "تم إنشاؤه بواسطة",
-      allRightsReserved: "جميع الحقوق محفوظة"
+      allRightsReserved: "جميع الحقوق محفوظة",
     },
     location: {
       search: "أدخل الموقع...",
-      detecting: "جاري تحديد الموقع..."
+      detecting: "جاري تحديد الموقع...",
     },
     weather: {
       lastUpdated: "آخر تحديث",
@@ -1389,7 +1370,7 @@ export const translations = {
         rainy: "ممطر",
         windy: "عاصف",
         veryWindy: "شديد العصف",
-        humid: "رطب"
+        humid: "رطب",
       },
       descriptions: {
         clearsky: "سماء صافية",
@@ -1438,7 +1419,8 @@ export const translations = {
         regularShoes: "أحذية مريحة لليوم العادي",
         rainUmbrella: "مظلة متينة للحماية من المطر",
         optionalUmbrella: "مظلة، اختيارية للمطر المحتمل",
-        sunSunglasses: "نظارات شمسية بحماية من الأشعة فوق البنفسجية للطقس المشمس",
+        sunSunglasses:
+          "نظارات شمسية بحماية من الأشعة فوق البنفسجية للطقس المشمس",
         optionalSunglasses: "نظارات شمسية، اختيارية للراحة",
         warmScarf: "وشاح سميك ودافئ للحرارة تحت الصفر",
         coldScarf: "وشاح مريح للطقس البارد",
@@ -1447,8 +1429,8 @@ export const translations = {
         warmGloves: "قفازات معزولة للحرارة تحت الصفر",
         coldGloves: "قفازات دافئة للطقس البارد",
         windGloves: "قفازات خفيفة للحماية من الرياح",
-        optionalGloves: "قفازات خفيفة، اختيارية للراحة"
-      }
+        optionalGloves: "قفازات خفيفة، اختيارية للراحة",
+      },
     },
     date: {
       today: "اليوم",
@@ -1461,8 +1443,8 @@ export const translations = {
           wed: "أرب",
           thu: "خمي",
           fri: "جمع",
-          sat: "سبت"
-        }
+          sat: "سبت",
+        },
       },
       months: {
         short: {
@@ -1477,107 +1459,94 @@ export const translations = {
           sep: "سبت",
           oct: "أكت",
           nov: "نوف",
-          dec: "ديس"
-        }
-      }
+          dec: "ديس",
+        },
+      },
     },
     temperature: {
       units: {
         celsius: "°م",
-        fahrenheit: "°ف"
+        fahrenheit: "°ف",
       },
       preferences: {
         cold: "بارد",
         normal: "مريح",
-        warm: "دافئ"
-      }
+        warm: "دافئ",
+      },
     },
     clothing: {
-      hat: 'قبعة',
-      jacket: 'جاكيت',
-      gloves: 'قفازات',
-      scarf: 'وشاح',
-      tshirt: 'تي شيرت',
-      socks: 'جوارب',
-      shirt: 'قميص',
-      pants: 'بنطلون',
-      shoes: 'حذاء',
-      sweater: 'سترة',
-      umbrella: 'مظلة',
-      sunglasses: 'نظارات شمسية',
-      shorts: 'شورت',
-      optional: 'اختياري',
-      essential: 'ضروري',
-      recommended: 'موصى به'
+      hat: "قبعة",
+      jacket: "جاكيت",
+      gloves: "قفازات",
+      scarf: "وشاح",
+      tshirt: "تي شيرت",
+      socks: "جوارب",
+      shirt: "قميص",
+      pants: "بنطلون",
+      shoes: "حذاء",
+      sweater: "سترة",
+      umbrella: "مظلة",
+      sunglasses: "نظارات شمسية",
+      shorts: "شورت",
+      optional: "اختياري",
+      essential: "ضروري",
+      recommended: "موصى به",
     },
     clothingDesc: {
-      shirt: [
-        "قميص كاجوال بأكمام طويلة",
-        "قميص أنيق من القماش التقني"
-      ],
+      shirt: ["قميص كاجوال بأكمام طويلة", "قميص أنيق من القماش التقني"],
       tshirt: [
         "تي شيرت أساسي من القطن",
         "تي شيرت تقني مضاد للعرق",
-        "تي شيرت خفيف ومريح"
+        "تي شيرت خفيف ومريح",
       ],
-      pants: [
-        "بنطلون جينز مريح",
-        "بنطلون خفيف وقابل للتنفس"
-      ],
-      shoes: [
-        "حذاء مقاوم للماء",
-        "حذاء خفيف ومريح"
-      ],
+      pants: ["بنطلون جينز مريح", "بنطلون خفيف وقابل للتنفس"],
+      shoes: ["حذاء مقاوم للماء", "حذاء خفيف ومريح"],
       jacket: [
         "جاكيت مقاوم للماء",
         "جاكيت خفيف مضاد للمطر",
-        "جاكيت دافئ مع بطانة من الفرو"
+        "جاكيت دافئ مع بطانة من الفرو",
       ],
       sweater: [
         "سترة من صوف ميرينو",
         "سويت شيرت مع غطاء رأس",
-        "سترة خفيفة من القماش الناعم"
+        "سترة خفيفة من القماش الناعم",
       ],
       scarf: [
         "وشاح من الصوف الناعم والدافئ",
         "وشاح متعدد الاستخدامات",
-        "وشاح خفيف مضاد للرياح"
+        "وشاح خفيف مضاد للرياح",
       ],
       gloves: [
         "قفازات تكتيلية ومقاومة للماء",
         "قفازات دافئة من الصوف",
-        "قفازات تقنية مضادة للرياح"
+        "قفازات تقنية مضادة للرياح",
       ],
       hat: [
         "قبعة من الصوف مع بطانة من الفرو",
         "قبعة خفيفة مضادة لأشعة الشمس",
-        "قبعة عصرية"
+        "قبعة عصرية",
       ],
       socks: [
         "جوارب رياضية مضادة للعرق",
         "جوارب دافئة من صوف المارينو",
-        "جوارب مريحة من القطن"
+        "جوارب مريحة من القطن",
       ],
       umbrella: [
         "مظلة مدمجة أوتوماتيكية",
         "مظلة سفر مضادة للرياح",
-        "مظلة كبيرة ومتينة"
+        "مظلة كبيرة ومتينة",
       ],
       sunglasses: [
         "نظارات شمسية بحماية UV400",
         "نظارات رياضية مستقطبة",
-        "نظارات طيار كلاسيكية"
+        "نظارات طيار كلاسيكية",
       ],
-      shorts: [
-        "شورت رياضي سريع الجفاف",
-        "شورت قطني مريح",
-        "شورت كارجو خفيف"
-      ]
+      shorts: ["شورت رياضي سريع الجفاف", "شورت قطني مريح", "شورت كارجو خفيف"],
     },
     priority: {
-      high: 'يجب ارتداؤه',
-      medium: 'موصى به',
-      low: 'اختياري'
+      high: "يجب ارتداؤه",
+      medium: "موصى به",
+      low: "اختياري",
     },
     ModelImage: {
       findingOutfit: "...جاري البحث عن الملابس المثالية",
@@ -1588,19 +1557,19 @@ export const translations = {
       providedBy: "AI Generated",
       providedByPexels: "مقدم من Pexels",
       providedByPixabay: "مقدم من Pixabay",
-      defaultImage: "AI Model"
+      defaultImage: "AI Model",
     },
     credits: {
       photoBy: "صورة بواسطة",
-      providedBy: "مقدمة من Pixabay"
-    }
-  }
+      providedBy: "مقدمة من Pixabay",
+    },
+  },
 };
 
 export type Language = keyof typeof translations;
 export type TranslationKeys = keyof typeof translations.en;
 
-export const defaultLanguage: Language = 'en';
+export const defaultLanguage: Language = "en";
 
 export function getTranslation(lang: Language = defaultLanguage) {
   return translations[lang] || translations[defaultLanguage];
@@ -1609,6 +1578,6 @@ export function getTranslation(lang: Language = defaultLanguage) {
 // Utility type for type-safe translation keys
 export type TranslationKey = {
   [K in keyof typeof translations.en]: {
-    [P in keyof typeof translations.en[K]]: string;
+    [P in keyof (typeof translations.en)[K]]: string;
   };
 };

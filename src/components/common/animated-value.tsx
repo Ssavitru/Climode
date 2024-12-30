@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { animate, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -9,11 +9,15 @@ interface AnimatedValueProps {
   className?: string;
 }
 
-export function AnimatedValue({ value, unit = '', className = 'tabular-nums' }: AnimatedValueProps) {
+export function AnimatedValue({
+  value,
+  unit = "",
+  className = "tabular-nums",
+}: AnimatedValueProps) {
   const count = useSpring(0, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
   const nodeRef = useRef<HTMLSpanElement>(null);
 
@@ -25,7 +29,7 @@ export function AnimatedValue({ value, unit = '', className = 'tabular-nums' }: 
         if (nodeRef.current) {
           nodeRef.current.textContent = Math.ceil(latest).toString();
         }
-      }
+      },
     });
 
     return () => animation.stop();

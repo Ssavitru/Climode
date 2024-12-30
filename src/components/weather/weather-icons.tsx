@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { WiRaindrop, WiHumidity, WiDaySunny } from "react-icons/wi";
 import { cn } from "@/lib/utils";
@@ -14,26 +14,22 @@ export function RainIcon({ value, className }: WeatherIconProps) {
   return (
     <div className={cn("relative w-12 h-12", className)}>
       {/* Empty drop outline */}
-      <WiRaindrop 
-        className="absolute inset-0 w-full h-full text-white/20 transition-opacity duration-300"
-      />
-      
+      <WiRaindrop className="absolute inset-0 w-full h-full text-white/20 transition-opacity duration-300" />
+
       {/* Filled drop */}
 
-      <div 
-        className="absolute inset-0 w-full h-full overflow-hidden transition-[clip-path] duration-300" 
-        style={{ 
+      <div
+        className="absolute inset-0 w-full h-full overflow-hidden transition-[clip-path] duration-300"
+        style={{
           clipPath: `polygon(
             0 ${100}%, 
             100% ${100}%, 
             100% ${69 - normalizedValue}%, 
             0 ${69 - normalizedValue}%
-          )` 
+          )`,
         }}
       >
-        <WiRaindrop 
-          className="absolute inset-0 w-full h-full text-sky-200"
-        />
+        <WiRaindrop className="absolute inset-0 w-full h-full text-sky-200" />
       </div>
     </div>
   );
@@ -44,7 +40,7 @@ export function HumidityIcon({ value, className }: WeatherIconProps) {
   const color = `rgba(186, 230, 253, ${opacity})`; // Light blue (sky-200) with dynamic opacity
 
   return (
-    <WiHumidity 
+    <WiHumidity
       className={cn("w-8 h-8 transition-colors duration-300", className)}
       style={{ color }}
     />
@@ -58,7 +54,7 @@ export function UVIcon({ value, className }: WeatherIconProps) {
   const color = `rgba(250, 204, 21, ${opacity})`; // Bright yellow with dynamic opacity
 
   return (
-    <WiDaySunny 
+    <WiDaySunny
       className={cn("w-8 h-8 transition-colors duration-300", className)}
       style={{ color }}
     />

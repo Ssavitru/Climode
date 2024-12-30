@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { FaCameraRetro } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import { translations, type Language } from '@/i18n';
+import { FaCameraRetro } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { translations, type Language } from "@/i18n";
 
 interface PhotoCreditsProps {
   photographerName?: string;
   photographerUrl?: string;
   language?: Language;
-  type?: 'model' | 'background';
+  type?: "model" | "background";
 }
 
 export function PhotoCredits({
   photographerName,
   photographerUrl,
-  language = 'en',
-  type = 'model'
+  language = "en",
+  type = "model",
 }: PhotoCreditsProps) {
   const t = translations[language].ModelImage;
   const isDefault = !photographerName;
@@ -24,15 +24,14 @@ export function PhotoCredits({
     <div className="flex items-center justify-center gap-2 text-white/80">
       <FaCameraRetro className="w-4 h-4 flex-shrink-0" />
       <span className="flex-1 text-xs">
-        {t.photoBy} {photographerName} {' '}
-        {isDefault && t.defaultImage} {' '}
-        {'• '}
+        {t.photoBy} {photographerName} {isDefault && t.defaultImage} {"• "}
         {t.providedByPexels}
       </span>
     </div>
   );
 
-  const containerClass = "fixed rounded-tl-xl bottom-0 right-0 z-[100] px-4 py-2 backdrop-blur-sm bg-black/20 hover:bg-black/50 transition-colors";
+  const containerClass =
+    "fixed rounded-tl-xl bottom-0 right-0 z-[100] px-4 py-2 backdrop-blur-sm bg-black/20 hover:bg-black/50 transition-colors";
 
   return (
     <motion.div

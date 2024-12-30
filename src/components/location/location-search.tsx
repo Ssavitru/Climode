@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { useAppTranslation } from '@/hooks/useAppTranslation';
-import { LocationSuggestionItem } from './location-suggestion-item';
-import { Language, Location } from '@/types';
+import { useState, useEffect, useRef } from "react";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
+import { LocationSuggestionItem } from "./location-suggestion-item";
+import { Language, Location } from "@/types";
 
 interface LocationSearchProps {
   onLocationSelect: (location: Location) => void;
@@ -16,13 +16,13 @@ interface LocationSuggestion {
   state?: string;
 }
 
-export function LocationSearch({ 
-  onLocationSelect, 
-  language, 
+export function LocationSearch({
+  onLocationSelect,
+  language,
   defaultLocation,
-  isAutoLocating = false 
+  isAutoLocating = false,
 }: LocationSearchProps) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,9 +46,11 @@ export function LocationSearch({
     const location: Location = {
       name: suggestion.city,
       country: suggestion.country,
-      state: suggestion.state
+      state: suggestion.state,
     };
-    setInputValue(`${suggestion.city}, ${suggestion.country}${suggestion.state ? `, ${suggestion.state}` : ''}`);
+    setInputValue(
+      `${suggestion.city}, ${suggestion.country}${suggestion.state ? `, ${suggestion.state}` : ""}`,
+    );
     setIsOpen(false);
     onLocationSelect(location);
   };
@@ -57,24 +59,24 @@ export function LocationSearch({
     if (!isOpen || suggestions.length === 0) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
-        setSelectedIndex(prev => 
-          prev < suggestions.length - 1 ? prev + 1 : prev
+        setSelectedIndex((prev) =>
+          prev < suggestions.length - 1 ? prev + 1 : prev,
         );
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedIndex(prev => prev > 0 ? prev - 1 : 0);
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
         break;
-      case 'Enter':
+      case "Enter":
         e.preventDefault();
         if (selectedIndex >= 0) {
           handleLocationSelect(suggestions[selectedIndex]);
-          () => handleLocationSelect(suggestions[selectedIndex])
+          () => handleLocationSelect(suggestions[selectedIndex]);
         }
         break;
-      case 'Escape':
+      case "Escape":
         setIsOpen(false);
         setSelectedIndex(-1);
         break;
@@ -88,8 +90,10 @@ export function LocationSearch({
 
     if (value.length >= 3) {
       try {
-        const response = await fetch(`/api/geocoding?query=${encodeURIComponent(value)}&lang=${language}`);
-        if (!response.ok) throw new Error('Failed to fetch suggestions');
+        const response = await fetch(
+          `/api/geocoding?query=${encodeURIComponent(value)}&lang=${language}`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch suggestions");
         const data = await response.json();
         setSuggestions(data);
       } catch (error) {
@@ -101,29 +105,33 @@ export function LocationSearch({
   };
 
   const handleCurrentLocation = async () => {
-    if (!('geolocation' in navigator) || isAutoLocating) return;
+    if (!("geolocation" in navigator) || isAutoLocating) return;
 
     setIsLoading(true);
     try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          timeout: 5000,
-          maximumAge: 0
-        });
-      });
+      const position = await new Promise<GeolocationPosition>(
+        (resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            timeout: 5000,
+            maximumAge: 0,
+          });
+        },
+      );
 
       const { latitude, longitude } = position.coords;
-      const response = await fetch(`/api/reverse-geocoding?lat=${latitude}&lon=${longitude}`);
-      
+      const response = await fetch(
+        `/api/reverse-geocoding?lat=${latitude}&lon=${longitude}`,
+      );
+
       if (!response.ok) {
-        throw new Error('Failed to get location');
+        throw new Error("Failed to get location");
       }
 
       const data = await response.json();
       handleLocationSelect({
         city: data.name,
         country: data.country,
-        state: data.state
+        state: data.state,
       });
     } catch (error) {
       // Handle error silently
@@ -135,13 +143,16 @@ export function LocationSearch({
   // Handle click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -155,10 +166,14 @@ export function LocationSearch({
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
               onFocus={() => setIsOpen(true)}
-              placeholder={isAutoLocating ? t('location.detecting') : t('location.search')}
+              placeholder={
+                isAutoLocating ? t("location.detecting") : t("location.search")
+              }
               className={`w-full px-4 py-2 bg-white/10 text-white rounded-2xl placeholder:text-white/50 outline-none ${
-                suggestions.length > 0 && isOpen ? 'focus:outline-none' : 'focus:outline-none focus:ring-2 focus:ring-white/20'
-              } transition-all ${isAutoLocating ? 'opacity-50' : ''}`}
+                suggestions.length > 0 && isOpen
+                  ? "focus:outline-none"
+                  : "focus:outline-none focus:ring-2 focus:ring-white/20"
+              } transition-all ${isAutoLocating ? "opacity-50" : ""}`}
               disabled={isAutoLocating}
             />
           </div>
@@ -185,14 +200,44 @@ export function LocationSearch({
         disabled={isLoading || isAutoLocating}
       >
         {isLoading || isAutoLocating ? (
-          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          <svg
+            className="animate-spin h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
           </svg>
         ) : (
-          <svg className="h-5 w-5 fill-none stroke-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          <svg
+            className="h-5 w-5 fill-none stroke-current"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
           </svg>
         )}
       </button>

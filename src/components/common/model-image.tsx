@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { getModelImage } from '@/lib/clothing-recommendations';
-import { translations, type Language } from '@/i18n';
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { PhotoCredits } from '@/components/credits';
+import { useState, useEffect } from "react";
+import { Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { getModelImage } from "@/lib/clothing-recommendations";
+import { translations, type Language } from "@/i18n";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import { PhotoCredits } from "@/components/credits";
 
 interface ModelImageProps {
   temperature: number;
@@ -21,9 +21,11 @@ export function ModelImage({
   weatherName,
   currentIndex = 0,
   onIndexChange,
-  language = 'en'
+  language = "en",
 }: ModelImageProps) {
-  const [outfits, setOutfits] = useState<{ url: string; alt: string; photographer?: string; }[]>([]);
+  const [outfits, setOutfits] = useState<
+    { url: string; alt: string; photographer?: string }[]
+  >([]);
   const [imageLoading, setImageLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const t = translations[language].ModelImage;
@@ -39,7 +41,7 @@ export function ModelImage({
           setError(t.noImagesAvailable);
         }
       } catch (error) {
-        console.error('Error loading model images:', error);
+        console.error("Error loading model images:", error);
         setError(t.failedToLoad);
       }
     };
@@ -76,7 +78,7 @@ export function ModelImage({
         <div className="flex flex-col items-center justify-center gap-2 text-white/60">
           <span className="text-lg">😔</span>
           <p>{error || t.failedToLoad}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="mt-2 px-4 py-2 text-sm bg-white/10 hover:bg-white/20 rounded-xl transition-colors"
           >
@@ -114,13 +116,13 @@ export function ModelImage({
               src={currentOutfit.url}
               alt={currentOutfit.alt}
               className={`w-full h-full object-cover transition-opacity duration-300 ${
-                imageLoading ? 'opacity-0' : 'opacity-100'
+                imageLoading ? "opacity-0" : "opacity-100"
               }`}
-              style={{ objectPosition: '50% 50%' }}
+              style={{ objectPosition: "50% 50%" }}
               onLoad={handleImageLoad}
               onError={handleImageError}
             />
-          
+
             {imageLoading && (
               <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-white/10 backdrop-blur-sm">
                 <Loader2 className="w-8 h-8 text-white animate-spin" />
@@ -129,11 +131,10 @@ export function ModelImage({
             )}
 
             {/* Photo Credits */}
-            <PhotoCredits 
+            <PhotoCredits
               photographerName={currentOutfit.photographer}
               language={language}
               photographerUrl={currentOutfit.photographerUrl}
-              
             />
           </motion.div>
         )}

@@ -4,28 +4,28 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'images.pexels.com',
+        protocol: "https",
+        hostname: "images.pexels.com",
       },
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
       {
-        protocol: 'https',
-        hostname: 'maps.googleapis.com',
-      }
+        protocol: "https",
+        hostname: "maps.googleapis.com",
+      },
     ],
   },
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': './src',
+      "@": "./src",
     };
     return config;
   },
-}
+};
 
 //
 
-module.exports = nextConfig
+module.exports = nextConfig;

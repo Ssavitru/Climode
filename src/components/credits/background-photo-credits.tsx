@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { FaCameraRetro } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import { translations, type Language } from '@/i18n';
+import { FaCameraRetro } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { translations, type Language } from "@/i18n";
 
 interface BackgroundPhotoCreditsProps {
   photographerName?: string;
@@ -13,7 +13,7 @@ interface BackgroundPhotoCreditsProps {
 export function BackgroundPhotoCredits({
   photographerName,
   photographerUrl,
-  language = 'en',
+  language = "en",
 }: BackgroundPhotoCreditsProps) {
   const t = translations[language].ModelImage;
   const isDefault = !photographerName;
@@ -22,9 +22,7 @@ export function BackgroundPhotoCredits({
     <div className="flex items-center justify-center gap-2 text-white/80">
       <FaCameraRetro className="w-4 h-4 flex-shrink-0" />
       <span className="flex-1 text-xs">
-        {t.photoBy} {photographerName} {' '}
-        {isDefault && t.defaultImage} {' '}
-        {'• '}
+        {t.photoBy} {photographerName} {isDefault && t.defaultImage} {"• "}
         {t.providedByPixabay}
       </span>
     </div>

@@ -1,16 +1,22 @@
-'use client';
+"use client";
 
-import { translations } from '@/i18n';
-import { ClothingItem } from '@/lib/clothing-recommendations';
-import { IconType } from 'react-icons';
-import { 
-  GiWinterHat, GiMonclerJacket, GiGloves,
-  GiTShirt, GiSocks, GiPoloShirt, GiTrousers, 
-  GiRunningShoe, GiHoodie, 
+import { translations } from "@/i18n";
+import { ClothingItem } from "@/lib/clothing-recommendations";
+import { IconType } from "react-icons";
+import {
+  GiWinterHat,
+  GiMonclerJacket,
+  GiGloves,
+  GiTShirt,
+  GiSocks,
+  GiPoloShirt,
+  GiTrousers,
+  GiRunningShoe,
+  GiHoodie,
   GiSunglasses,
-  GiUmbrella
-} from 'react-icons/gi';
-import { useMemo } from 'react';
+  GiUmbrella,
+} from "react-icons/gi";
+import { useMemo } from "react";
 
 interface OutfitListProps {
   items: ClothingItem[];
@@ -18,42 +24,45 @@ interface OutfitListProps {
 }
 
 const itemIcons: Record<string, IconType> = {
-  'hat': GiWinterHat,
-  'jacket': GiMonclerJacket,
-  'gloves': GiGloves,
-  'scarf': GiWinterHat,
-  'tshirt': GiTShirt,
-  'socks': GiSocks,
-  'shirt': GiPoloShirt,
-  'pants': GiTrousers,
-  'shoes': GiRunningShoe,
-  'sweater': GiHoodie,
-  'shorts': GiTrousers,
-  'sunglasses': GiSunglasses,
-  'umbrella': GiUmbrella,
+  hat: GiWinterHat,
+  jacket: GiMonclerJacket,
+  gloves: GiGloves,
+  scarf: GiWinterHat,
+  tshirt: GiTShirt,
+  socks: GiSocks,
+  shirt: GiPoloShirt,
+  pants: GiTrousers,
+  shoes: GiRunningShoe,
+  sweater: GiHoodie,
+  shorts: GiTrousers,
+  sunglasses: GiSunglasses,
+  umbrella: GiUmbrella,
 };
 
 const priorityDots = {
-  high: '●',
-  medium: '●',
-  low: '●',
+  high: "●",
+  medium: "●",
+  low: "●",
 };
 
 const statusColors = {
-  essential: 'text-blue-500/80',
-  recommended: 'text-teal-500/80',
-  optional: 'text-green-500/80',
+  essential: "text-blue-500/80",
+  recommended: "text-teal-500/80",
+  optional: "text-green-500/80",
 };
 
-const getItemStatus = (priority: 'high' | 'medium' | 'low', isOptional: boolean) => {
-  if (priority === 'high') return 'essential';
-  if (priority === 'medium') return 'recommended';
-  return 'optional';
+const getItemStatus = (
+  priority: "high" | "medium" | "low",
+  isOptional: boolean,
+) => {
+  if (priority === "high") return "essential";
+  if (priority === "medium") return "recommended";
+  return "optional";
 };
 
 export function OutfitList({ items, language }: OutfitListProps) {
   const t = (key: string) => {
-    const parts = key.split('.');
+    const parts = key.split(".");
     let current: any = translations[language];
     for (const part of parts) {
       if (!current[part]) return key;
@@ -79,9 +88,9 @@ export function OutfitList({ items, language }: OutfitListProps) {
         {sortedItems.map((item, index) => {
           const Icon = itemIcons[item.type.toLowerCase()] || GiTShirt;
           const status = getItemStatus(item.priority, item.isOptional);
-          
+
           return (
-            <div 
+            <div
               key={index}
               className=" flex-col md:flex-row flex items-start md:items-center gap-4 md:p-4 rounded-lg transition-colors"
             >
@@ -96,11 +105,8 @@ export function OutfitList({ items, language }: OutfitListProps) {
                   <h5 className="font-medium text-white">
                     {t(`clothing.${item.type.toLowerCase()}`)}
                   </h5>
-                  
                 </div>
-                <p className="text-sm text-white/60">
-                  {item.description}
-                </p>
+                <p className="text-sm text-white/60">{item.description}</p>
               </div>
 
               {/* Status label */}

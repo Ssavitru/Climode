@@ -2,9 +2,9 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './src/pages/**/*.{ts,tsx}',
-    './src/components/**/*.{ts,tsx}',
-    './src/app/**/*.{ts,tsx}',
+    "./src/pages/**/*.{ts,tsx}",
+    "./src/components/**/*.{ts,tsx}",
+    "./src/app/**/*.{ts,tsx}",
   ],
   theme: {
     container: {
@@ -16,8 +16,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        display: ['var(--font-newsreader)'],
-        sans: ['var(--font-geologica)'],
+        display: ["var(--font-newsreader)"],
+        sans: ["var(--font-geologica)"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -76,4 +76,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

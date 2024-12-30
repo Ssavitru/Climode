@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
 interface PhotoCredit {
   photographerName: string;
@@ -13,9 +13,15 @@ interface PhotoCreditsContextType {
   setPhotoCredit: (credit: PhotoCredit | null) => void;
 }
 
-const PhotoCreditsContext = createContext<PhotoCreditsContextType | undefined>(undefined);
+const PhotoCreditsContext = createContext<PhotoCreditsContextType | undefined>(
+  undefined,
+);
 
-export function PhotoCreditsProvider({ children }: { children: React.ReactNode }) {
+export function PhotoCreditsProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [photoCredit, setPhotoCredit] = useState<PhotoCredit | null>(null);
 
   return (
@@ -28,7 +34,9 @@ export function PhotoCreditsProvider({ children }: { children: React.ReactNode }
 export function usePhotoCredits() {
   const context = useContext(PhotoCreditsContext);
   if (context === undefined) {
-    throw new Error('usePhotoCredits must be used within a PhotoCreditsProvider');
+    throw new Error(
+      "usePhotoCredits must be used within a PhotoCreditsProvider",
+    );
   }
   return context;
 }

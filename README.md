@@ -5,10 +5,11 @@
   
   <p>Your personal weather-based clothing advisor</p>
 
-  [![PWA Ready](https://img.shields.io/badge/PWA-Ready-blue.svg)](https://whatowear.vercel.app)
-  [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-  [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PWA Ready](https://img.shields.io/badge/PWA-Ready-blue.svg)](https://whatowear.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 </div>
 
 ## 🌟 Features
@@ -27,6 +28,7 @@
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or yarn
 - OpenWeather API key
@@ -35,12 +37,14 @@
 ### Installation
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/yourusername/whatToWear.git
 cd whatToWear
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 # or
@@ -48,7 +52,8 @@ yarn install
 ```
 
 3. Set up environment variables
-Create a `.env.local` file with:
+   Create a `.env.local` file with:
+
 ```env
 OPENWEATHER_API_KEY=your_openweather_api_key
 PEXELS_API_KEY=your_pexels_api_key
@@ -56,6 +61,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 4. Start the development server
+
 ```bash
 npm run dev
 # or
@@ -69,7 +75,7 @@ yarn dev
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 - **State Management**: React Hooks + Context
-- **APIs**: 
+- **APIs**:
   - OpenWeather (weather data)
   - Pexels (city images)
 - **PWA Features**: Workbox + Next PWA
@@ -77,18 +83,21 @@ yarn dev
 ## 🌈 Features in Detail
 
 ### Weather Data
+
 - Real-time weather conditions
 - 5-day forecast
 - Temperature, humidity, wind speed, UV index
 - Location-based suggestions
 
 ### Clothing Recommendations
+
 - Temperature-appropriate clothing suggestions
 - Layering recommendations
 - Accessory suggestions (umbrella, sunglasses, etc.)
 - Customizable based on personal temperature preferences
 
 ### User Experience
+
 - Intuitive interface
 - Smooth animations
 - Offline support
@@ -98,6 +107,7 @@ yarn dev
 ## 🌍 Internationalization
 
 Currently supports:
+
 - 🇺🇸 English
 - 🇫🇷 French
 - 🇪🇸 Spanish

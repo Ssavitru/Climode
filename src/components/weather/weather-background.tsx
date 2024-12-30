@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
-import { Language } from '@/types';
-import { useAppTranslation } from '@/hooks/useAppTranslation';
-import { BackgroundPhotoCredits } from '@/components/credits';
-import { CrossfadeImage } from '@/components/ui/crossfade-image';
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { Language } from "@/types";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
+import { BackgroundPhotoCredits } from "@/components/credits";
+import { CrossfadeImage } from "@/components/ui/crossfade-image";
 
 interface WeatherBackgroundProps {
   city: string;
@@ -25,31 +25,33 @@ interface ImageData {
 export function WeatherBackground({
   city,
   className,
-  language = 'en'
+  language = "en",
 }: WeatherBackgroundProps) {
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [photographer, setPhotographer] = useState({ name: '', url: '' });
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [photographer, setPhotographer] = useState({ name: "", url: "" });
   const { t } = useAppTranslation(language);
 
   useEffect(() => {
     if (!city) return;
-    
+
     async function fetchImage() {
       try {
-        const cityName = city.split(',')[0];
-        console.log('Fetching image for:', cityName, 'in language:', language);
-        
-        const response = await fetch(`/api/cityImage?city=${encodeURIComponent(cityName)}&lang=${language}`);
-        if (!response.ok) throw new Error('Failed to fetch image');
-        
+        const cityName = city.split(",")[0];
+        console.log("Fetching image for:", cityName, "in language:", language);
+
+        const response = await fetch(
+          `/api/cityImage?city=${encodeURIComponent(cityName)}&lang=${language}`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch image");
+
         const data: ImageData = await response.json();
         setImageUrl(data.url);
         setPhotographer({
           name: data.credit.name,
-          url: data.credit.url
+          url: data.credit.url,
         });
       } catch (error) {
-        console.error('Error fetching image:', error);
+        console.error("Error fetching image:", error);
       }
     }
 
@@ -66,8 +68,8 @@ export function WeatherBackground({
             duration={3000}
             timingFunction="ease-in-out"
             containerClass={cn(
-              'w-full h-full contrast-100 brightness-75',
-              className
+              "w-full h-full contrast-100 brightness-75",
+              className,
             )}
           />
         </div>
