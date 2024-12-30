@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAppTranslation } from "@/hooks/useAppTranslation";
 import { LocationSuggestionItem } from "./location-suggestion-item";
-import { Language, Location } from "@/types";
 
 interface LocationSearchProps {
   onLocationSelect: (location: Location) => void;
@@ -27,9 +26,9 @@ export function LocationSearch({
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isAutoDetected, setIsAutoDetected] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { t } = useAppTranslation(language);
-
   // Reset selected index when suggestions change
   useEffect(() => {
     setSelectedIndex(-1);
@@ -42,7 +41,7 @@ export function LocationSearch({
     }
   }, [defaultLocation]);
 
-  const handleLocationSelect = (suggestion: LocationSuggestion) => {
+  const handleLocationSelect = (suggestion: LocationSuggestion, isAuto = false) => {
     const location: Location = {
       name: suggestion.city,
       country: suggestion.country,
@@ -52,6 +51,7 @@ export function LocationSearch({
       `${suggestion.city}, ${suggestion.country}${suggestion.state ? `, ${suggestion.state}` : ""}`,
     );
     setIsOpen(false);
+    setIsAutoDetected(isAuto);
     onLocationSelect(location);
   };
 
@@ -72,8 +72,7 @@ export function LocationSearch({
       case "Enter":
         e.preventDefault();
         if (selectedIndex >= 0) {
-          handleLocationSelect(suggestions[selectedIndex]);
-          () => handleLocationSelect(suggestions[selectedIndex]);
+          handleLocationSelect(suggestions[selectedIndex], false);
         }
         break;
       case "Escape":
@@ -132,7 +131,7 @@ export function LocationSearch({
         city: data.name,
         country: data.country,
         state: data.state,
-      });
+      }, true);
     } catch (error) {
       // Handle error silently
     } finally {
@@ -188,7 +187,7 @@ export function LocationSearch({
                 state={suggestion.state}
                 language={language}
                 isSelected={index === selectedIndex}
-                onClick={() => handleLocationSelect(suggestion)}
+                onClick={() => handleLocationSelect(suggestion, false)}
               />
             ))}
           </ul>
@@ -222,7 +221,7 @@ export function LocationSearch({
           </svg>
         ) : (
           <svg
-            className="h-5 w-5 fill-none stroke-current"
+            className={`h-5 w-5 ${isAutoDetected ? "fill-white stroke-none" : "fill-none stroke-current"}`}
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >

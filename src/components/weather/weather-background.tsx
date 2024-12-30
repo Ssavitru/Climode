@@ -29,7 +29,6 @@ export function WeatherBackground({
 }: WeatherBackgroundProps) {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [photographer, setPhotographer] = useState({ name: "", url: "" });
-  const { t } = useAppTranslation(language);
 
   useEffect(() => {
     if (!city) return;
@@ -37,7 +36,6 @@ export function WeatherBackground({
     async function fetchImage() {
       try {
         const cityName = city.split(",")[0];
-        console.log("Fetching image for:", cityName, "in language:", language);
 
         const response = await fetch(
           `/api/cityImage?city=${encodeURIComponent(cityName)}&lang=${language}`,
@@ -65,7 +63,7 @@ export function WeatherBackground({
           <CrossfadeImage
             src={imageUrl}
             alt={`Weather in ${city}`}
-            duration={3000}
+            duration={1000}
             timingFunction="ease-in-out"
             containerClass={cn(
               "w-full h-full contrast-100 brightness-75",

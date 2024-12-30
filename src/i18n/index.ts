@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     app: {
-      title: "DressSmart",
+      title: "Clima",
       slogan: "Your personal weather-based stylist",
       refresh: "Refresh weather data",
       autoLocating: "Auto-locating...",
@@ -200,19 +200,19 @@ export const translations = {
         "Lightweight fine knit pullover",
       ],
       scarf: [
-        "Soft warm wool scarf",
-        "Versatile neck gaiter",
-        "Lightweight windproof wrap",
+        "Warm knit scarf",
+        "Light neck warmer",
+        "Wind-protective scarf"
       ],
       gloves: [
-        "Touchscreen waterproof gloves",
-        "Warm wool mittens",
-        "Technical windproof gloves",
+        "Warm insulated gloves",
+        "Lightweight touchscreen gloves",
+        "Weather-resistant gloves"
       ],
       hat: [
-        "Fleece-lined wool beanie",
-        "Light UV-protective cap",
-        "Stylish bucket hat",
+        "Warm winter beanie",
+        "UV-protective cap",
+        "Lightweight breathable hat"
       ],
       socks: [
         "Moisture-wicking athletic socks",
@@ -220,19 +220,16 @@ export const translations = {
         "Comfortable cotton blend socks",
       ],
       umbrella: [
-        "Compact automatic umbrella",
-        "Windproof travel umbrella",
-        "Large sturdy umbrella",
+        "Compact travel umbrella",
+        "Windproof rain umbrella"
       ],
       sunglasses: [
-        "UV400 protection sunglasses",
-        "Polarized sport sunglasses",
-        "Classic aviator shades",
+        "UV-protective sunglasses",
+        "Polarized sport sunglasses"
       ],
       shorts: [
-        "Quick-dry athletic shorts",
-        "Comfortable cotton shorts",
-        "Lightweight cargo shorts",
+        "Lightweight breathable shorts",
+        "Quick-dry athletic shorts"
       ],
     },
     priority: {
@@ -440,66 +437,63 @@ export const translations = {
     clothingDesc: {
       shirt: [
         "Chemise décontractée à manches longues",
-        "Chemise élégante en tissu technique",
+        "Chemise élégante en tissu technique"
       ],
       tshirt: [
         "T-shirt basique en coton doux",
         "T-shirt technique anti-transpiration",
-        "T-shirt léger et confortable",
+        "T-shirt léger et confortable"
       ],
       pants: [
         "Jean coupe régulière confortable",
-        "Pantalon léger et respirant",
+        "Pantalon léger et respirant"
       ],
       shoes: [
-        "Chaussures imperméables et robustes",
-        "Baskets légères et respirantes",
+        "Chaussures robustes imperméables",
+        "Baskets légères et respirantes"
       ],
       jacket: [
-        "Veste imperméable coupe-vent",
-        "Blouson léger et déperlant",
-        "Veste chaude doublée polaire",
+        "Veste coupe-vent imperméable",
+        "Bomber léger déperlant",
+        "Manteau chaud doublé polaire"
       ],
       sweater: [
-        "Pull en laine mérinos respirant",
-        "Sweat à capuche doublé molleton",
-        "Pull léger en maille fine",
+        "Pull respirant en laine mérinos",
+        "Sweat à capuche doublé polaire",
+        "Pull fin léger"
       ],
       scarf: [
-        "Écharpe en laine douce et chaude",
-        "Tour de cou multifonction",
-        "Foulard léger coupe-vent",
+        "Écharpe chaude en tricot",
+        "Tour de cou léger",
+        "Écharpe coupe-vent"
       ],
       gloves: [
-        "Gants tactiles et imperméables",
-        "Mitaines en laine chaude",
-        "Gants techniques coupe-vent",
+        "Gants chauds isolés",
+        "Gants légers tactiles",
+        "Gants résistants aux intempéries"
       ],
       hat: [
-        "Bonnet en laine doublé polaire",
-        "Casquette légère anti-UV",
-        "Bob élégant",
+        "Bonnet d'hiver chaud",
+        "Casquette anti-UV",
+        "Chapeau léger et respirant"
       ],
       socks: [
-        "Chaussettes de sport anti-transpiration",
+        "Chaussettes sportives anti-transpiration",
         "Chaussettes chaudes en laine mérinos",
-        "Chaussettes confortables en coton",
+        "Chaussettes confortables en coton"
       ],
       umbrella: [
-        "Parapluie compact automatique",
-        "Parapluie de voyage coupe-vent",
-        "Grand parapluie robuste",
+        "Parapluie de voyage compact",
+        "Parapluie coupe-vent"
       ],
       sunglasses: [
-        "Lunettes de soleil protection UV400",
-        "Lunettes de sport polarisées",
-        "Lunettes aviateur classiques",
+        "Lunettes de soleil anti-UV",
+        "Lunettes de sport polarisées"
       ],
       shorts: [
-        "Short de sport séchage rapide",
-        "Short en coton confortable",
-        "Short cargo léger",
-      ],
+        "Short léger et respirant",
+        "Short athlétique séchage rapide"
+      ]
     },
     priority: {
       high: "Essentiel",
@@ -706,66 +700,63 @@ export const translations = {
     clothingDesc: {
       shirt: [
         "Camisa casual de manga larga",
-        "Camisa elegante de tejido técnico",
+        "Camisa elegante de tejido técnico"
       ],
       tshirt: [
         "Camiseta básica de algodón suave",
         "Camiseta técnica anti-sudor",
-        "Camiseta ligera y cómoda",
+        "Camiseta ligera y cómoda"
       ],
       pants: [
-        "Pantalones de jean cómodo",
-        "Pantalones ligeros y transpirables",
+        "Vaqueros cómodos de corte regular",
+        "Pantalones ligeros y transpirables"
       ],
       shoes: [
-        "Zapatos impermeables y robustos",
-        "Zapatillas ligeras y transpirables",
+        "Zapatos resistentes impermeables",
+        "Zapatillas ligeras y transpirables"
       ],
       jacket: [
-        "Chaqueta impermeable cortaviento",
-        "Blouson ligero y anti-lluvia",
-        "Chaqueta cálida forrada de poliéster",
+        "Chaqueta cortavientos impermeable",
+        "Bomber ligera repelente al agua",
+        "Abrigo cálido con forro polar"
       ],
       sweater: [
-        "Suéter de lana merino transpirable",
-        "Sudadera con capucha forrada de molleton",
-        "Suéter ligero de tejido fino",
+        "Suéter transpirable de lana merino",
+        "Sudadera con capucha forrada",
+        "Jersey fino y ligero"
       ],
       scarf: [
-        "Bufanda de lana suave y cálida",
-        "Bufanda multifuncional",
-        "Bufanda ligera cortaviento",
+        "Bufanda cálida de punto",
+        "Cuello ligero",
+        "Bufanda cortavientos"
       ],
       gloves: [
-        "Guantes táctiles e impermeables",
-        "Guantes cálidos de lana",
-        "Guantes técnicos cortaviento",
+        "Guantes cálidos aislados",
+        "Guantes ligeros táctiles",
+        "Guantes resistentes al clima"
       ],
       hat: [
-        "Gorro de lana forrado de poliéster",
-        "Gorra ligera anti-UV",
-        "Sombrero de estilo bucket",
+        "Gorro de invierno cálido",
+        "Gorra con protección UV",
+        "Sombrero ligero y transpirable"
       ],
       socks: [
         "Calcetines deportivos anti-sudor",
         "Calcetines cálidos de lana merino",
-        "Calcetines cómodos de algodón",
+        "Calcetines cómodos de algodón"
       ],
       umbrella: [
-        "Paraguas compacto automático",
-        "Paraguas de viaje cortaviento",
-        "Paraguas grande y robusto",
+        "Paraguas compacto de viaje",
+        "Paraguas resistente al viento"
       ],
       sunglasses: [
-        "Gafas de sol protección UV400",
-        "Gafas de deporte polarizadas",
-        "Gafas de aviador clásicas",
+        "Gafas de sol con protección UV",
+        "Gafas de deporte polarizadas"
       ],
       shorts: [
-        "Pantalones cortos deportivos de secado rápido",
-        "Pantalones cortos cómodos de algodón",
-        "Pantalones cortos cargo ligeros",
-      ],
+        "Pantalones cortos ligeros y transpirables",
+        "Shorts deportivos de secado rápido"
+      ]
     },
     priority: {
       high: "Imprescindible",
@@ -1497,51 +1488,49 @@ export const translations = {
       tshirt: [
         "تي شيرت أساسي من القطن",
         "تي شيرت تقني مضاد للعرق",
-        "تي شيرت خفيف ومريح",
+        "تي شيرت خفيف ومريح"
       ],
       pants: ["بنطلون جينز مريح", "بنطلون خفيف وقابل للتنفس"],
       shoes: ["حذاء مقاوم للماء", "حذاء خفيف ومريح"],
       jacket: [
         "جاكيت مقاوم للماء",
         "جاكيت خفيف مضاد للمطر",
-        "جاكيت دافئ مع بطانة من الفرو",
+        "جاكيت دافئ مع بطانة من الفرو"
       ],
       sweater: [
         "سترة من صوف ميرينو",
         "سويت شيرت مع غطاء رأس",
-        "سترة خفيفة من القماش الناعم",
+        "سترة خفيفة من القماش الناعم"
       ],
       scarf: [
         "وشاح من الصوف الناعم والدافئ",
         "وشاح متعدد الاستخدامات",
-        "وشاح خفيف مضاد للرياح",
+        "وشاح خفيف مضاد للرياح"
       ],
       gloves: [
         "قفازات تكتيلية ومقاومة للماء",
         "قفازات دافئة من الصوف",
-        "قفازات تقنية مضادة للرياح",
+        "قفازات تقنية مضادة للرياح"
       ],
       hat: [
         "قبعة من الصوف مع بطانة من الفرو",
         "قبعة خفيفة مضادة لأشعة الشمس",
-        "قبعة عصرية",
+        "قبعة عصرية"
       ],
       socks: [
         "جوارب رياضية مضادة للعرق",
         "جوارب دافئة من صوف المارينو",
-        "جوارب مريحة من القطن",
+        "جوارب مريحة من القطن"
       ],
       umbrella: [
         "مظلة مدمجة أوتوماتيكية",
-        "مظلة سفر مضادة للرياح",
-        "مظلة كبيرة ومتينة",
+        "مظلة سفر مضادة للرياح"
       ],
       sunglasses: [
-        "نظارات شمسية بحماية UV400",
-        "نظارات رياضية مستقطبة",
-        "نظارات طيار كلاسيكية",
+        "نظارات شمسية بحماية UV",
+        "نظارات رياضية مستقطبة"
       ],
-      shorts: ["شورت رياضي سريع الجفاف", "شورت قطني مريح", "شورت كارجو خفيف"],
+      shorts: ["شورت رياضي سريع الجفاف", "شورت قطني مريح", "شورت كارجو خفيف"]
     },
     priority: {
       high: "يجب ارتداؤه",

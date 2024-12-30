@@ -1,4 +1,4 @@
-const CACHE_NAME = "dresssmart-v1";
+const CACHE_NAME = "Clima-v1";
 
 // Add all static assets that should be cached
 const urlsToCache = [

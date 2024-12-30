@@ -2,13 +2,12 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion, LayoutGroup } from "framer-motion";
+import { motion } from "framer-motion";
 import { WiThermometer, WiRefresh } from "react-icons/wi";
 import { FaFan } from "react-icons/fa";
 import { translations, type Language } from "@/i18n";
 import { getClothingRecommendations } from "@/lib/clothing-recommendations";
 import { useWeather } from "@/hooks/useWeather";
-import { useCountryName } from "@/hooks/useCountryName";
 import { useLanguage } from "@/hooks/useLanguage";
 
 // Common components
@@ -45,6 +44,7 @@ import {
 
 import Image from "next/image";
 import { AuthorWidget } from "@/components/credits";
+import cn from "classnames";
 
 const getCurrentPosition = (): Promise<GeolocationPosition> => {
   return new Promise((resolve, reject) => {
@@ -92,7 +92,9 @@ export default function Home() {
   >("normal");
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentOutfitIndex, setCurrentOutfitIndex] = useState(0);
-  const [isAutoLocating, setIsAutoLocating] = useState(true);
+  const [isAutoLocating, setIsAutoLocating] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
   const currentTranslations = translations[language] || translations.en;
 
   // Use the weather hook with city and country
@@ -109,33 +111,32 @@ export default function Home() {
   );
   const NUMBER_OF_OUTFITS = 10;
 
-  // Initialize from localStorage
+  // Load saved location on mount
   useEffect(() => {
-    const initializeFromStorage = () => {
+    const loadSavedLocation = () => {
       const saved = localStorage.getItem("lastLocation");
       if (saved) {
         try {
-          const loc = JSON.parse(saved);
-          setLocation(loc);
+          const savedLocation = JSON.parse(saved);
+          setLocation(savedLocation);
           const formatted = formatLocationString(
-            loc.name,
-            loc.country,
+            savedLocation.name,
+            savedLocation.country,
             language,
           );
           setLocationString(formatted);
-          setIsAutoLocating(false);
         } catch (error) {
           console.error("Error parsing saved location:", error);
         }
-      } else {
-        setIsAutoLocating(true);
       }
+      const timeoutId = setTimeout(() => {
+        setIsInitialLoad(false);
+      }, 50);
+      return () => clearTimeout(timeoutId);
     };
 
-    if (typeof window !== "undefined") {
-      initializeFromStorage();
-    }
-  }, [language]); // Re-run when language changes
+    loadSavedLocation();
+  }, [language]);
 
   useEffect(() => {
     const storedLanguage = localStorage.getItem("language");
@@ -156,83 +157,6 @@ export default function Home() {
       setLocationString(formatted);
     }
   }, [location, language]);
-
-  useEffect(() => {
-    const checkPermissionAndAutoDetect = async () => {
-      // Don't auto-detect if we already have a location
-      if (location) return;
-
-      try {
-        // Check if geolocation is supported
-        if (!navigator.geolocation) {
-          throw new Error("Geolocation is not supported");
-        }
-
-        // Check permission status
-        const permissionStatus = await navigator.permissions.query({
-          name: "geolocation",
-        });
-
-        // Only proceed if permission is granted
-        if (permissionStatus.state === "granted") {
-          setIsAutoLocating(true);
-
-          const position = await getCurrentPosition();
-          const { latitude, longitude } = position.coords;
-          const response = await fetch(
-            `/api/reverse-geocoding?lat=${latitude}&lon=${longitude}`,
-          );
-
-          if (!response.ok) throw new Error("Failed to get location");
-
-          const data = await response.json();
-          const newLocation = {
-            name: data.name,
-            country: data.country,
-          };
-          setLocation(newLocation);
-          const countryName = formatLocationString(
-            data.name,
-            data.country,
-            language,
-          );
-          setLocationString(`${data.name}, ${countryName}`);
-        } else {
-          // If permission not granted, try to use saved location
-          const saved = localStorage.getItem("lastLocation");
-          if (saved) {
-            const savedLocation = JSON.parse(saved);
-            setLocation(savedLocation);
-            const countryName = formatLocationString(
-              savedLocation.name,
-              savedLocation.country,
-              language,
-            );
-            setLocationString(`${savedLocation.name}, ${countryName}`);
-          }
-          setIsAutoLocating(false);
-        }
-      } catch (error) {
-        console.error("Auto-location failed:", error);
-        // If auto-location fails and we have a saved location, use that
-        const saved = localStorage.getItem("lastLocation");
-        if (saved) {
-          const savedLocation = JSON.parse(saved);
-          setLocation(savedLocation);
-          const countryName = formatLocationString(
-            savedLocation.name,
-            savedLocation.country,
-            language,
-          );
-          setLocationString(`${savedLocation.name}, ${countryName}`);
-        }
-      } finally {
-        setIsAutoLocating(false);
-      }
-    };
-
-    checkPermissionAndAutoDetect();
-  }, []); // Run only once on mount
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -288,7 +212,7 @@ export default function Home() {
 
   // Get the weather data for the selected date
   const selectedWeather = useMemo(() => {
-    if (isLoading || !weatherData) return currentWeather;
+    if (!isLoading || !weatherData) return currentWeather;
 
     const found = weatherData.find(
       (data) =>
@@ -388,7 +312,7 @@ export default function Home() {
                   height={50}
                 />
                 <h1 className="text-4xl font-bold text-white sm:text-left">
-                  <span className="text-white font-display">DressSmart</span>
+                  <span className="text-white font-display">Clima</span>
 
                   <AuthorWidget language={language} />
                 </h1>
@@ -411,8 +335,12 @@ export default function Home() {
                     className="ml-2 shadow-xl backdrop-blur-xl rounded-2xl hover:bg-white/30 text-white bg-white/10 px-1"
                     aria-label={currentTranslations?.app?.refresh}
                   >
-                    <WiRefresh className="w-10 h-10" />
+                    <WiRefresh className={cn("w-10 h-10", {
+                      "fill-current": location?.isAutoDetected,
+                      "stroke-current": !location?.isAutoDetected
+                    })} />
                   </button>
+
                 </div>
               </div>
             </div>
@@ -422,7 +350,7 @@ export default function Home() {
               <DateSlider onDateChange={setSelectedDate} language={language} />
             </div>
 
-            {isLoading || isAutoLocating ? (
+            {isLoading || isAutoLocating || isInitialLoad ? (
               <div className="space-y-8 mt-8">
                 <div className="glass-card p-6 rounded-3xl pt-8">
                   <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
@@ -486,9 +414,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            ) : !locationString && !isLoading && !isAutoLocating ? (
-              <div className="text-center py-12 glass-card rounded-3xl">
-                <p className="text-white/80">
+            ) : !selectedWeather && !isLoading && !isInitialLoad ? (
+              <div className="text-center py-12 glass-card rounded-3xl mt-8">
+                <p className="text-white/80 animate-pulse text-lg">
                   {currentTranslations?.app?.noLocation}
                 </p>
               </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const baseUrl =
-  process.env.NEXT_PUBLIC_BASE_URL || "https://dresssmart.vercel.app";
+  process.env.NEXT_PUBLIC_BASE_URL || "https://Clima.vercel.app";
 
 export function generateMetadata({
   params,
@@ -21,11 +21,11 @@ export function generateMetadata({
       },
     },
     title: {
-      default: "DressSmart - Your Personal Weather-Based Stylist",
-      template: "%s | DressSmart",
+      default: "Clima - Your Personal Weather-Based Stylist",
+      template: "%s | Clima",
     },
     description:
-      "Get personalized clothing recommendations based on real-time weather data. DressSmart helps you dress appropriately for any weather condition, anywhere in the world.",
+      "Get personalized clothing recommendations based on real-time weather data. Clima helps you dress appropriately for any weather condition, anywhere in the world.",
     keywords: [
       "weather clothing",
       "outfit recommendations",
@@ -34,9 +34,9 @@ export function generateMetadata({
       "dress for weather",
       "clothing assistant",
     ],
-    authors: [{ name: "DressSmart Team" }],
-    creator: "DressSmart",
-    publisher: "DressSmart",
+    authors: [{ name: "Clima Team" }],
+    creator: "Clima",
+    publisher: "Clima",
     formatDetection: {
       email: false,
       address: false,
@@ -67,8 +67,8 @@ export function generateMetadata({
       type: "website",
       locale: lang,
       url: baseUrl,
-      siteName: "DressSmart",
-      title: "DressSmart - Your Personal Weather-Based Stylist",
+      siteName: "Clima",
+      title: "Clima - Your Personal Weather-Based Stylist",
       description:
         "Get personalized clothing recommendations based on real-time weather data. Never be underdressed or overdressed again!",
       images: [
@@ -76,17 +76,17 @@ export function generateMetadata({
           url: `${baseUrl}/og-image.jpg`,
           width: 1200,
           height: 630,
-          alt: "DressSmart - Weather-based clothing recommendations",
+          alt: "Clima - Weather-based clothing recommendations",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "DressSmart - Your Personal Weather-Based Stylist",
+      title: "Clima - Your Personal Weather-Based Stylist",
       description:
         "Get personalized clothing recommendations based on real-time weather data.",
       images: [`${baseUrl}/og-image.jpg`],
-      creator: "@dresssmart",
+      creator: "@Clima",
     },
     icons: {
       icon: "/favicon.ico",
@@ -101,7 +101,7 @@ export function generateMetadata({
     other: {
       "apple-mobile-web-app-capable": "yes",
       "apple-mobile-web-app-status-bar-style": "default",
-      "apple-mobile-web-app-title": "DressSmart",
+      "apple-mobile-web-app-title": "Clima",
       "format-detection": "telephone=no",
     },
   };

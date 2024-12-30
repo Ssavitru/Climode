@@ -1,6 +1,6 @@
 {
-  "name": "DressSmart",
-  "short_name": "DressSmart",
+  "name": "Clima",
+  "short_name": "Clima",
   "description": "Get personalized clothing recommendations based on real-time weather data",
   "start_url": "/",
   "display": "standalone",
@@ -54,7 +54,7 @@
       "src": "/og-image.jpg",
       "sizes": "1080x1920",
       "type": "image/png",
-      "label": "DressSmart Home Screen"
+      "label": "Clima Home Screen"
     }
   ],
   "shortcuts": [

@@ -106,7 +106,9 @@ export function OutfitList({ items, language }: OutfitListProps) {
                     {t(`clothing.${item.type.toLowerCase()}`)}
                   </h5>
                 </div>
-                <p className="text-sm text-white/60">{item.description}</p>
+                <p className="text-sm text-white/60">
+                  {(t(`clothingDesc.${item.type.toLowerCase()}`) as string[])?.[0] || item.description}
+                </p>
               </div>
 
               {/* Status label */}

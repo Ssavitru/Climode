@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Language } from "@/types";
+import { getTranslation } from "@/i18n";
 
 const DEFAULT_LANGUAGE: Language = "en";
 const SUPPORTED_LANGUAGES: Language[] = ["en", "fr", "es", "de", "it", "ar"];
@@ -31,6 +32,7 @@ export function useLanguage(): [Language, (lang: Language) => void] {
       if (isClient) {
         localStorage.setItem("language", newLang);
         document.documentElement.lang = newLang;
+        document.title = `Clima - ${getTranslation(newLang).app.slogan}`;
         document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
       }
     }

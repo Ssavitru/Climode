@@ -1,7 +1,7 @@
-# DressSmart - Weather Clothing Recommendation App
+# Clima - Weather Clothing Recommendation App
 
 <div align="center">
-  <img src="public/logo.png" alt="DressSmart Logo" width="120"/>
+  <img src="public/logo.png" alt="Clima Logo" width="120"/>
   
   <p>Your personal weather-based clothing advisor</p>
 
@@ -22,7 +22,7 @@
 - 📱 **PWA Support**: Install and use offline on any device
 
 <div align="center">
-  <img src="public/og-image.jpg" alt="DressSmart App Screenshot" width="600"/>
+  <img src="public/og-image.jpg" alt="Clima App Screenshot" width="600"/>
 </div>
 
 ## 🚀 Getting Started
