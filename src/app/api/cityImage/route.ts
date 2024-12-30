@@ -116,7 +116,7 @@ export async function GET(request: Request) {
 
         if (data.hits?.length > 0) {
           // Sort by likes and get the most liked image
-          data.hits.sort((a, b) => b.likes - a.likes);
+          data.hits.sort((a: any, b: any) => b.likes - a.likes);
           break;
         }
       } catch (error) {

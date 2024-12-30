@@ -55,6 +55,5 @@ export async function GET(request: Request) {
     return NextResponse.json({ name: translatedName });
   } catch (error) {
     console.error("Error fetching country translation:", error);
-    return NextResponse.json({ name: countryCode });
   }
 }

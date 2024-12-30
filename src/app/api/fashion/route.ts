@@ -155,7 +155,7 @@ async function getFashionImages(query: string, style: string, count: number) {
 
     const selectedPhotos = shuffleArray(data.photos)
       .slice(0, count)
-      .map((photo) => ({
+      .map((photo: any) => ({
         url: photo.src.large,
         alt: `${style === "any" ? "" : style + " "}outfit for ${query} weather`,
         photographer: photo.photographer,
