@@ -27,6 +27,8 @@ export function LocationSearch({
   const [isLoading, setIsLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isAutoDetected, setIsAutoDetected] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { t } = useAppTranslation(language);
   // Reset selected index when suggestions change
@@ -82,21 +84,43 @@ export function LocationSearch({
     }
   };
 
-  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDebounceSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
     setIsOpen(true);
 
+    if (value.length < 3) {
+      setIsOpen(false);
+    }
+
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Set new timeout
+    timeoutRef.current = setTimeout(() => {
+      if (value.length >= 3) {
+        handleSearchChange(value);
+      }
+    }, 200);
+  };
+
+  const handleSearchChange = async (value: string) => {
     if (value.length >= 3) {
       try {
+        setIsLoading(true);
         const response = await fetch(
           `/api/geocoding?query=${encodeURIComponent(value)}&lang=${language}`,
         );
         if (!response.ok) throw new Error("Failed to fetch suggestions");
+
         const data = await response.json();
         setSuggestions(data);
+        setIsLoading(false);
       } catch (error) {
-        setSuggestions([]);
+        console.error("Error fetching suggestions:", error);
+        setIsLoading(false);
       }
     } else {
       setSuggestions([]);
@@ -162,7 +186,7 @@ export function LocationSearch({
             <input
               type="text"
               value={inputValue}
-              onChange={handleSearchChange}
+              onChange={handleDebounceSearchChange}
               onKeyDown={handleKeyDown}
               onFocus={() => setIsOpen(true)}
               placeholder={

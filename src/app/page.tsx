@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { WiThermometer, WiRefresh } from "react-icons/wi";
@@ -29,7 +29,6 @@ import {
   TemperaturePreference,
   TemperatureValue,
   TemperatureToggle,
-  TemperatureUnit,
 } from "@/components/temperature";
 
 // Weather components
@@ -45,8 +44,9 @@ import {
 import Image from "next/image";
 import { AuthorWidget } from "@/components/credits";
 import cn from "classnames";
+import { Skeleton } from "@/components/skeletons";
 
-export default function Home() {
+function HomeContent() {
   const [language, updateLanguage] = useLanguage();
   const searchParams = useSearchParams();
 
@@ -344,69 +344,7 @@ export default function Home() {
             </div>
 
             {isLoading || isAutoLocating || isInitialLoad ? (
-              <div className="space-y-8 mt-8">
-                <div className="glass-card p-6 rounded-3xl pt-8">
-                  <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-                    {/* Location and Time */}
-                    <div className="flex flex-col items-center mb-4">
-                      <div className="h-8 w-48 bg-white/10 rounded-lg animate-pulse" />
-                      <div className="h-4 w-32 bg-white/10 rounded-lg mt-2 animate-pulse" />
-                    </div>
-
-                    {/* Weather Display */}
-                    <div className={`flex justify-center items-center gap-4`}>
-                      <div className="w-16 h-16 bg-white/10 rounded-full animate-pulse" />
-                      <div className="flex flex-col items-center">
-                        <div className="h-16 w-32 bg-white/10 rounded-lg animate-pulse" />
-                      </div>
-                    </div>
-
-                    {/* Weather Details */}
-                    <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="flex flex-col items-center gap-2"
-                        >
-                          <div className="h-8 w-8 bg-white/10 rounded-lg animate-pulse" />
-                          <div className="h-4 w-16 bg-white/10 rounded-lg animate-pulse" />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="w-full h-px bg-white/10 " />
-
-                    {/* Temperature Preference */}
-                    <div>
-                      <div className="h-7 w-32 bg-white/10 rounded-lg animate-pulse mx-auto mb-4" />
-
-                      <div className="grid grid-cols-3 justify-center gap-4">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                          <div
-                            key={i}
-                            className="h-10 w-full bg-white/10 rounded-xl animate-pulse"
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="w-full h-px bg-white/10" />
-
-                    {/* Clothing Items */}
-                    <div>
-                      <div className="h-7 w-64 bg-white/10 rounded-lg animate-pulse mx-auto mb-4" />
-                      <div className="grid grid-cols-2 gap-4">
-                        {Array.from({ length: 2 }).map((_, index) => (
-                          <div
-                            key={index}
-                            className="h-[600px] w-full bg-white/10 rounded-xl animate-pulse"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Skeleton />
             ) : !selectedWeather && !isLoading && !isInitialLoad ? (
               <div className="text-center py-12 glass-card rounded-3xl mt-8">
                 <p className="text-white/80 animate-pulse text-lg">
@@ -731,5 +669,13 @@ export default function Home() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<></>}>
+      <HomeContent />
+    </Suspense>
   );
 }

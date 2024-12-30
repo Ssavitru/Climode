@@ -323,3 +323,31 @@ body {
     transform: scale(1.1);
   }
 }
+
+.opacity-animation-in {
+  animation: opacity-in 1s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes opacity-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.opacity-animation-out {
+  animation: opacity-out 1s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes opacity-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

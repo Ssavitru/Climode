@@ -90,7 +90,7 @@ export async function GET(request: Request) {
         lang: strategy.lang,
         image_type: "photo",
         orientation: "horizontal",
-        category: "places",
+        category: "cities",
         safesearch: "true",
         per_page: "3",
         min_width: "1920",
