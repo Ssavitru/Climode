@@ -7,6 +7,7 @@ import { getModelImage } from "@/lib/clothing-recommendations";
 import { translations, type Language } from "@/i18n";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { PhotoCredits } from "@/components/credits";
+import Image from "next/image";
 
 interface ModelImageProps {
   temperature: number;
@@ -112,15 +113,18 @@ export function ModelImage({
             exit={{ opacity: 0 }}
             className="relative w-full h-full flex items-center justify-center"
           >
-            <img
+            <Image
               src={currentOutfit.url}
               alt={currentOutfit.alt}
-              className={`w-full h-full object-cover transition-opacity duration-300 ${
+              fill
+              className={`object-cover transition-opacity duration-300 ${
                 imageLoading ? "opacity-0" : "opacity-100"
               }`}
               style={{ objectPosition: "50% 50%" }}
-              onLoad={handleImageLoad}
+              onLoadingComplete={handleImageLoad}
               onError={handleImageError}
+              sizes="100vw"
+              priority
             />
 
             {imageLoading && (

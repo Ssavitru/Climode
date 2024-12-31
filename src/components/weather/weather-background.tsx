@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Language } from "@/types";
 import { BackgroundPhotoCredits } from "@/components/credits";
+import Image from "next/image";
 
 interface WeatherBackgroundProps {
   city: string;
@@ -71,27 +72,35 @@ export function WeatherBackground({
         <div className="absolute inset-0 w-full h-full">
           {/* Old image that fades out */}
           {oldImageUrl && isOldImageVisible && (
-            <img
+            <Image
               src={oldImageUrl}
               alt={`Previous weather in ${city}`}
               onAnimationEnd={() => setIsOldImageVisible(false)}
               className={cn(
-                "absolute w-full h-full contrast-100 brightness-75 opacity-animation-out z-10",
+                "absolute contrast-100 brightness-75 opacity-animation-out z-10",
                 className
               )}
+              fill
+              sizes="100vw"
+              quality={75}
+              priority
             />
           )
           }
           
           {/* New image that fades in */}
           {imageUrl && (
-            <img
+            <Image
               src={imageUrl}
               alt={`Weather in ${city}`}
               className={cn(
-                "absolute w-full h-full contrast-100 brightness-75 opacity-animation-in z-0",
+                "absolute contrast-100 brightness-75 opacity-animation-in z-0",
                 className
               )}
+              fill
+              sizes="100vw"
+              quality={75}
+              priority
             />
           )
           }
