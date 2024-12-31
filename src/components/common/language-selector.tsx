@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { translations, type Language } from "@/i18n";
 import { useState, useRef, useEffect } from "react";
 import { IoMdCheckmark } from "react-icons/io";
-import ReactCountryFlag from "react-country-flag";
+import Flags from "react-world-flags"
 
 interface LanguageSelectorProps {
   value: Language;
@@ -68,10 +68,11 @@ export function LanguageSelector({
         )}
         dir={value === "ar" ? "rtl" : "ltr"}
       >
-        <ReactCountryFlag
-          countryCode={languageToCountry[value]}
+        <Flags
+          code={languageToCountry[value]}
           svg
           className="w-5 h-5 rounded"
+          height="20"
           style={{ width: "20px", height: "15px" }}
         />
         <span
@@ -103,10 +104,10 @@ export function LanguageSelector({
                   value === lang ? "text-white bg-white/10" : "text-white/70",
                 )}
               >
-                <ReactCountryFlag
-                  countryCode={languageToCountry[lang]}
+                <Flags
+                  code={languageToCountry[lang]}
                   svg
-                  className="w-5 h-4 rounded"
+                  className="w-5 h-5 rounded"
                   style={{ width: "20px", height: "15px" }}
                 />
                 <span className="flex-1">

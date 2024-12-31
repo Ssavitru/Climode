@@ -68,8 +68,8 @@ export function WeatherBackground({
 
   return (
     <>
-      <div className="fixed inset-0 w-full h-full">
-        <div className="absolute inset-0 w-full h-full">
+      <div className="fixed inset-0 w-full h-[120vh] translate-y-[-10vh]">
+        <div className="absolute inset-0 w-full h-[120vh] translate-y-[-10vh]">
           {/* Old image that fades out */}
           {oldImageUrl && isOldImageVisible && (
             <Image
