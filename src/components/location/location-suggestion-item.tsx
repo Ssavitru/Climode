@@ -25,9 +25,9 @@ export function LocationSuggestionItem({
   };
 
   // Use Intl.DisplayNames to get localized country name
-  const countryName = new Intl.DisplayNames([language], { type: "region" }).of(
-    country,
-  );
+  const countryName =
+    country &&
+    new Intl.DisplayNames([language], { type: "region" }).of(country);
 
   return (
     <div
