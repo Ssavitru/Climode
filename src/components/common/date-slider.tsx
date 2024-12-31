@@ -162,7 +162,7 @@ export function DateSlider({ onDateChange, language }: DateSliderProps) {
             <span className="text-xs font-medium font-display">
               {formatDay(date)}
             </span>
-            <span className="text-xs font-bold">{formatDate(date)}</span>
+            <span className="text-lg font-bold">{formatDate(date)}</span>
             {!isToday(date) ? (
               <>
                 <span className="text-xs font-display">

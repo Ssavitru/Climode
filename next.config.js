@@ -62,12 +62,12 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.google.com *.googleapis.com;
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.google.com *.googleapis.com *.googletagmanager.com;
               style-src 'self' 'unsafe-inline' *.googleapis.com;
               img-src 'self' blob: data: *.unsplash.com *.pexels.com *.googleapis.com;
               font-src 'self' data: *.googleapis.com *.gstatic.com;
-              frame-src 'self';
-              connect-src 'self' *.openweathermap.org *.googleapis.com;
+              frame-src 'self' *.googletagmanager.com;
+              connect-src 'self' *.openweathermap.org *.googleapis.com *.google-analytics.com *.analytics.google.com *.googletagmanager.com;
             `.replace(/\s{2,}/g, ' ').trim()
           },
           {
@@ -75,7 +75,15 @@ const nextConfig = {
             value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=()'
           }
         ]
-      }
+      },
+      {
+        source: "/api/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate" },
+          { key: "Pragma", value: "no-cache" },
+          { key: "Expires", value: "0" }
+        ],
+      },
     ];
   },
   typescript: {

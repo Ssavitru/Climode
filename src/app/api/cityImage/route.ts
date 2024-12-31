@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
+import { headers } from "next/headers";
 
 const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
 const PIXABAY_API_URL = "https://pixabay.com/api/";
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const CACHE_DURATION = 24 * 60 * 60; // 24 hours in seconds
+
+// Initialize Redis client
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 // Default image for fallback - high quality city landscape
 const DEFAULT_IMAGE = {
@@ -12,9 +20,6 @@ const DEFAULT_IMAGE = {
     url: "https://pixabay.com",
   },
 };
-
-// In-memory cache
-const imageCache = new Map<string, { data: any; timestamp: number }>();
 
 // Language mapping for better search results
 const languageMap: { [key: string]: string } = {
@@ -31,6 +36,12 @@ const languageMap: { [key: string]: string } = {
 };
 
 export async function GET(request: Request) {
+  // Add cache control headers
+  const response = new NextResponse();
+  response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  response.headers.set('Pragma', 'no-cache');
+  response.headers.set('Expires', '0');
+
   try {
     const { searchParams } = new URL(request.url);
     const city = searchParams.get("city");
@@ -40,20 +51,42 @@ export async function GET(request: Request) {
 
     if (!city) {
       console.log("No city provided");
-      return NextResponse.json(DEFAULT_IMAGE);
+      return NextResponse.json(DEFAULT_IMAGE, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
     }
 
     if (!PIXABAY_API_KEY) {
       console.error("PIXABAY_API_KEY is not configured");
-      return NextResponse.json(DEFAULT_IMAGE);
+      return NextResponse.json(DEFAULT_IMAGE, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
     }
 
-    // Check cache first
-    const cacheKey = `${city.toLowerCase()}_${country?.toLowerCase() || ""}_${lang}`;
-    const cachedData = imageCache.get(cacheKey);
-    if (cachedData && Date.now() - cachedData.timestamp < CACHE_DURATION) {
-      console.log("Returning cached image for:", city, country);
-      return NextResponse.json(cachedData.data);
+    // Check Redis cache first
+    const cacheKey = `cityImage:${city.toLowerCase()}_${country?.toLowerCase() || ""}_${lang}`;
+    try {
+      const cachedData = await redis.get(cacheKey);
+      if (cachedData) {
+        console.log("Returning cached image for:", city, country);
+        return NextResponse.json(cachedData, {
+          headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error accessing Redis:", error);
     }
 
     // Try different search strategies
@@ -128,7 +161,13 @@ export async function GET(request: Request) {
     // If no results found with any strategy, return default image
     if (!data?.hits?.length) {
       console.log("No results found for:", city, country);
-      return NextResponse.json(DEFAULT_IMAGE);
+      return NextResponse.json(DEFAULT_IMAGE, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
     }
 
     // Get the most liked image (first one after sorting)
@@ -136,7 +175,13 @@ export async function GET(request: Request) {
 
     if (!bestImage?.largeImageURL) {
       console.error("Invalid image data from Pixabay");
-      return NextResponse.json(DEFAULT_IMAGE);
+      return NextResponse.json(DEFAULT_IMAGE, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
     }
 
     const imageData = {
@@ -147,16 +192,29 @@ export async function GET(request: Request) {
       },
     };
 
-    // Cache the result
-    console.log("Caching image for:", city, country);
-    imageCache.set(cacheKey, {
-      data: imageData,
-      timestamp: Date.now(),
-    });
+    // Cache the result in Redis
+    try {
+      await redis.set(cacheKey, imageData, { ex: CACHE_DURATION });
+      console.log("Cached image in Redis for:", city, country);
+    } catch (error) {
+      console.error("Error caching in Redis:", error);
+    }
 
-    return NextResponse.json(imageData);
+    return NextResponse.json(imageData, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
   } catch (error) {
     console.error("Error in cityImage API:", error);
-    return NextResponse.json(DEFAULT_IMAGE);
+    return NextResponse.json(DEFAULT_IMAGE, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
   }
 }
