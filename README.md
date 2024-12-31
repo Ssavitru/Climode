@@ -22,7 +22,9 @@
 - 🌐 **Multilingual**: Supports English, French, Spanish, German, Italian, and Arabic
 - 📱 **PWA Support**: Install and use offline on any device
 
-![image](https://github.com/user-attachments/assets/179d4efe-c400-47cf-a3cc-192633e6f742)
+![image](https://github.com/user-attachments/assets/b2936c56-4191-4153-b85b-9bd5aae6fe60)
+![image](https://github.com/user-attachments/assets/102a25b3-ae45-4eaa-ad7a-1f5f9b1e3e19)
+
 
 
 
