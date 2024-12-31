@@ -279,7 +279,7 @@ function HomeContent() {
   return (
     <main className="relative min-h-screen">
       {/* Language Selector */}
-      <div className="absolute top-4 right-4 z-50 mr-4">
+      <div className="absolute top-4 right-0 sm:right-8 md:right-4 z-50 mr-4">
         <LanguageSelector value={language} onChange={handleLanguageChange} />
       </div>
 

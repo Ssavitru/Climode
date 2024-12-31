@@ -192,13 +192,43 @@ export function LocationSearch({
               placeholder={
                 isAutoLocating ? t("location.detecting") : t("location.search")
               }
-              className={`w-full px-4 py-2 bg-white/10 text-white rounded-2xl placeholder:text-white/50 outline-none ${
+              className={`w-full px-4 py-2 pr-10 bg-white/10 text-white rounded-2xl placeholder:text-white/50 outline-none ${
                 suggestions.length > 0 && isOpen
                   ? "focus:outline-none"
                   : "focus:outline-none focus:ring-2 focus:ring-white/20"
               } transition-all ${isAutoLocating ? "opacity-50" : ""}`}
               disabled={isAutoLocating}
             />
+            {
+              inputValue.length > 0 && !isAutoLocating && (
+                <>
+                {/* Divider */}
+                <div className="absolute top-1/2 -translate-y-1/2 right-10 w-0.5 h-5 bg-white/10"></div>
+                <button
+                  onClick={() => {
+                    setInputValue("");
+                    setIsOpen(false);
+                  }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1}
+                    stroke="rgba(255,255,255,0.75)"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+                </>
+              )
+            }
           </div>
         </div>
         {isOpen && suggestions.length > 0 && (
