@@ -58,6 +58,10 @@ export default function RootLayout({
         <GoogleAnalytics />
       </head>
       <body className={`${geologica.className}`}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MWS5XFXR"
+height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
+        {/* End Google Tag Manager (noscript) */}
         <LanguageProvider>
           <PhotoCreditsProvider>
             {children}
