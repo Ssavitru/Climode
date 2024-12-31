@@ -167,8 +167,7 @@ function HomeContent() {
   const handleLanguageChange = (newLanguage: Language) => {
     updateLanguage(newLanguage);
     localStorage.setItem("language", newLanguage);
-    router.push(`/${newLanguage}`);
-    // Dispatch custom event for same-window updates
+    router.replace(`/${newLanguage}`, { scroll: false });
     window.dispatchEvent(new Event("languageChange"));
   };
 
