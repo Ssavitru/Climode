@@ -1,24 +1,23 @@
-"use client";
-
 import { type Language } from "@/i18n";
-import { use } from "react";
+import { LanguageWrapper } from "@/components/language-wrapper";
+import { generateMetadata } from "./metadata";
 
 interface Props {
   children: React.ReactNode;
-  params: Promise<{
-    lang: Language;
-  }>;
+  params: { lang: Language };
 }
+
+export { generateMetadata };
 
 export default function LocalizedLayout({
   children,
-  params,
+  params: { lang },
 }: Props) {
-  const { lang } = use(params);
-  
   return (
-    <div data-lang={lang}>
-      {children}
-    </div>
+    <LanguageWrapper lang={lang}>
+      <div data-lang={lang}>
+        {children}
+      </div>
+    </LanguageWrapper>
   );
 }
