@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/contexts/language-context";
 import { PhotoCreditsProvider } from "@/contexts/photo-credits-context";
 import { JsonLd } from "@/components/json-ld";
 import { PWARegister } from "@/components/pwa-register";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { usePathname } from "next/navigation";
 import { defaultLanguage } from "@/i18n";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
           sizes="32x32"
           href="/favicon-32x32.png"
         />
+        <GoogleAnalytics />
       </head>
       <body className={`${geologica.className}`}>
         <LanguageProvider>
