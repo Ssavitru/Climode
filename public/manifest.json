@@ -1,6 +1,6 @@
 {
-  "name": "Clima",
-  "short_name": "Clima",
+  "name": "Climode",
+  "short_name": "Climode",
   "description": "Get personalized clothing recommendations based on real-time weather data",
   "start_url": "/",
   "display": "standalone",
@@ -51,10 +51,10 @@
   ],
   "screenshots": [
     {
-      "src": "/og-image.jpg",
+      "src": "/og-image.png",
       "sizes": "1080x1920",
       "type": "image/png",
-      "label": "Clima Home Screen"
+      "label": "Climode Home Screen"
     }
   ],
   "shortcuts": [

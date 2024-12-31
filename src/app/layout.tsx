@@ -2,12 +2,10 @@
 
 import "./globals.css";
 import { Geologica, Newsreader } from "next/font/google";
-import { LanguageProvider, useLanguage } from "@/contexts/language-context";
+import { LanguageProvider } from "@/contexts/language-context";
 import { PhotoCreditsProvider } from "@/contexts/photo-credits-context";
 import { JsonLd } from "@/components/json-ld";
-import { PWARegister } from "@/components/pwa-register"
-import { useEffect } from "react";
-import { getTranslation } from "@/i18n";
+import { PWARegister } from "@/components/pwa-register";
 
 const geologica = Geologica({
   subsets: ["latin"],
@@ -25,9 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geologica.variable} ${newsreader.variable}`}>
+    <html>
       <head>
-        <title>Clima - Your personal weather-based stylist</title>
         <meta charSet="utf-8" />
         <meta
           name="viewport"
@@ -39,8 +36,8 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="apple-mobile-web-app-title" content="What to Wear" />
-        <meta name="application-name" content="What to Wear" />
+        <meta name="apple-mobile-web-app-title" content="Climode" />
+        <meta name="application-name" content="Climode" />
 
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
@@ -51,22 +48,15 @@ export default function RootLayout({
           sizes="32x32"
           href="/favicon-32x32.png"
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-
-        <JsonLd />
-        <PWARegister />
       </head>
-      <body className={geologica.className}>
-        <PhotoCreditsProvider>
-          <LanguageProvider>
+      <body className={`${geologica.variable} ${newsreader.variable}`}>
+        <LanguageProvider>
+          <PhotoCreditsProvider>
             {children}
-          </LanguageProvider>
-        </PhotoCreditsProvider>
+            <JsonLd />
+            <PWARegister />
+          </PhotoCreditsProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

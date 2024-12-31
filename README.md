@@ -1,7 +1,7 @@
-# Clima - Weather Clothing Recommendation App
+# Climode - Weather Clothing Recommendation App
 
 <div align="center">
-  <img src="public/logo.png" alt="Clima Logo" width="120"/>
+  <img src="public/logo.png" alt="Climode Logo" width="120"/>
   
   <p>Your personal weather-based clothing advisor</p>
 

@@ -1,11 +1,11 @@
-const CACHE_NAME = "Clima-v1";
+const CACHE_NAME = "Climode-v1";
 
 // Add all static assets that should be cached
 const urlsToCache = [
   "/",
   "/manifest.json",
   "/favicon.ico",
-  "/og-image.jpg",
+  "/og-image.png",
   "/apple-touch-icon.png",
   "/favicon-16x16.png",
   "/favicon-32x32.png",

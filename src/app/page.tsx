@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { WiThermometer, WiRefresh } from "react-icons/wi";
 import { FaFan } from "react-icons/fa";
@@ -79,7 +79,7 @@ function HomeContent() {
   const [currentOutfitIndex, setCurrentOutfitIndex] = useState(0);
   const [isAutoLocating, setIsAutoLocating] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-
+  const router = useRouter();
   const currentTranslations = translations[language] || translations.en;
 
   // Use the weather hook with city and country
@@ -167,6 +167,7 @@ function HomeContent() {
   const handleLanguageChange = (newLanguage: Language) => {
     updateLanguage(newLanguage);
     localStorage.setItem("language", newLanguage);
+    router.push(`/${newLanguage}`);
     // Dispatch custom event for same-window updates
     window.dispatchEvent(new Event("languageChange"));
   };
@@ -305,7 +306,7 @@ function HomeContent() {
                   height={50}
                 />
                 <h1 className="text-4xl font-bold text-white sm:text-left">
-                  <span className="text-white font-display">Clima</span>
+                  <span className="text-white font-display">Climode</span>
 
                   <AuthorWidget language={language} />
                 </h1>

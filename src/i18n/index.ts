@@ -1,7 +1,12 @@
 export const translations = {
   en: {
+    metadata: {
+      title: "Climode - Your Personal Weather-Based Stylist",
+      description: "Get personalized clothing recommendations based on real-time weather data. Climode helps you dress appropriately for any weather condition, anywhere in the world.",
+      siteName: "Climode"
+    },
     app: {
-      title: "Clima",
+      title: "Climode",
       slogan: "Your personal weather-based stylist",
       refresh: "Refresh weather data",
       autoLocating: "Auto-locating...",
@@ -277,6 +282,11 @@ export const translations = {
     },
   },
   fr: {
+    metadata: {
+      title: "Climode - Votre Styliste Personnel Basé sur la Météo",
+      description: "Obtenez des recommandations vestimentaires personnalisées basées sur les données météorologiques en temps réel. Climode vous aide à vous habiller de manière appropriée pour toutes les conditions météorologiques, partout dans le monde.",
+      siteName: "Climode"
+    },
     app: {
       title: "Que Porter",
       slogan: "Votre styliste personnel basé sur la météo",
@@ -563,6 +573,11 @@ export const translations = {
     },
   },
   es: {
+    metadata: {
+      title: "Climode - Tu Estilista Personal Basado en el Clima",
+      description: "Obtén recomendaciones de ropa personalizadas basadas en datos meteorológicos en tiempo real. Climode te ayuda a vestirte apropiadamente para cualquier condición climática, en cualquier parte del mundo.",
+      siteName: "Climode"
+    },
     app: {
       title: "¿Qué Vestir",
       slogan: "Tu estilista personal basado en el clima",
@@ -850,6 +865,11 @@ export const translations = {
     },
   },
   de: {
+    metadata: {
+      title: "Climode - Ihr Persönlicher Wetterbasierter Stilberater",
+      description: "Erhalten Sie personalisierte Kleidungsempfehlungen basierend auf Echtzeit-Wetterdaten. Climode hilft Ihnen, sich für jede Wetterlage überall auf der Welt angemessen zu kleiden.",
+      siteName: "Climode"
+    },
     app: {
       title: "Was anziehen",
       slogan: "Ihr persönlicher wetterbasierter Stylist",
@@ -1078,7 +1098,7 @@ export const translations = {
       scarf: [
         "Schal aus weicher Wolle",
         "Multifunktionsschal",
-        "Leichter Schal mit Windschutz",
+        "Leichter Schal mit Windschutz"
       ],
       gloves: [
         "Handschuhe mit Touchscreen-Funktion",
@@ -1133,6 +1153,11 @@ export const translations = {
     },
   },
   it: {
+    metadata: {
+      title: "Climode - Il Tuo Stilista Personale Basato sul Meteo",
+      description: "Ottieni consigli personalizzati sull'abbigliamento basati su dati meteorologici in tempo reale. Climode ti aiuta a vestirti in modo appropriato per qualsiasi condizione meteorologica, ovunque nel mondo.",
+      siteName: "Climode"
+    },
     app: {
       title: "Cosa Indossare",
       slogan: "Il tuo stilista personale basato sul meteo",
@@ -1341,59 +1366,57 @@ export const translations = {
     clothingDesc: {
       shirt: [
         "Camicia casual a maniche lunghe",
-        "Camicia elegante in tessuto tecnico",
+        "Camicia elegante in tessuto tecnico"
       ],
       tshirt: [
         "T-shirt in cotone morbido",
         "T-shirt tecnico anti-sudore",
-        "T-shirt leggero e comodo",
+        "T-shirt leggero e comodo"
       ],
       pants: ["Pantaloni di jeans comodi", "Pantaloni leggeri e traspiranti"],
       shoes: ["Scarpe impermeabili e robuste", "Scarpe leggere e traspiranti"],
       jacket: [
         "Giacca impermeabile",
         "Giacca leggera anti-pioggia",
-        "Giacca calda con fodera in pile",
+        "Giacca calda con fodera in pile"
       ],
       sweater: [
         "Maglione in lana merino traspirante",
         "Felpa con cappuccio foderata",
-        "Maglione leggero in tessuto fine",
+        "Maglione leggero in tessuto fine"
       ],
       scarf: [
         "Sciarpa in lana morbida e calda",
         "Sciarpa multifunzione",
-        "Sciarpa leggera anti-vento",
+        "Sciarpa leggera anti-vento"
       ],
       gloves: [
         "Guanti tattili e impermeabili",
         "Guanti caldi in lana",
-        "Guanti tecnici anti-vento",
+        "Guanti tecnici anti-vento"
       ],
       hat: [
         "Cappello in lana con fodera in pile",
         "Berretto leggero anti-UV",
-        "Cappello bucket alla moda",
+        "Cappello bucket alla moda"
       ],
       socks: [
         "Calzini sportivi anti-sudore",
         "Calzini caldi in lana merino",
-        "Calzini comodi in cotone",
+        "Calzini comodi in cotone"
       ],
       umbrella: [
         "Ombrello compatto automatico",
-        "Ombrello da viaggio anti-vento",
-        "Ombrello grande e robusto",
+        "Ombrello da viaggio anti-vento"
       ],
       sunglasses: [
         "Occhiali da sole protezione UV400",
-        "Occhiali sportivi polarizzati",
-        "Occhiali aviator classici",
+        "Occhiali sportivi polarizzati"
       ],
       shorts: [
         "Pantaloncini sportivi ad asciugatura rapida",
         "Pantaloncini comodi in cotone",
-        "Pantaloncini cargo leggeri",
+        "Pantaloncini cargo leggeri"
       ],
     },
     priority: {
@@ -1418,6 +1441,11 @@ export const translations = {
     },
   },
   ar: {
+    metadata: {
+      title: "كلايمود - مستشارك الشخصي للأزياء حسب الطقس",
+      description: "احصل على توصيات ملابس مخصصة بناءً على بيانات الطقس في الوقت الفعلي. يساعدك كلايمود على ارتداء الملابس المناسبة لأي ظروف جوية، في أي مكان في العالم.",
+      siteName: "كلايمود"
+    },
     app: {
       title: "ماذا ترتدي",
       slogan: "مستشارك الشخصي للأزياء حسب الطقس",
@@ -1694,18 +1722,24 @@ export const translations = {
   },
 };
 
-export type Language = keyof typeof translations;
-export type TranslationKeys = keyof typeof translations.en;
+export type Language = 'en' | 'fr' | 'es' | 'de' | 'it' | 'ar';
 
 export const defaultLanguage: Language = "en";
 
+export type Dictionary = typeof translations.en;
+
 export function getTranslation(lang: Language = defaultLanguage) {
-  return translations[lang] || translations[defaultLanguage];
+  return translations[lang];
+}
+
+export async function getDictionary(lang: Language = defaultLanguage): Promise<Dictionary> {
+  try {
+    return translations[lang] || translations[defaultLanguage];
+  } catch (error) {
+    console.error(`Error loading dictionary for language: ${lang}`, error);
+    return translations[defaultLanguage];
+  }
 }
 
 // Utility type for type-safe translation keys
-export type TranslationKey = {
-  [K in keyof typeof translations.en]: {
-    [P in keyof (typeof translations.en)[K]]: string;
-  };
-};
+export type TranslationKey = keyof typeof translations.en;

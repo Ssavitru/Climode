@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Dynamic sitemap URL is handled by Next.js at /sitemap.xml
+Sitemap: ${NEXT_PUBLIC_BASE_URL}/sitemap.xml

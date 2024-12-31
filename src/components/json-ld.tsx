@@ -9,7 +9,7 @@ export function JsonLd() {
     script.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      name: "Clima",
+      name: "Climode",
       applicationCategory: "LifestyleApplication",
       operatingSystem: "Any",
       description:
@@ -23,12 +23,12 @@ export function JsonLd() {
       ],
       screenshot: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.jpg`,
-        caption: "Clima App Interface",
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.png`,
+        caption: "Climode App Interface",
       },
       author: {
-        "@type": "Organization",
-        name: "Clima Team",
+        "@type": "Author",
+        name: "ilyomix",
       },
     });
     document.head.appendChild(script);

@@ -3,14 +3,18 @@
 import { useState, useEffect } from "react";
 import { Language } from "@/types";
 import { getTranslation } from "@/i18n";
+import { usePathname } from "next/navigation";
+
 
 const DEFAULT_LANGUAGE: Language = "en";
 const SUPPORTED_LANGUAGES: Language[] = ["en", "fr", "es", "de", "it", "ar"];
 
 export function useLanguage(): [Language, (lang: Language) => void] {
-  const [language, setLanguage] = useState<Language>("en");
+  const pathname = usePathname();
+  const routeLang = pathname?.split('/')[1] as Language;
+  const [language, setLanguage] = useState<Language>(routeLang);
   const [isClient, setIsClient] = useState(false);
-
+  
   useEffect(() => {
     setIsClient(true);
     const storedLang = localStorage.getItem("language") as Language;
@@ -32,7 +36,7 @@ export function useLanguage(): [Language, (lang: Language) => void] {
       if (isClient) {
         localStorage.setItem("language", newLang);
         document.documentElement.lang = newLang;
-        document.title = `Clima - ${getTranslation(newLang).app.slogan}`;
+        document.title = `Climode - ${getTranslation(newLang).app.slogan}`;
         document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
       }
     }
