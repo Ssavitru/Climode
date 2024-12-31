@@ -98,10 +98,18 @@ export function DateSlider({ onDateChange, language }: DateSliderProps) {
   };
 
   const formatDay = (date: Date) => {
-    const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
+    const days = [
+      "sun",
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat",
+    ] as const;
     const dayIndex = date.getDay();
-    return currentTranslations.date.weekdays.short[
-      days[dayIndex] as keyof typeof currentTranslations.date.weekdays.short
+    return currentTranslations.date.weekdays.long[
+      days[dayIndex] as keyof typeof currentTranslations.date.weekdays.long
     ];
   };
 
@@ -151,13 +159,13 @@ export function DateSlider({ onDateChange, language }: DateSliderProps) {
             }`}
             dir={language === "ar" ? "rtl" : "ltr"}
           >
-            <span className="text-sm font-medium font-display">
+            <span className="text-xs font-medium font-display">
               {formatDay(date)}
             </span>
             <span className="text-lg font-bold">{formatDate(date)}</span>
             {!isToday(date) ? (
               <>
-                <span className="text-sm font-display">
+                <span className="text-xs font-display">
                   {formatMonth(date)}
                   {!isToday(date) && isLoaded && date.getDate() === 1 && date.getMonth() === 0 && (
                     <NewYearBadge date={date.getFullYear()} />
