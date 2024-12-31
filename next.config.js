@@ -62,12 +62,12 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.google.com *.googleapis.com *.googletagmanager.com;
-              style-src 'self' 'unsafe-inline' *.googleapis.com;
-              img-src 'self' blob: data: *.unsplash.com *.pexels.com *.googleapis.com;
-              font-src 'self' data: *.googleapis.com *.gstatic.com;
-              frame-src 'self' *.googletagmanager.com;
-              connect-src 'self' *.openweathermap.org *.googleapis.com *.google-analytics.com *.analytics.google.com *.googletagmanager.com;
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.google.com *.googleapis.com *.googletagmanager.com *.axept.io;
+              style-src 'self' 'unsafe-inline' *.googleapis.com *.axept.io;
+              img-src 'self' blob: data: *.imgix.net *.unsplash.com *.pexels.com *.googleapis.com *.pixabay.com cdn.pixabay.com;
+              font-src 'self' data: *.googleapis.com *.gstatic.com *.axept.io;
+              frame-src 'self' *.googletagmanager.com *.axept.io;
+              connect-src 'self' *.openweathermap.org *.googleapis.com *.google-analytics.com *.analytics.google.com *.googletagmanager.com *.axept.io;
             `.replace(/\s{2,}/g, ' ').trim()
           },
           {

@@ -70,7 +70,7 @@ export function LanguageSelector({
       >
         <Flags
           code={languageToCountry[value]}
-          svg
+          
           className="w-5 h-5 rounded"
           height="20"
           style={{ width: "20px", height: "15px" }}
@@ -106,7 +106,7 @@ export function LanguageSelector({
               >
                 <Flags
                   code={languageToCountry[lang]}
-                  svg
+                  
                   className="w-5 h-5 rounded"
                   style={{ width: "20px", height: "15px" }}
                 />

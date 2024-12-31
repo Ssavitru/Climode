@@ -173,7 +173,7 @@ export function DateSlider({ onDateChange, language }: DateSliderProps) {
                 </span>
               </>
             ) : (
-              <span className="text-sm text-white/80 font-display">
+              <span className="text-xs text-white/80 font-display">
                 {currentTranslations.date.today}
               </span>
             )}

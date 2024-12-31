@@ -16,7 +16,7 @@ import {
   GiSunglasses,
   GiUmbrella,
 } from "react-icons/gi";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 
 interface OutfitListProps {
   items: ClothingItem[];
@@ -84,15 +84,15 @@ export function OutfitList({ items, language }: OutfitListProps) {
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-8 md:gap-2">
+      <div className="grid gap-8 md:gap-2" key="outfit-list"> 
         {sortedItems.map((item, index) => {
           const Icon = itemIcons[item.type.toLowerCase()] || GiTShirt;
           const status = getItemStatus(item.priority, item.isOptional);
 
           return (
-            <>
+            <Fragment key={index + 'outfit-item'}>
             <div
-              key={index}
+
               className=" flex-col lg:flex-row flex items-start lg:items-center gap-4 lg:p-4 rounded-lg transition-colors"
             >
               {/* Icon */}
@@ -123,7 +123,7 @@ export function OutfitList({ items, language }: OutfitListProps) {
             {sortedItems.length - 1 !== index && (
               <div key={index + "separator"} className="h-px w-full bg-white/10 lg:display-none" />
             )}
-            </>
+            </Fragment>
           );
         })}
       </div>

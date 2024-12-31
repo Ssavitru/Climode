@@ -1,220 +1,126 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
-import { headers } from "next/headers";
 
 const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
 const PIXABAY_API_URL = "https://pixabay.com/api/";
 const CACHE_DURATION = 24 * 60 * 60; // 24 hours in seconds
 
-// Initialize Redis client
+const DEFAULT_IMAGE = {
+  url: "https://images.unsplash.com/photo-1523374228107-6e44bd2b524e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  alt: "Andre Benz",
+  photographer: "Unsplash",
+  photographerUrl: "https://unsplash.com/fr/@trapnation",
+};
+// Initialize Redis client outside the handler to avoid reconnection overhead
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  automaticDeserialization: false  // Disable automatic JSON parsing
 });
 
-// Default image for fallback - high quality city landscape
-const DEFAULT_IMAGE = {
-  url: "https://cdn.pixabay.com/photo/2015/03/26/09/47/sky-690293_1280.jpg",
-  credit: {
-    name: "Pixabay",
-    url: "https://pixabay.com",
-  },
-};
+// Memoize the fetch promises to prevent duplicate requests
+const fetchCache = new Map();
 
-// Language mapping for better search results
-const languageMap: { [key: string]: string } = {
-  fr: "fr",
-  en: "en",
-  es: "es",
-  de: "de",
-  it: "it",
-  pt: "pt",
-  ru: "ru",
-  ja: "ja",
-  ko: "ko",
-  ar: "en", // fallback to English for Arabic
-};
-
-export async function GET(request: Request) {
-  // Add cache control headers
-  const response = new NextResponse();
-  response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-  response.headers.set('Pragma', 'no-cache');
-  response.headers.set('Expires', '0');
+async function fetchWithTimeout(url: string, timeout = 5000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
 
   try {
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
+}
+
+export async function GET(request: Request) {
+  const startTime = Date.now();
+  console.log('Request started');
+  
+  try {
     const { searchParams } = new URL(request.url);
-    const city = searchParams.get("city");
-    const country = searchParams.get("country");
+    const city = searchParams.get("city")?.toLowerCase();
+    const country = searchParams.get("country")?.toLowerCase();
     const lang = (searchParams.get("lang") || "en").toLowerCase();
-    const searchLang = languageMap[lang] || "en";
-
-    if (!city) {
-      console.log("No city provided");
-      return NextResponse.json(DEFAULT_IMAGE, {
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
-      });
+    
+    // Early return conditions
+    if (!city || !PIXABAY_API_KEY) {
+      return NextResponse.json(DEFAULT_IMAGE);
     }
 
-    if (!PIXABAY_API_KEY) {
-      console.error("PIXABAY_API_KEY is not configured");
-      return NextResponse.json(DEFAULT_IMAGE, {
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
-      });
-    }
-
-    // Check Redis cache first
-    const cacheKey = `cityImage:${city.toLowerCase()}_${country?.toLowerCase() || ""}_${lang}`;
+    // Unified cache key
+    const cacheKey = `cityImage:${city}_${country || ""}_${lang}`;
+    
+    // Check Redis cache with error handling and timeout
     try {
-      const cachedData = await redis.get(cacheKey);
+      const cachedData = await Promise.race([
+        redis.get(cacheKey),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Redis timeout')), 3000)
+        )
+      ]);
+      
       if (cachedData) {
-        console.log("Returning cached image for:", city, country);
-        return NextResponse.json(cachedData, {
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0'
-          }
-        });
+        console.log(`Cache hit: ${Date.now() - startTime}ms`);
+        return NextResponse.json(JSON.parse(cachedData as string));
       }
     } catch (error) {
-      console.error("Error accessing Redis:", error);
+      console.error("Redis error:", error);
+      // Continue execution instead of failing
     }
 
-    // Try different search strategies
-    const searchStrategies = [
-      // Strategy 1: City and country
-      {
-        q: country ? `${city} ${country}` : city,
-        lang: searchLang,
-      },
-      // Strategy 2: City name with type
-      {
-        q: searchLang === "fr" ? `${city} ville` : `${city} city`,
-        lang: searchLang,
-      },
-      // Strategy 3: Just city name
-      {
-        q: city,
-        lang: searchLang,
-      },
-      // Strategy 4: English fallback with country
-      {
-        q: country ? `${city} ${country}` : `${city} city`,
-        lang: "en",
-      },
-    ];
+    // Use the first successful strategy
+    const searchQuery = country ? `${city} ${country}` : `${city} city`;
+    const params = new URLSearchParams({
+      key: PIXABAY_API_KEY,
+      q: searchQuery,
+      lang: lang,
+      image_type: "photo",
+      orientation: "horizontal",
+      category: "cities",
+      safesearch: "true",
+      per_page: "3",
+      min_width: "1920",
+      order: "popular",
+    });
 
-    let data = null;
-    let response = null;
-
-    for (const strategy of searchStrategies) {
-      const params = new URLSearchParams({
-        key: PIXABAY_API_KEY,
-        q: strategy.q,
-        lang: strategy.lang,
-        image_type: "photo",
-        orientation: "horizontal",
-        category: "cities",
-        safesearch: "true",
-        per_page: "3",
-        min_width: "1920",
-        order: "popular",
-      });
-
-      try {
-        console.log(
-          "Trying search with:",
-          strategy.q,
-          "in language:",
-          strategy.lang,
-        );
-        response = await fetch(`${PIXABAY_API_URL}?${params}`);
-
-        if (!response.ok) {
-          console.error("Pixabay API error:", response.status);
-          continue;
-        }
-
-        data = await response.json();
-        console.log(`Found ${data.hits?.length} results`);
-
-        if (data.hits?.length > 0) {
-          // Sort by likes and get the most liked image
-          data.hits.sort((a: any, b: any) => b.likes - a.likes);
-          break;
-        }
-      } catch (error) {
-        console.error("Error fetching from Pixabay:", error);
-        continue;
-      }
+    const cacheKey2 = params.toString();
+    if (!fetchCache.has(cacheKey2)) {
+      fetchCache.set(
+        cacheKey2,
+        fetchWithTimeout(`${PIXABAY_API_URL}?${params}`)
+      );
     }
 
-    // If no results found with any strategy, return default image
+    const response = await fetchCache.get(cacheKey2);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    const data = await response.json();
+    
     if (!data?.hits?.length) {
-      console.log("No results found for:", city, country);
-      return NextResponse.json(DEFAULT_IMAGE, {
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
-      });
-    }
-
-    // Get the most liked image (first one after sorting)
-    const bestImage = data.hits[0];
-
-    if (!bestImage?.largeImageURL) {
-      console.error("Invalid image data from Pixabay");
-      return NextResponse.json(DEFAULT_IMAGE, {
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
-      });
+      console.log(`No results: ${Date.now() - startTime}ms`);
+      return NextResponse.json(DEFAULT_IMAGE);
     }
 
     const imageData = {
-      url: bestImage.largeImageURL,
+      url: data.hits[0].largeImageURL,
       credit: {
-        name: bestImage.user,
-        url: `https://pixabay.com/users/${bestImage.user}-${bestImage.user_id}/`,
+        name: data.hits[0].user,
+        url: `https://pixabay.com/users/${data.hits[0].user}-${data.hits[0].user_id}/`,
       },
     };
 
-    // Cache the result in Redis
-    try {
-      await redis.set(cacheKey, imageData, { ex: CACHE_DURATION });
-      console.log("Cached image in Redis for:", city, country);
-    } catch (error) {
-      console.error("Error caching in Redis:", error);
-    }
+    // Async cache update without awaiting
+    redis.set(cacheKey, JSON.stringify(imageData), { ex: CACHE_DURATION })
+      .catch(error => console.error("Redis cache error:", error));
 
-    return NextResponse.json(imageData, {
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
-    });
+    console.log(`Success: ${Date.now() - startTime}ms`);
+    return NextResponse.json(imageData);
+    
   } catch (error) {
-    console.error("Error in cityImage API:", error);
-    return NextResponse.json(DEFAULT_IMAGE, {
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
-    });
+    console.error(`Error: ${Date.now() - startTime}ms`, error);
+    return NextResponse.json(DEFAULT_IMAGE);
   }
 }
