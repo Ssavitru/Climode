@@ -77,7 +77,7 @@ export function WeatherBackground({
               alt={`Previous weather in ${city}`}
               onAnimationEnd={() => setIsOldImageVisible(false)}
               className={cn(
-                "absolute contrast-100 brightness-75 opacity-animation-out z-10",
+                "absolute contrast-100 brightness-75 object-cover opacity-animation-out z-10",
                 className
               )}
               fill
@@ -94,7 +94,7 @@ export function WeatherBackground({
               src={imageUrl}
               alt={`Weather in ${city}`}
               className={cn(
-                "absolute contrast-100 brightness-75 opacity-animation-in z-0",
+                "absolute contrast-100 brightness-75 object-cover opacity-animation-in z-0",
                 className
               )}
               fill
@@ -106,6 +106,7 @@ export function WeatherBackground({
           }
         </div>
       </div>
+      <div className="bg-gradient-to-b from-black/50 from-10% via-transparent to-transparent inset-0 w-full h-[120vh] translate-y-[-10vh] absolute z-10" />
       {photographer.name && (
         <BackgroundPhotoCredits
           photographerName={photographer.name}
