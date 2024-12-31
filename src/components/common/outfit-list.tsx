@@ -90,9 +90,10 @@ export function OutfitList({ items, language }: OutfitListProps) {
           const status = getItemStatus(item.priority, item.isOptional);
 
           return (
+            <>
             <div
               key={index}
-              className=" flex-col md:flex-row flex items-start md:items-center gap-4 md:p-4 rounded-lg transition-colors"
+              className=" flex-col lg:flex-row flex items-start lg:items-center gap-4 lg:p-4 rounded-lg transition-colors"
             >
               {/* Icon */}
               <div className="p-2 bg-white/10 rounded-xl">
@@ -119,6 +120,10 @@ export function OutfitList({ items, language }: OutfitListProps) {
                 {t(`clothing.${status}`)}
               </div>
             </div>
+            {sortedItems.length - 1 !== index && (
+              <div key={index + "separator"} className="h-px w-full bg-white/10 lg:display-none" />
+            )}
+            </>
           );
         })}
       </div>

@@ -599,7 +599,7 @@ function HomeContent() {
                         </div>
 
                         {/* Recommendations List Section - 3/4 on mobile, 2/4 on desktop */}
-                        <div className="col-span-4 sm:col-span-2 h-fit p-6 rounded-2xl bg-white/5 backdrop-blur-lg">
+                        <div className="col-span-4 sm:col-span-2 h-fit p-6 rounded-2xl bg-white/5">
                           {isLoading ? (
                             <div className="h-full rounded animate-pulse" />
                           ) : selectedWeather ? (
