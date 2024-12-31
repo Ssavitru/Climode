@@ -6,6 +6,8 @@ import { LanguageProvider } from "@/contexts/language-context";
 import { PhotoCreditsProvider } from "@/contexts/photo-credits-context";
 import { JsonLd } from "@/components/json-ld";
 import { PWARegister } from "@/components/pwa-register";
+import { usePathname } from "next/navigation";
+import { defaultLanguage } from "@/i18n";
 
 const geologica = Geologica({
   subsets: ["latin"],
@@ -22,8 +24,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const lang = pathname?.split('/')[1] || defaultLanguage;
+  const dir = lang === 'ar' ? 'rtl' : 'ltr';
+
   return (
-    <html lang="en">
+    <html lang={lang} dir={dir} className={`${geologica.variable} ${newsreader.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta
@@ -49,7 +55,7 @@ export default function RootLayout({
           href="/favicon-32x32.png"
         />
       </head>
-      <body className={`${geologica.variable} ${newsreader.variable}`}>
+      <body className={`${geologica.className}`}>
         <LanguageProvider>
           <PhotoCreditsProvider>
             {children}
