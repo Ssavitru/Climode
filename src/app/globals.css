@@ -325,7 +325,7 @@ body {
 }
 
 .opacity-animation-in {
-  animation: opacity-in 1s ease-in-out forwards;
+  animation: opacity-in 2s ease-in-out forwards;
   opacity: 0;
 }
 
@@ -339,7 +339,7 @@ body {
 }
 
 .opacity-animation-out {
-  animation: opacity-out 1s ease-in-out forwards;
+  animation: opacity-out 2s ease-in-out forwards;
   opacity: 0;
 }
 

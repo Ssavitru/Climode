@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://Climode.vercel.app";
+const baseUrl = process.env.BASE_URL || "https://Climode.vercel.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {

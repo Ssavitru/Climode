@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Dynamic sitemap URL is handled by Next.js at /sitemap.xml
-Sitemap: ${NEXT_PUBLIC_BASE_URL}/sitemap.xml
+Sitemap: ${_BASE_URL}/sitemap.xml

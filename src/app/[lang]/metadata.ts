@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getDictionary, defaultLanguage } from "@/i18n";
 import { Language } from "@/types";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://climode.app";
+const baseUrl = process.env.BASE_URL || "https://climode.app";
 
 type GenerateMetadataProps = {
   params: { lang: Language };

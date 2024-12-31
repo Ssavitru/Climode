@@ -23,7 +23,7 @@ export function JsonLd() {
       ],
       screenshot: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/og-image.png`,
+        url: `${process.env.BASE_URL}/og-image.png`,
         caption: "Climode App Interface",
       },
       author: {

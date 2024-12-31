@@ -1,34 +1,29 @@
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+// middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-// Initialize Redis client
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
-
-// Create a new ratelimiter, allowing 20 requests per minute
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(20, "1 m"),
-  analytics: true,
-  prefix: "@upstash/ratelimit",
-});
+import { getRateLimiter } from "@/lib/redis";
 
 export async function withRateLimit(
   request: NextRequest,
   handler: (request: NextRequest) => Promise<NextResponse>
 ) {
+  const ratelimit = getRateLimiter();
+  
+  if (!ratelimit) {
+    console.warn("Rate limiter not configured, proceeding without rate limiting");
+    return handler(request);
+  }
+
   try {
-    // Get client IP or fallback to a default
     const ip = request.ip ?? request.headers.get("x-real-ip") ?? "127.0.0.1";
     const identifier = `${request.method}_${request.nextUrl.pathname}_${ip}`;
     
-    const { success, pending, limit, reset, remaining } = await ratelimit.limit(
-      identifier
-    );
+    const { success, limit, reset, remaining } = await Promise.race([
+      ratelimit.limit(identifier),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Rate limit timeout')), 2000)
+      )
+    ]);
     
     if (!success) {
       return new NextResponse(
@@ -59,14 +54,8 @@ export async function withRateLimit(
     return response;
   } catch (error) {
     console.error("Rate limit error:", error);
-    return new NextResponse(
-      JSON.stringify({ error: "Internal Server Error" }),
-      { 
-        status: 500,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    );
+    
+    // If rate limiting fails, still allow the request but log the error
+    return handler(request);
   }
 }

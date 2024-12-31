@@ -60,7 +60,7 @@ yarn install
 ```env
 OPENWEATHER_API_KEY=your_openweather_api_key
 PEXELS_API_KEY=your_pexels_api_key
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
+_BASE_URL=http://localhost:3000
 ```
 
 4. Start the development server

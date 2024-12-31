@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { type Language } from "@/i18n";
 
 const languages: Language[] = ['en', 'fr', 'es', 'de', 'it', 'ar'];
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://Climode.vercel.app";
+const baseUrl = process.env.BASE_URL || "https://Climode.vercel.app";
 
 // Pages that should be available in all languages
 const pages = [
