@@ -5,42 +5,37 @@ import { Language } from "@/types";
 import { getTranslation } from "@/i18n";
 import { usePathname } from "next/navigation";
 
-
 const DEFAULT_LANGUAGE: Language = "en";
 const SUPPORTED_LANGUAGES: Language[] = ["en", "fr", "es", "de", "it", "ar"];
 
 export function useLanguage(): [Language, (lang: Language) => void] {
   const pathname = usePathname();
   const routeLang = pathname?.split('/')[1] as Language;
-  const [language, setLanguage] = useState<Language>(routeLang);
+  const [language, setLanguage] = useState<Language>(
+    SUPPORTED_LANGUAGES.includes(routeLang) ? routeLang : DEFAULT_LANGUAGE
+  );
   const [isClient, setIsClient] = useState(false);
   
+  // Update language when route changes
+  useEffect(() => {
+    if (routeLang && SUPPORTED_LANGUAGES.includes(routeLang)) {
+      setLanguage(routeLang);
+    }
+  }, [routeLang]);
+
   useEffect(() => {
     setIsClient(true);
     const storedLang = localStorage.getItem("language") as Language;
     if (storedLang && SUPPORTED_LANGUAGES.includes(storedLang)) {
       setLanguage(storedLang);
-    } else {
-      const browserLang = navigator.language.split("-")[0] as Language;
-      setLanguage(
-        SUPPORTED_LANGUAGES.includes(browserLang)
-          ? browserLang
-          : DEFAULT_LANGUAGE,
-      );
     }
   }, []);
 
-  const updateLanguage = (newLang: Language) => {
-    if (SUPPORTED_LANGUAGES.includes(newLang)) {
-      setLanguage(newLang);
-      if (isClient) {
-        localStorage.setItem("language", newLang);
-        document.documentElement.lang = newLang;
-        document.title = `Climode - ${getTranslation(newLang).app.slogan}`;
-        document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-      }
+  const updateLanguage = (lang: Language) => {
+    if (SUPPORTED_LANGUAGES.includes(lang)) {
+      setLanguage(lang);
     }
   };
 
-  return [isClient ? language : DEFAULT_LANGUAGE, updateLanguage];
+  return [language, updateLanguage];
 }
