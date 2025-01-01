@@ -289,9 +289,7 @@ class ClothingRecommender {
     } else if (isCold) {
       this.addItem("lightSweater", "required");
     } else if (isMild) {
-      if (isEarlyMorning || isEarlyEvening) {
-        this.addItem("lightSweater", "optional");
-      }
+      this.addItem("lightSweater", "optional");
     }
   }
 
@@ -320,7 +318,7 @@ class ClothingRecommender {
         this.addItem("warmJacket", "required");
       } else if (isCold) {
         this.addItem("lightJacket", "required");
-      } else if (isMild && (isEarlyMorning || isEarlyEvening)) {
+      } else if (isMild) {
         this.addItem("lightJacket", "optional");
       } else if (isWarm && !this.hasRequiredItemInCategory("OUTERWEAR")) {
         this.addItem("windbreaker", "optional");
