@@ -73,7 +73,7 @@ function HomeContent() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [tempUnit, setTempUnit] = useState<"C" | "F">("C");
   const [tempPreference, setTempPreference] = useState<
-    "cold" | "normal" | "hot"
+    "cold" | "normal" | "warm"
   >("normal");
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentOutfitIndex, setCurrentOutfitIndex] = useState(0);
@@ -94,7 +94,7 @@ function HomeContent() {
     true,
     language,
   );
-  const NUMBER_OF_OUTFITS = 10;
+  const NUMBER_OF_OUTFITS = 5;
 
   // Load saved location on mount
   useEffect(() => {
@@ -290,7 +290,7 @@ function HomeContent() {
 
       {/* Content */}
       <div className="relative z-10 min-h-screen px-0 md:px-4 py-12 sm:p-8">
-        <div className="max-w-[1024px] mx-auto w-full">
+        <div className="max-w-[1024px] mx-auto w-full pt-4">
           <div
             dir="ltr"
             className="flex flex-col xl:flex-row xl:justify-between xl:items-end gap-4 mb-8 px-4"
@@ -314,7 +314,7 @@ function HomeContent() {
 
             <div className="w-full xl:w-1/2 p-4 px-0 space-y-6 z-50 rounded-xl">
               <div className="flex flex-col space-y-4">
-                <div className="flex items-center justify-se">
+                <div className="flex items-center justify-start">
                   <div className="flex-1">
                     <LocationSearch
                       onLocationSelect={handleLocationSelect}
@@ -417,7 +417,7 @@ function HomeContent() {
                             />
                           </motion.div>
                           <motion.div layout className="flex flex-col">
-                            <motion.div layout className="flex gap-[8px]">
+                            <motion.div layout className="flex gap-[6px]">
                               <TemperatureValue
                                 value={Math.round(
                                   tempUnit === "C"
@@ -430,11 +430,11 @@ function HomeContent() {
                               />
                               <motion.div
                                 layout
-                                className="flex gap-2 -translate-x-2"
+                                className="flex gap-3 items-start"
                               >
                                 <motion.span
                                   layout
-                                  className="text-2xl font-bold -translate-y-2 translate-x-1"
+                                  className="text-2xl font-bold -mt-[7px]"
                                 >
                                   °
                                 </motion.span>
@@ -610,14 +610,19 @@ function HomeContent() {
                                     temperature: selectedWeather.temperature,
                                     windSpeed: selectedWeather.windSpeed,
                                     humidity: selectedWeather.humidity,
-                                    isRaining:
-                                      selectedWeather.precipitation > 60,
-                                    unit: tempUnit,
-                                    uv:
-                                      selectedWeather.uvIndex ??
+                                    rainProbability: selectedWeather.precipitation,
+                                    uvIndex: selectedWeather.uvIndex ??
                                       (selectedWeather.temperature >= 25
                                         ? 3
                                         : 1),
+                                    hour: selectedWeather.hour,
+                                    precipitation: selectedWeather.precipitation,
+                                    tempFeelsLike: selectedWeather.feelsLike,
+                                    weatherCondition:
+                                      selectedWeather.weather.description,
+                                    cloudCover: selectedWeather.cloudCover,
+                                    windGust: selectedWeather.windGust,
+                                    altitude: selectedWeather.altitude,
                                   },
                                   tempPreference,
                                 )}

@@ -27,7 +27,7 @@ export function TemperatureToggle({ onChange }: TemperatureToggleProps) {
   return (
     <button
       onClick={toggleUnit}
-      className="text-4xl font-bold text-white/60 hover:text-white transition-colors ml-2 hover:cursor-pointer relative -top-[18px] right-2 font-display"
+      className="text-4xl font-bold text-white/60 hover:text-white transition-colors hover:cursor-pointer relative right-2 font-display"
     >
       {unit}
     </button>

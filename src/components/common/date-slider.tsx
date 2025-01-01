@@ -163,19 +163,25 @@ export function DateSlider({ onDateChange, language }: DateSliderProps) {
               {formatDay(date)}
             </span>
             <span className="text-lg font-bold">{formatDate(date)}</span>
-            {!isToday(date) ? (
+            {date.getDate() === 1 && date.getMonth() === 0 ? (
               <>
                 <span className="text-xs font-display">
                   {formatMonth(date)}
-                  {!isToday(date) && isLoaded && date.getDate() === 1 && date.getMonth() === 0 && (
+                  {isLoaded && (
                     <NewYearBadge date={date.getFullYear()} />
                   )}
                 </span>
               </>
-            ) : (
+            ) : isToday(date) ? (
               <span className="text-xs text-white/80 font-display">
                 {currentTranslations.date.today}
               </span>
+            ) : (
+              <>
+                <span className="text-xs font-display">
+                  {formatMonth(date)}
+                </span>
+              </>
             )}
           </button>
         ))}

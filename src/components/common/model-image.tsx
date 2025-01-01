@@ -73,7 +73,7 @@ export function ModelImage({
     setImageLoading(false);
   };
 
-  if (error || !outfits.length) {
+  if (error || !outfits.length && !imageLoading) {
     return (
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
         <div className="flex flex-col items-center justify-center gap-2 text-white/60">
@@ -94,7 +94,7 @@ export function ModelImage({
   const currentOutfit = outfits[safeIndex];
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 w-full h-full flex items-center justify-center overflow-hidden">
       {/* Navigation - Left */}
       <button
         onClick={handlePrevious}
@@ -111,35 +111,37 @@ export function ModelImage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative w-full h-full flex items-center justify-center"
+            className="absolute inset-0"
           >
-            <Image
-              src={currentOutfit.url}
-              alt={currentOutfit.alt}
-              fill
-              className={`object-cover transition-opacity duration-300 ${
-                imageLoading ? "opacity-0" : "opacity-100"
-              }`}
-              style={{ objectPosition: "50% 50%" }}
-              onLoadingComplete={handleImageLoad}
-              onError={handleImageError}
-              sizes="100vw"
-              priority
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src={currentOutfit.url}
+                alt={currentOutfit.alt}
+                fill
+                className={`object-cover transition-opacity duration-300 ${
+                  imageLoading ? "opacity-0" : "opacity-100"
+                }`}
+                style={{ objectPosition: "50% 50%" }}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                sizes="(max-width: 640px) 100vw, 50vw"
+                priority
+              />
 
-            {imageLoading && (
-              <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-white/10 backdrop-blur-sm">
-                <Loader2 className="w-8 h-8 text-white animate-spin" />
-                <p className="text-white text-sm">{t.findingOutfit}</p>
-              </div>
-            )}
+              {imageLoading && (
+                <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-white/10 backdrop-blur-sm">
+                  <Loader2 className="w-8 h-8 text-white animate-spin" />
+                  <p className="text-white text-sm">{t.findingOutfit}</p>
+                </div>
+              )}
 
-            {/* Photo Credits */}
-            <PhotoCredits
-              photographerName={currentOutfit.photographer}
-              language={language}
-              photographerUrl={currentOutfit.photographerUrl}
-            />
+              {/* Photo Credits */}
+              <PhotoCredits
+                photographerName={currentOutfit.photographer}
+                language={language}
+                photographerUrl={currentOutfit.photographerUrl}
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -66,7 +66,8 @@ export const clothingSearchTerms: SearchTermMapping = {
 
   // Footwear
   winterBoots: ["winter boots fashion", "snow boots", "leather boots"],
-  waterproofShoes: ["rain boots fashion", "waterproof boots", "rubber boots"],
+  rainBoots: ["rain boots fashion", "waterproof boots", "rubber boots"],
+  warmShoes: ["warm shoes fashion", "winter shoes", "thermal footwear"],
   regularShoes: ["shoes fashion", "casual shoes", "sneakers style"],
   lightShoes: ["summer shoes fashion", "light footwear", "casual sneakers"],
 };

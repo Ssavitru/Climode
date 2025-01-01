@@ -4,13 +4,14 @@ import { Language } from "@/types";
 
 const baseUrl = process.env.BASE_URL || "https://climode.app";
 
-type GenerateMetadataProps = {
+type Props = {
   params: { lang: Language };
 };
 
-export async function generateMetadata({
-  params: { lang = defaultLanguage },
-}: GenerateMetadataProps): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { params } = props;
+  const response = await params;
+  const lang = response.lang || defaultLanguage;
   const dict = await getDictionary(lang);
 
   const title = dict.metadata.title;
@@ -36,12 +37,34 @@ export async function generateMetadata({
     },
     description,
     keywords: [
-      "weather clothing",
-      "outfit recommendations",
-      "weather-based fashion",
-      "what to wear",
-      "dress for weather",
-      "clothing assistant",
+      // English
+      "weather clothing", "outfit recommendations", "weather-based fashion", "what to wear", "dress for weather", "clothing assistant",
+      "fashion ai", "weather outfit planner", "smart wardrobe", "daily outfit generator",
+      "fashion", "outfits", "clothing", "wardrobe", "style", "weather", "clothes", "dress", "wear", "attire",
+      "apparel", "looks", "trends", "fashion", "seasonal", "temperature", "climate", "forecast", "recommendations",
+      // French
+      "vêtements météo", "tenue du jour", "mode selon météo", "quoi porter", "assistant vestimentaire", "mode intelligente",
+      "mode", "vetements", "tenue", "meteo", "habits", "style", "garde-robe", "tendances", "saison",
+      // Spanish
+      "ropa según clima", "outfit del día", "moda según tiempo", "qué ponerme", "asistente de moda", "armario inteligente",
+      "moda", "ropa", "clima", "vestimenta", "estilo", "tiempo", "armario", "temporada", "tendencias",
+      // German
+      "wetterkleidung", "outfit empfehlungen", "wetterbasierte mode", "was anziehen", "kleidungsassistent", "intelligente garderobe",
+      "mode", "kleidung", "wetter", "stil", "garderobe", "trends", "saison", "outfit", "kleid",
+      // Italian
+      "abbigliamento meteo", "outfit del giorno", "moda secondo tempo", "cosa indossare", "assistente moda", "guardaroba intelligente",
+      "moda", "vestiti", "tempo", "stile", "guardaroba", "tendenze", "stagione", "abbigliamento", "vestire",
+      // Arabic
+      "ملابس الطقس", "توصيات الملابس", "أزياء حسب الطقس", "ماذا ألبس", "مساعد الملابس", "خزانة ملابس ذكية",
+      "موضة", "ملابس", "طقس", "أزياء", "ستايل", "فاشون", "خزانة", "موسم", "لبس",
+      // Trending Terms
+      "AI fashion", "sustainable fashion", "smart clothing", "eco-friendly outfits", "minimalist wardrobe",
+      "capsule wardrobe", "weather-smart fashion", "climate-adaptive clothing", "outfit inspiration", "style assistant",
+      // Single Word Trending
+      "AI", "sustainable", "smart", "eco", "minimal", "capsule", "trendy", "stylish", "fashionable", "chic",
+      "aesthetic", "minimalist", "sustainable", "trendsetter", "influencer", "streetwear", "casual", "formal",
+      "seasonal", "winter", "summer", "spring", "autumn", "fall", "rain", "sun", "cold", "hot", "warm", "cool",
+      "layering", "accessories", "shoes", "boots", "coats", "jackets", "sweaters", "dresses", "pants", "shirts"
     ],
     authors: [{ name: "Climode Team" }],
     creator: "Climode",
@@ -90,19 +113,12 @@ export async function generateMetadata({
       ],
     },
     manifest: "/manifest.json",
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 1,
-      userScalable: false,
-    },
     applicationName: dict.metadata.siteName,
     formatDetection: {
       email: false,
       address: false,
       telephone: false,
     },
-    themeColor: "#ffffff",
     category: "lifestyle",
   };
 }

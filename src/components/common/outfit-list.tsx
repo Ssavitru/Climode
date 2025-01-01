@@ -15,6 +15,7 @@ import {
   GiHoodie,
   GiSunglasses,
   GiUmbrella,
+  GiBilledCap,
 } from "react-icons/gi";
 import { Fragment, useMemo } from "react";
 
@@ -24,39 +25,53 @@ interface OutfitListProps {
 }
 
 const itemIcons: Record<string, IconType> = {
-  hat: GiWinterHat,
-  jacket: GiMonclerJacket,
-  gloves: GiGloves,
-  scarf: GiWinterHat,
+  thermalUnderwear: GiTShirt,
+  heavySweater: GiHoodie,
+  heavyCoat: GiMonclerJacket,
+  lightSweater: GiHoodie,
+  warmJacket: GiMonclerJacket,
+  lightJacket: GiMonclerJacket,
+  longSleeveShirt: GiPoloShirt,
+  regularShirt: GiPoloShirt,
   tshirt: GiTShirt,
-  socks: GiSocks,
-  shirt: GiPoloShirt,
-  pants: GiTrousers,
-  shoes: GiRunningShoe,
-  sweater: GiHoodie,
+  insulatedPants: GiTrousers,
+  warmPants: GiTrousers,
+  lightPants: GiTrousers,
+  regularPants: GiTrousers,
   shorts: GiTrousers,
-  sunglasses: GiSunglasses,
+  windbreaker: GiMonclerJacket,
+  rainJacket: GiMonclerJacket,
   umbrella: GiUmbrella,
+  sunHat: GiBilledCap,
+  sunglasses: GiSunglasses,
+  winterHat: GiWinterHat,
+  warmHat: GiWinterHat,
+  gloves: GiGloves,
+  winterBoots: GiRunningShoe,
+  rainBoots: GiRunningShoe,
+  warmShoes: GiRunningShoe,
+  regularShoes: GiRunningShoe,
+  lightShoes: GiRunningShoe,
 };
 
 const priorityDots = {
-  high: "●",
-  medium: "●",
-  low: "●",
+  required: "●",
+  suggested: "●",
+  optional: "●",
 };
 
 const statusColors = {
-  essential: "text-blue-500/80",
-  recommended: "text-teal-500/80",
+  required: "text-blue-500/80",
+  suggested: "text-teal-500/80",
   optional: "text-green-500/80",
 };
 
 const getItemStatus = (
-  priority: "high" | "medium" | "low",
+  priority: "required" | "suggested" | "optional",
   isOptional: boolean,
 ) => {
-  if (priority === "high") return "essential";
-  if (priority === "medium") return "recommended";
+  if (priority === "required") return "required";
+  if (priority === "suggested") return "suggested";
   return "optional";
 };
 
@@ -71,13 +86,13 @@ export function OutfitList({ items, language }: OutfitListProps) {
     return current;
   };
 
-  // Sort items by priority (high -> medium -> low) and optional status (required first)
+  // Sort items by priority (required -> suggested -> optional) and optional status (required first)
   const sortedItems = useMemo(() => {
     return [...items].sort((a, b) => {
       if (a.isOptional !== b.isOptional) {
         return a.isOptional ? 1 : -1;
       }
-      const priorityOrder = { high: 0, medium: 1, low: 2 };
+      const priorityOrder = { required: 0, suggested: 1, optional: 2 };
       return priorityOrder[a.priority] - priorityOrder[b.priority];
     });
   }, [items]);
@@ -86,7 +101,7 @@ export function OutfitList({ items, language }: OutfitListProps) {
     <div className="space-y-4">
       <div className="grid gap-8 md:gap-2" key="outfit-list"> 
         {sortedItems.map((item, index) => {
-          const Icon = itemIcons[item.type.toLowerCase()] || GiTShirt;
+          const Icon = itemIcons[item.type] || GiTShirt;
           const status = getItemStatus(item.priority, item.isOptional);
 
           return (
@@ -104,11 +119,11 @@ export function OutfitList({ items, language }: OutfitListProps) {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <h5 className="font-medium text-white">
-                    {t(`clothing.${item.type.toLowerCase()}`)}
+                    {t(`clothing.types.${item.type}`)}
                   </h5>
                 </div>
                 <p className="text-sm text-white/60">
-                  {(t(`clothingDesc.${item.type.toLowerCase()}`) as string[])?.[0] || item.description}
+                  {t(`clothing.descriptions.${item.type}`)}
                 </p>
               </div>
 
@@ -117,7 +132,7 @@ export function OutfitList({ items, language }: OutfitListProps) {
                 <div className={`${statusColors[status]} -translate-x-1`}>
                   {priorityDots[item.priority]}
                 </div>
-                {t(`clothing.${status}`)}
+                {t(`clothing.priority.${item.priority}`)}
               </div>
             </div>
             {sortedItems.length - 1 !== index && (

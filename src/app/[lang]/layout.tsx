@@ -1,21 +1,25 @@
-import { type Language } from "@/i18n";
+import { defaultLanguage, type Language } from "@/i18n";
 import { LanguageWrapper } from "@/components/language-wrapper";
 import { generateMetadata } from "./metadata";
+import { viewport } from "./viewport";
 
 interface Props {
   children: React.ReactNode;
-  params: { lang: Language };
+  params: { lang: Language | Promise<Language> };
 }
 
-export { generateMetadata };
+export { generateMetadata, viewport };
 
-export default function LocalizedLayout({
+export default async function LocalizedLayout({
   children,
-  params: { lang },
+  params,
 }: Props) {
+  const resolvedParams = await params;
+  const resolvedLang = resolvedParams.lang || defaultLanguage;
+
   return (
-    <LanguageWrapper lang={lang}>
-      <div data-lang={lang}>
+    <LanguageWrapper lang={resolvedLang}>
+      <div data-lang={resolvedLang}>
         {children}
       </div>
     </LanguageWrapper>

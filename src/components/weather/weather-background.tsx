@@ -69,7 +69,7 @@ export function WeatherBackground({
   return (
     <>
       <div className="fixed inset-0 w-full h-[120vh] translate-y-[-10vh]">
-        <div className="absolute inset-0 w-full h-[120vh] translate-y-[-10vh]">
+        <div className="relative w-full h-full">
           {/* Old image that fades out */}
           {oldImageUrl && isOldImageVisible && (
             <Image
@@ -77,16 +77,15 @@ export function WeatherBackground({
               alt={`Previous weather in ${city}`}
               onAnimationEnd={() => setIsOldImageVisible(false)}
               className={cn(
-                "absolute contrast-100 brightness-75 object-cover opacity-animation-out z-10",
+                "object-cover opacity-animation-out z-10",
                 className
-              )}
-              fill
-              sizes="100vw"
+              )}      
               quality={75}
+              sizes="100vw"
+              fill
               priority
             />
-          )
-          }
+          )}
           
           {/* New image that fades in */}
           {imageUrl && (
@@ -94,19 +93,18 @@ export function WeatherBackground({
               src={imageUrl}
               alt={`Weather in ${city}`}
               className={cn(
-                "absolute contrast-100 brightness-75 object-cover opacity-animation-in z-0",
+                "object-cover opacity-animation-in z-0",
                 className
               )}
-              fill
               sizes="100vw"
+              fill
               quality={75}
               priority
             />
-          )
-          }
+          )}
         </div>
       </div>
-      <div className="bg-gradient-to-b from-black/50 from-10% via-transparent to-transparent inset-0 w-full h-[120vh] translate-y-[-10vh] absolute z-10" />
+      <div className="fixed bg-gradient-to-b from-black/40 from-10% via-black/20 to-transparent inset-0 w-full h-[120vh] translate-y-[-10vh] z-10" />
       {photographer.name && (
         <BackgroundPhotoCredits
           photographerName={photographer.name}

@@ -129,7 +129,7 @@ async function getFashionImages(query: string, style: string, count: number) {
   }
 
   try {
-    const searchQuery = style === "any" ? query : `${query} ${style} style`;
+    const searchQuery = style === "any" ? query : `${query} ${style} style outfit person`;
     const params = new URLSearchParams({
       query: searchQuery,
       per_page: "30",
@@ -153,7 +153,23 @@ async function getFashionImages(query: string, style: string, count: number) {
       throw new Error("No photos found");
     }
 
-    const selectedPhotos = shuffleArray(data.photos)
+    // Filter out photos that don't contain people or are likely not fashion-related
+    const filteredPhotos = data.photos.filter((photo: any) => {
+      const description = photo.alt?.toLowerCase() || "";
+      const isLikelyFashion = 
+        description.includes("person") || 
+        description.includes("outfit") || 
+        description.includes("fashion") ||
+        description.includes("wear") ||
+        description.includes("style");
+      return isLikelyFashion;
+    });
+
+    if (filteredPhotos.length === 0) {
+      throw new Error("No suitable fashion photos found");
+    }
+
+    const selectedPhotos = shuffleArray(filteredPhotos)
       .slice(0, count)
       .map((photo: any) => ({
         url: photo.src.large,

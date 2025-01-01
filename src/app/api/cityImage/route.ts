@@ -96,7 +96,9 @@ export async function GET(request: Request) {
 
         if (cachedData) {
           console.log(`${requestId} INFO Cache hit: ${Date.now() - startTime}ms`);
-          return NextResponse.json(JSON.parse(cachedData as string));
+          // Handle both string and object cases
+          const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+          return NextResponse.json(parsedData);
         }
       } catch (error) {
         console.error(`${requestId} ERROR Redis error:`, error);
@@ -134,6 +136,11 @@ export async function GET(request: Request) {
       console.log(`${requestId} INFO No results found: ${Date.now() - startTime}ms`);
       if (error) {
         console.error(`${requestId} ERROR Last error:`, error);
+      }
+      // Store default image in cache
+      if (redis) {
+        redis.set(cacheKey, JSON.stringify(DEFAULT_IMAGE), { ex: CACHE_DURATION })
+          .catch(error => console.error(`${requestId} ERROR Redis cache error:`, error));
       }
       return NextResponse.json(DEFAULT_IMAGE);
     }
