@@ -559,7 +559,7 @@ function HomeContent() {
                     <div>
                       {/* Secondary Weather Data */}
 
-                      <div className="w-full h-px bg-white/10 my-4" />
+                      {/* <div className="w-full h-px bg-white/10 my-4" />
                       <h3 className="text-lg font-semibold text-white mb-4 text-center font-display">
                         {currentTranslations?.app?.temperaturePreference}
                       </h3>
@@ -569,7 +569,7 @@ function HomeContent() {
                           onChange={setTempPreference}
                           language={language}
                         />
-                      </div>
+                      </div> */}
 
                       <div className="w-full h-px bg-white/10 my-4" />
                       <h3 className="text-lg font-semibold text-white mb-4 text-center font-display">

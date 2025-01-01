@@ -32,22 +32,6 @@ export const Skeleton = () => {
 
             <div className="w-full h-px bg-white/10 " />
 
-            {/* Temperature Preference */}
-            <div>
-              <div className="h-7 w-32 bg-white/10 rounded-lg animate-pulse mx-auto mb-4" />
-
-              <div className="grid grid-cols-3 justify-center gap-4">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-10 w-full bg-white/10 rounded-xl animate-pulse"
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="w-full h-px bg-white/10" />
-
             {/* Clothing Items */}
             <div>
               <div className="h-7 w-64 bg-white/10 rounded-lg animate-pulse mx-auto mb-4" />

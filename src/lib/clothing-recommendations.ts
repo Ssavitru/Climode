@@ -11,7 +11,7 @@ export type WeatherParams = {
 };
 
 export type TemperaturePreference = "cold" | "normal" | "warm";
-export type PriorityLevel = "required" | "suggested" | "optional";
+export type PriorityLevel = "required" | "optional" | "optional";
 
 export interface ClothingItem {
   type: string;
@@ -23,35 +23,48 @@ export interface ClothingItem {
 // Priority order mapping for comparing priorities
 const PRIORITY_ORDER: Record<PriorityLevel, number> = {
   required: 3,
-  suggested: 2,
+  optional: 2,
   optional: 1,
 } as const;
 
 // Weather condition thresholds
 const WEATHER_THRESHOLDS = {
   TEMPERATURE: {
+    EXTREME_COLD: -10,
     VERY_COLD: 0,
     COLD: 10,
     MILD: 20,
     WARM: 25,
     HOT: 30,
+    EXTREME_HOT: 35,
   },
   PRECIPITATION: {
     LIGHT: 2.5,
     MODERATE: 7,
+    HEAVY: 15,
   },
   WIND: {
     BREEZY: 5,
     WINDY: 15,
     VERY_WINDY: 30,
+    STORM: 45,
   },
   UV: {
     MODERATE: 3,
     HIGH: 6,
+    EXTREME: 8,
+  },
+  HUMIDITY: {
+    DRY: 30,
+    COMFORTABLE: 50,
+    HUMID: 70,
+    VERY_HUMID: 85,
   },
   TIME: {
-    DAY_START: 6,
-    DAY_END: 20,
+    EARLY_MORNING: 6,
+    LATE_MORNING: 10,
+    EARLY_EVENING: 17,
+    NIGHT: 20,
   },
 } as const;
 
@@ -65,11 +78,60 @@ const TEMPERATURE_ADJUSTMENTS: Record<TemperaturePreference, number> = {
 // Clothing categories to prevent duplicates
 const CLOTHING_CATEGORIES = {
   pants: ["insulatedPants", "warmPants", "regularPants", "lightPants", "shorts"],
-  jacket: ["heavyCoat", "warmJacket", "lightJacket", "rainJacket", "windbreaker"],
-  shirt: ["thermalUnderwear", "longSleeveShirt", "regularShirt", "tshirt"],
+  jacket: ["heavyCoat", "warmJacket", "lightJacket", "rainJacket", "lightRainJacket", "windbreaker"],
+  shirt: ["thermalShirt", "thermalUnderwear", "longSleeveShirt", "lightLongSleeveShirt", "regularShirt", "tshirt"],
   sweater: ["heavySweater", "lightSweater"],
   hat: ["winterHat", "warmHat", "sunHat"],
   footwear: ["winterBoots", "rainBoots", "warmShoes", "regularShoes", "lightShoes"]
+} as const;
+
+// Clothing types and descriptions
+export const CLOTHING_TYPES = {
+  TOPS: ["tshirt", "longSleeveShirt", "moistureWickingShirt", "thermalShirt"],
+  BOTTOMS: ["shorts", "regularPants", "warmPants", "thermalUnderwear"],
+  OUTERWEAR: ["lightJacket", "warmJacket", "heavyCoat", "rainJacket", "lightRainJacket", "windbreaker"],
+  MIDLAYER: ["lightSweater", "heavySweater"],
+  ACCESSORIES: ["sunglasses", "sunHat", "warmHat", "gloves", "umbrella"],
+  FOOTWEAR: ["regularShoes", "warmShoes", "rainBoots", "winterBoots"],
+} as const;
+
+export const CLOTHING_DESCRIPTIONS: Record<string, string> = {
+  // Tops
+  tshirt: "T-shirt léger et confortable pour les chaudes journées",
+  longSleeveShirt: "Haut à manches longues respirant idéal pour les températures douces",
+  moistureWickingShirt: "Haut technique qui évacue la transpiration, parfait pour l'humidité",
+  thermalShirt: "Haut thermique pour les températures froides",
+  
+  // Bottoms
+  shorts: "Short léger pour les journées chaudes",
+  regularPants: "Pantalon confortable pour toutes les occasions",
+  warmPants: "Pantalon chaud pour les températures basses",
+  thermalUnderwear: "Sous-vêtement thermique pour les températures très froides",
+  
+  // Outerwear
+  lightJacket: "Veste légère pour les températures douces",
+  warmJacket: "Veste chaude pour les températures froides",
+  heavyCoat: "Manteau épais pour les températures très froides",
+  rainJacket: "Veste imperméable pour la pluie",
+  lightRainJacket: "Veste légère imperméable pour la pluie légère",
+  windbreaker: "Coupe-vent pour se protéger du vent",
+  
+  // Midlayer
+  lightSweater: "Pull léger pour les températures douces",
+  heavySweater: "Pull épais pour les températures froides",
+  
+  // Accessories
+  sunglasses: "Lunettes de soleil pour la protection UV",
+  sunHat: "Chapeau pour la protection solaire",
+  warmHat: "Bonnet chaud pour les températures froides",
+  gloves: "Gants pour protéger les mains du froid",
+  umbrella: "Parapluie pour la protection contre la pluie",
+  
+  // Footwear
+  regularShoes: "Chaussures confortables pour un usage quotidien",
+  warmShoes: "Chaussures chaudes pour les températures froides",
+  rainBoots: "Bottes imperméables pour la pluie",
+  winterBoots: "Bottes d'hiver pour les températures très froides",
 } as const;
 
 // Weather condition evaluation class
@@ -85,20 +147,22 @@ class WeatherConditionEvaluator {
   get temperatureConditions() {
     const { tempFeelsLike } = this.params;
     return {
-      isVeryCold: tempFeelsLike < this.thresholds.TEMPERATURE.VERY_COLD,
+      isExtremeCold: tempFeelsLike < this.thresholds.TEMPERATURE.EXTREME_COLD,
+      isVeryCold: tempFeelsLike >= this.thresholds.TEMPERATURE.EXTREME_COLD && tempFeelsLike < this.thresholds.TEMPERATURE.VERY_COLD,
       isCold: tempFeelsLike >= this.thresholds.TEMPERATURE.VERY_COLD && tempFeelsLike < this.thresholds.TEMPERATURE.COLD,
       isMild: tempFeelsLike >= this.thresholds.TEMPERATURE.COLD && tempFeelsLike < this.thresholds.TEMPERATURE.MILD,
       isWarm: tempFeelsLike >= this.thresholds.TEMPERATURE.MILD && tempFeelsLike < this.thresholds.TEMPERATURE.WARM,
-      isHot: tempFeelsLike >= this.thresholds.TEMPERATURE.HOT,
+      isHot: tempFeelsLike >= this.thresholds.TEMPERATURE.WARM && tempFeelsLike < this.thresholds.TEMPERATURE.HOT,
+      isExtremeHot: tempFeelsLike >= this.thresholds.TEMPERATURE.HOT,
     };
   }
 
   get precipitationConditions() {
     const { precipitation } = this.params;
     return {
-      isHeavyRain: precipitation > this.thresholds.PRECIPITATION.MODERATE,
-      isModerateRain: precipitation > this.thresholds.PRECIPITATION.LIGHT && precipitation <= this.thresholds.PRECIPITATION.MODERATE,
-      isLightRain: precipitation > 0 && precipitation <= this.thresholds.PRECIPITATION.LIGHT,
+      isHeavyRain: precipitation > this.thresholds.PRECIPITATION.HEAVY,
+      isModerateRain: precipitation > this.thresholds.PRECIPITATION.MODERATE && precipitation <= this.thresholds.PRECIPITATION.HEAVY,
+      isLightRain: precipitation > 0 && precipitation <= this.thresholds.PRECIPITATION.MODERATE,
       isAnyRain: precipitation > 0,
     };
   }
@@ -106,7 +170,8 @@ class WeatherConditionEvaluator {
   get windConditions() {
     const { windSpeed } = this.params;
     return {
-      isVeryWindy: windSpeed > this.thresholds.WIND.VERY_WINDY,
+      isStorm: windSpeed > this.thresholds.WIND.STORM,
+      isVeryWindy: windSpeed > this.thresholds.WIND.VERY_WINDY && windSpeed <= this.thresholds.WIND.STORM,
       isWindy: windSpeed > this.thresholds.WIND.WINDY && windSpeed <= this.thresholds.WIND.VERY_WINDY,
       isBreezy: windSpeed > this.thresholds.WIND.BREEZY && windSpeed <= this.thresholds.WIND.WINDY,
     };
@@ -115,14 +180,35 @@ class WeatherConditionEvaluator {
   get uvConditions() {
     const { uvIndex } = this.params;
     return {
-      isHighUV: uvIndex >= this.thresholds.UV.HIGH,
+      isExtremeUV: uvIndex >= this.thresholds.UV.EXTREME,
+      isHighUV: uvIndex >= this.thresholds.UV.HIGH && uvIndex < this.thresholds.UV.EXTREME,
       isModerateUV: uvIndex >= this.thresholds.UV.MODERATE && uvIndex < this.thresholds.UV.HIGH,
+    };
+  }
+
+  get humidityConditions() {
+    const { humidity } = this.params;
+    return {
+      isDry: humidity < this.thresholds.HUMIDITY.DRY,
+      isComfortable: humidity >= this.thresholds.HUMIDITY.DRY && humidity < this.thresholds.HUMIDITY.HUMID,
+      isHumid: humidity >= this.thresholds.HUMIDITY.HUMID && humidity < this.thresholds.HUMIDITY.VERY_HUMID,
+      isVeryHumid: humidity >= this.thresholds.HUMIDITY.VERY_HUMID,
+    };
+  }
+
+  get timeOfDayConditions() {
+    const { hour } = this.params;
+    return {
+      isEarlyMorning: hour >= this.thresholds.TIME.EARLY_MORNING && hour < this.thresholds.TIME.LATE_MORNING,
+      isDay: hour >= this.thresholds.TIME.LATE_MORNING && hour < this.thresholds.TIME.EARLY_EVENING,
+      isEarlyEvening: hour >= this.thresholds.TIME.EARLY_EVENING && hour < this.thresholds.TIME.NIGHT,
+      isNight: hour >= this.thresholds.TIME.NIGHT || hour < this.thresholds.TIME.EARLY_MORNING,
     };
   }
 
   get isDaytime() {
     const { hour } = this.params;
-    return hour >= this.thresholds.TIME.DAY_START && hour < this.thresholds.TIME.DAY_END;
+    return hour >= this.thresholds.TIME.EARLY_MORNING && hour < this.thresholds.TIME.NIGHT;
   }
 }
 
@@ -135,102 +221,119 @@ class ClothingRecommender {
     this.weather = new WeatherConditionEvaluator(weatherParams);
   }
 
-  private hasItemInCategory(itemType: string): boolean {
-    for (const [category, items] of Object.entries(CLOTHING_CATEGORIES)) {
-      if (items.includes(itemType)) {
-        return this.recommendations.some(item => 
-          items.includes(item.type) && 
-          item.priority === "required"
-        );
-      }
-    }
-    return false;
+  private hasRequiredItemInCategory(category: keyof typeof CLOTHING_TYPES): boolean {
+    const categoryItems = CLOTHING_TYPES[category];
+    return this.recommendations.some(item => 
+      categoryItems.includes(item.type as any) && item.priority === "required"
+    );
   }
 
-  private addItem(type: string, priority: PriorityLevel = "suggested", isOptional: boolean = false): void {
-    // Check if we already have a required item in this category
-    if (this.hasItemInCategory(type)) {
-      // If trying to add another item in the same category, make it optional
+  private addItem(type: string, priority: PriorityLevel = "optional", isOptional: boolean = false): void {
+    // Find which category this item belongs to
+    const category = Object.entries(CLOTHING_TYPES).find(([_, items]) => 
+      items.includes(type as any)
+    )?.[0] as keyof typeof CLOTHING_TYPES | undefined;
+
+    if (category && priority === "required" && this.hasRequiredItemInCategory(category)) {
+      // If we already have a required item in this category, make this one optional instead
       priority = "optional";
-      isOptional = true;
     }
 
-    this.recommendations.push({
-      type,
-      priority,
-      isOptional,
-      description: type,
-    });
+    // Don't add duplicate items
+    if (!this.recommendations.some(item => item.type === type)) {
+      this.recommendations.push({
+        type,
+        priority,
+        isOptional,
+        description: CLOTHING_DESCRIPTIONS[type],
+      });
+    }
   }
 
   private selectBaseLayer(): void {
-    const { isVeryCold, isCold } = this.weather.temperatureConditions;
-    if (isVeryCold) {
+    const { isExtremeCold, isVeryCold, isCold, isMild, isWarm, isHot } = this.weather.temperatureConditions;
+    const { isHumid, isVeryHumid } = this.weather.humidityConditions;
+    const { isEarlyMorning, isDay, isEarlyEvening } = this.weather.timeOfDayConditions;
+
+    // Base layer selection based on temperature and humidity
+    if (isExtremeCold || isVeryCold) {
       this.addItem("thermalUnderwear", "required");
+      this.addItem("thermalShirt", "required");
     } else if (isCold) {
-      this.addItem("thermalUnderwear", "suggested");
+      this.addItem("thermalShirt", "required");
+      if (isHumid || isVeryHumid) {
+        this.addItem("moistureWickingShirt", "optional");
+      }
+    } else if (isMild) {
+      if (isEarlyMorning || isEarlyEvening) {
+        this.addItem("longSleeveShirt", "required");
+        this.addItem("tshirt", "optional");
+      } else if (isDay) {
+        this.addItem("tshirt", "required");
+      }
+    } else if (isWarm || isHot) {
+      if (isHumid || isVeryHumid) {
+        this.addItem("moistureWickingShirt", "required");
+      } else {
+        this.addItem("tshirt", "required");
+      }
     }
   }
 
   private selectMidLayer(): void {
-    const { isVeryCold, isCold, isMild, isWarm, isHot } = this.weather.temperatureConditions;
-    const { isWindy } = this.weather.windConditions;
-    
-    // Only add mid layer if we don't have a heavier outer layer
-    if (isVeryCold) {
+    const { isExtremeCold, isVeryCold, isCold, isMild } = this.weather.temperatureConditions;
+    const { isEarlyMorning, isDay, isEarlyEvening } = this.weather.timeOfDayConditions;
+
+    if (isExtremeCold || isVeryCold) {
       this.addItem("heavySweater", "required");
     } else if (isCold) {
-      if (!isWindy) {
-        this.addItem("heavySweater", "required");
-      } else {
-        this.addItem("lightSweater", "suggested");
+      this.addItem("lightSweater", "required");
+    } else if (isMild) {
+      if (isEarlyMorning || isEarlyEvening) {
+        this.addItem("lightSweater", "optional");
       }
-    } else if (isMild && !isWarm && !isHot) {
-      this.addItem("lightSweater", "suggested");
     }
   }
 
   private selectOuterLayer(): void {
-    const { isVeryCold, isCold, isMild, isWarm, isHot } = this.weather.temperatureConditions;
+    const { isExtremeCold, isVeryCold, isCold, isMild, isWarm, isHot } = this.weather.temperatureConditions;
     const { isWindy, isVeryWindy } = this.weather.windConditions;
-    const { isAnyRain, isHeavyRain, isModerateRain } = this.weather.precipitationConditions;
+    const { isRainy, isHeavyRain } = this.weather.precipitationConditions;
+    const { isEarlyMorning, isDay, isEarlyEvening } = this.weather.timeOfDayConditions;
 
-    // Handle rain protection first
-    if (isHeavyRain || isModerateRain) {
-      if (isVeryCold || isCold) {
-        this.addItem("heavyCoat", "required");
-      } else if (!isHot) {
-        this.addItem("rainJacket", "required");
-      }
-      return;
-    }
-
-    // Handle temperature-based protection
-    if (isVeryCold) {
-      this.addItem("heavyCoat", "required");
-    } else if (isCold) {
-      if (isVeryWindy || isWindy) {
+    // Prioritize weather protection
+    if (isHeavyRain) {
+      this.addItem("rainJacket", "required");
+    } else if (isRainy) {
+      this.addItem("lightRainJacket", "required");
+    } else if (isVeryWindy) {
+      if (isCold || isVeryCold) {
         this.addItem("warmJacket", "required");
       } else {
-        this.addItem("warmJacket", "suggested");
-      }
-    } else if (isMild && !isWarm && !isHot) {
-      if (isVeryWindy) {
         this.addItem("windbreaker", "required");
-      } else if (isWindy) {
-        this.addItem("windbreaker", "suggested");
-      } else {
+      }
+    } else {
+      // Temperature-based outer layer
+      if (isExtremeCold) {
+        this.addItem("heavyCoat", "required");
+      } else if (isVeryCold) {
+        this.addItem("warmJacket", "required");
+      } else if (isCold) {
+        this.addItem("lightJacket", "required");
+      } else if (isMild && (isEarlyMorning || isEarlyEvening)) {
         this.addItem("lightJacket", "optional");
+      } else if (isWarm && !this.hasRequiredItemInCategory("OUTERWEAR")) {
+        this.addItem("windbreaker", "optional");
       }
     }
   }
 
   private selectRainProtection(): void {
     const { isHeavyRain, isModerateRain, isLightRain } = this.weather.precipitationConditions;
-    const { isWarm, isHot, isVeryCold, isCold } = this.weather.temperatureConditions;
+    const { isWarm, isHot, isExtremeCold, isVeryCold, isCold } = this.weather.temperatureConditions;
 
     // Don't suggest umbrella in very cold or cold weather
-    if (isVeryCold || isCold) {
+    if (isExtremeCold || isVeryCold || isCold) {
       return;
     }
 
@@ -238,67 +341,88 @@ class ClothingRecommender {
       if (isWarm || isHot) {
         this.addItem("umbrella", "required");
       } else {
-        this.addItem("umbrella", "suggested");
+        this.addItem("umbrella", "optional");
       }
     } else if (isModerateRain) {
       if (isWarm || isHot) {
         this.addItem("umbrella", "required");
       } else {
-        this.addItem("umbrella", "suggested");
+        this.addItem("umbrella", "optional");
       }
     } else if (isLightRain) {
-      this.addItem("umbrella", "suggested");
+      this.addItem("umbrella", "optional");
     }
   }
 
   private selectWindProtection(): void {
-    const { isVeryWindy, isWindy } = this.weather.windConditions;
-    const { isWarm, isHot, isMild } = this.weather.temperatureConditions;
+    const { isWarm, isHot } = this.weather.temperatureConditions;
+    const { isWindy, isVeryWindy } = this.weather.windConditions;
     const { isAnyRain } = this.weather.precipitationConditions;
 
     // Only add windbreaker for warm weather when no other outer layer is present
-    if (isWarm && !isHot && !isAnyRain && !this.hasItemInCategory("jacket")) {
+    if (isWarm && !isHot && !isAnyRain && !this.hasRequiredItemInCategory("OUTERWEAR")) {
       if (isVeryWindy) {
         this.addItem("windbreaker", "required");
       } else if (isWindy) {
-        this.addItem("windbreaker", "suggested");
+        this.addItem("windbreaker", "optional");
       }
     }
   }
 
   private selectTops(): void {
-    const { isHot, isWarm, isMild, isCold } = this.weather.temperatureConditions;
+    const { isExtremeCold, isVeryCold, isCold, isMild, isWarm, isHot, isExtremeHot } = this.weather.temperatureConditions;
+    const { isHighUV, isExtremeUV } = this.weather.uvConditions;
 
     // Always require one type of shirt
-    if (isHot || isWarm) {
+    if (isExtremeCold) {
+      this.addItem("thermalShirt", "required");
+      this.addItem("longSleeveShirt", "required");
+    } else if (isVeryCold) {
+      this.addItem("thermalShirt", "required");
+      this.addItem("longSleeveShirt", "optional");
+    } else if (isCold) {
+      this.addItem("longSleeveShirt", "required");
+    } else if (isExtremeHot) {
       this.addItem("tshirt", "required");
-      // Suggest a long sleeve shirt for sun protection
-      if (this.weather.uvConditions.isHighUV) {
-        this.addItem("longSleeveShirt", "optional");
+    } else if (isHot || isWarm) {
+      this.addItem("tshirt", "required");
+      if (isHighUV) {
+        this.addItem("lightLongSleeveShirt", "optional");
       }
+    } else if (isMild) {
+      this.addItem("lightLongSleeveShirt", "optional");
+      this.addItem("tshirt", "optional");
     } else {
       this.addItem("longSleeveShirt", "required");
     }
   }
 
   private selectBottoms(): void {
-    const { isHot, isWarm, isMild, isCold, isVeryCold } = this.weather.temperatureConditions;
-    const { isHighUV } = this.weather.uvConditions;
+    const { isExtremeCold, isVeryCold, isCold, isMild, isWarm, isHot, isExtremeHot } = this.weather.temperatureConditions;
+    const { isHighUV, isExtremeUV } = this.weather.uvConditions;
+    const { isStorm } = this.weather.windConditions;
 
     // Always require one type of bottom
-    if (isHot) {
+    if (isExtremeCold || isStorm) {
+      this.addItem("insulatedPants", "required");
+    } else if (isVeryCold) {
+      this.addItem("insulatedPants", "required");
+    } else if (isCold) {
+      this.addItem("warmPants", "required");
+    } else if (isExtremeHot) {
+      this.addItem("shorts", "required");
+      if (isExtremeUV) {
+        this.addItem("lightPants", "optional");
+      }
+    } else if (isHot) {
       this.addItem("shorts", "required");
       if (isHighUV) {
-        this.addItem("lightPants", "suggested"); // For sun protection
+        this.addItem("lightPants", "optional");
       }
     } else if (isWarm) {
       this.addItem("lightPants", "required");
     } else if (isMild) {
       this.addItem("regularPants", "required");
-    } else if (isCold) {
-      this.addItem("warmPants", "required");
-    } else if (isVeryCold) {
-      this.addItem("insulatedPants", "required");
     } else {
       this.addItem("regularPants", "required");
     }
@@ -306,11 +430,13 @@ class ClothingRecommender {
 
   private selectFootwear(): void {
     const { isHeavyRain, isModerateRain } = this.weather.precipitationConditions;
-    const { isVeryCold, isCold, isHot } = this.weather.temperatureConditions;
+    const { isExtremeCold, isVeryCold, isCold, isHot } = this.weather.temperatureConditions;
 
     // Always require one type of footwear
     if (isHeavyRain || isModerateRain) {
       this.addItem("rainBoots", "required");
+    } else if (isExtremeCold) {
+      this.addItem("winterBoots", "required");
     } else if (isVeryCold) {
       this.addItem("winterBoots", "required");
     } else if (isCold) {
@@ -324,27 +450,38 @@ class ClothingRecommender {
 
   private selectAccessories(): void {
     const { isHighUV, isModerateUV } = this.weather.uvConditions;
-    const { isVeryCold, isCold, isMild } = this.weather.temperatureConditions;
+    const { isExtremeCold, isVeryCold, isCold, isMild } = this.weather.temperatureConditions;
     const { isWindy } = this.weather.windConditions;
+    const { isDry, isComfortable, isHumid, isVeryHumid } = this.weather.humidityConditions;
 
     // UV protection
     if (isHighUV) {
       this.addItem("sunglasses", "required");
-      this.addItem("sunHat", "suggested");
+      this.addItem("sunHat", "optional");
     } else if (isModerateUV) {
       this.addItem("sunglasses", "optional");
     }
 
     // Cold weather accessories
-    if (isVeryCold) {
+    if (isExtremeCold) {
+      this.addItem("winterHat", "required");
+      this.addItem("gloves", "required");
+    } else if (isVeryCold) {
       this.addItem("winterHat", "required");
       this.addItem("gloves", "required");
     } else if (isCold) {
       this.addItem("warmHat", "required");
-      this.addItem("gloves", "suggested");
-    } else if (isMild && isWindy) {
-      this.addItem("warmHat", "suggested");
       this.addItem("gloves", "optional");
+    } else if (isMild && isWindy) {
+      this.addItem("warmHat", "optional");
+      this.addItem("gloves", "optional");
+    }
+
+    // Humidity-based accessories
+    if (isVeryHumid) {
+      this.addItem("umbrella", "required");
+    } else if (isHumid) {
+      this.addItem("umbrella", "optional");
     }
   }
 
@@ -393,7 +530,7 @@ const ensureEssentialClothing = (recommendations: ClothingItem[]): void => {
       );
       highestPriorityPants.priority = "required";
       highestPriorityPants.isOptional = false;
-      highestPriorityPants.description = highestPriorityPants.description?.replace(/optional|suggested/i, 'required');
+      highestPriorityPants.description = highestPriorityPants.description?.replace(/optional|optional/i, 'required');
     }
   }
 
@@ -406,7 +543,7 @@ const ensureEssentialClothing = (recommendations: ClothingItem[]): void => {
       );
       highestPriorityShirt.priority = "required";
       highestPriorityShirt.isOptional = false;
-      highestPriorityShirt.description = highestPriorityShirt.description?.replace(/optional|suggested/i, 'required');
+      highestPriorityShirt.description = highestPriorityShirt.description?.replace(/optional|optional/i, 'required');
     }
   }
 
@@ -419,7 +556,7 @@ const ensureEssentialClothing = (recommendations: ClothingItem[]): void => {
       );
       highestPriorityFootwear.priority = "required";
       highestPriorityFootwear.isOptional = false;
-      highestPriorityFootwear.description = highestPriorityFootwear.description?.replace(/optional|suggested/i, 'required');
+      highestPriorityFootwear.description = highestPriorityFootwear.description?.replace(/optional|optional/i, 'required');
     }
   }
 };
