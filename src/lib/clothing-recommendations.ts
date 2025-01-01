@@ -282,7 +282,7 @@ class ClothingRecommender {
 
   private selectMidLayer(): void {
     const { isExtremeCold, isVeryCold, isCold, isMild } = this.weather.temperatureConditions;
-    const { isEarlyMorning, isDay, isEarlyEvening } = this.weather.timeOfDayConditions;
+
 
     if (isExtremeCold || isVeryCold) {
       this.addItem("heavySweater", "required");
@@ -297,7 +297,7 @@ class ClothingRecommender {
     const { isExtremeCold, isVeryCold, isCold, isMild, isWarm, isHot } = this.weather.temperatureConditions;
     const { isWindy, isVeryWindy } = this.weather.windConditions;
     const { isRainy, isHeavyRain } = this.weather.precipitationConditions;
-    const { isEarlyMorning, isDay, isEarlyEvening } = this.weather.timeOfDayConditions;
+
 
     // Prioritize weather protection
     if (isHeavyRain) {
@@ -319,7 +319,7 @@ class ClothingRecommender {
       } else if (isCold) {
         this.addItem("lightJacket", "required");
       } else if (isMild) {
-        this.addItem("lightJacket", "optional");
+        this.addItem("lightJacket", "required");
       } else if (isWarm && !this.hasRequiredItemInCategory("OUTERWEAR")) {
         this.addItem("windbreaker", "optional");
       }
