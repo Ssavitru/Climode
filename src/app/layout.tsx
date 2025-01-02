@@ -9,6 +9,7 @@ import { PWARegister } from "@/components/pwa-register";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { usePathname } from "next/navigation";
 import { defaultLanguage } from "@/i18n";
+import Script from "next/script";
 
 const geologica = Geologica({
   subsets: ["latin"],
@@ -55,7 +56,7 @@ export default function RootLayout({
           sizes="32x32"
           href="/favicon-32x32.png"
         />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5274201910411416" crossorigin="anonymous"></script>
+        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5274201910411416" crossOrigin="anonymous"></Script>
         <GoogleAnalytics />
       </head>
       <body className={`${geologica.className}`}>
