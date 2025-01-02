@@ -55,6 +55,7 @@ export default function RootLayout({
           sizes="32x32"
           href="/favicon-32x32.png"
         />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5274201910411416" crossorigin="anonymous"></script>
         <GoogleAnalytics />
       </head>
       <body className={`${geologica.className}`}>
