@@ -61,7 +61,6 @@ export default function RootLayout({
       </head>
       <body className={`${geologica.className}`}>
         {/* Google Tag Manager (noscript) */}
-        <script src="https://alwingulla.com/88/tag.min.js" data-zone="124850" async data-cfasync="false"></script>
         <noscript>
           <iframe
             title="Google Tag Manager"
