@@ -141,7 +141,7 @@ Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTIN
 
 ## 📄 License
 
-This project is <b>private</b>.
+This project is <b>public and under MIT LICENSE</b>.
 
 ## 🙏 Acknowledgments
 
