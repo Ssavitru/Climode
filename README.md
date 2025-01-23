@@ -13,6 +13,9 @@
 
 </div>
 
+## ⚠️ Disclamer
+- The code is dirty as hell, as I made this project in less than 48 h - i'll take time (maybe) to clean it 
+
 ## 🌟 Features
 
 - 🌍 **Location-Based Weather**: Real-time weather data for any location worldwide
