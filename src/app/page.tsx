@@ -9,6 +9,9 @@ import { translations, type Language } from "@/i18n";
 import { getClothingRecommendations } from "@/lib/clothing-recommendations";
 import { useWeather } from "@/hooks/useWeather";
 import { useLanguage } from "@/hooks/useLanguage";
+import BackgroundWrapper from '@/components/BackgroundWrapper';
+
+
 
 // Common components
 import {

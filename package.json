@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=16.14.0"
   },
-  "author": "Ilyes Abd-Lillah",
+  "author": "Artem Litovchenko",
   "repository": {
     "type": "git",
     "url": "https://github.com/ilyomix/DressSmart"

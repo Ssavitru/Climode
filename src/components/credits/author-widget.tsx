@@ -19,23 +19,23 @@ export function AuthorWidget({ language = "en" }: AuthorWidgetProps) {
       <p className="text-start lg:text-left mt-1 lg:mt-0">
         {language === "ar" && (
           <Link
-            href="https://ilyesabd.com"
+            href=""
             target="_blank"
             rel="noopener noreferrer"
             className="text-white hover:text-white/80 transition-colors font-body"
           >
-            Ilyes Abd-Lillah
+            Artem Litovchenko
           </Link>
         )}
         <span className="font-display"> {t.app.createdBy} </span>
         {language !== "ar" && (
           <Link
-            href="https://ilyesabd.com"
+            href=""
             target="_blank"
             rel="noopener noreferrer"
             className="text-white hover:text-white/80 transition-colors"
           >
-            Ilyes Abd-Lillah
+            Artem Litovchenko
           </Link>
         )}
       </p>

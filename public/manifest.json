@@ -3,14 +3,14 @@
   "short_name": "Climode",
   "description": "Get personalized clothing recommendations based on real-time weather data",
   "start_url": ".",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "orientation": "portrait",
   "dir": "ltr",
   "scope": "/",
   "lang": "en",
-  "display_override": ["fullscreen", "minimal-ui"],
+  "display_override": ["standalone", "minimal-ui"],
   "categories": ["lifestyle", "weather", "clothing"],
   "launch_handler": {
     "client_mode": ["navigate-existing", "auto"]
