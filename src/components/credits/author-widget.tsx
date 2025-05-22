@@ -19,7 +19,7 @@ export function AuthorWidget({ language = "en" }: AuthorWidgetProps) {
       <p className="text-start lg:text-left mt-1 lg:mt-0">
         {language === "ar" && (
           <Link
-            href=""
+            href="https://github.com/Ssavitru/Climode"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white hover:text-white/80 transition-colors font-body"
@@ -30,7 +30,7 @@ export function AuthorWidget({ language = "en" }: AuthorWidgetProps) {
         <span className="font-display"> {t.app.createdBy} </span>
         {language !== "ar" && (
           <Link
-            href=""
+            href="https://github.com/Ssavitru/Climode"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white hover:text-white/80 transition-colors"
