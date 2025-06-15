@@ -31,12 +31,13 @@ export function getStoredLanguage() {
     | "es"
     | "de"
     | "it"
-    | "ar";
+    | "ar"
+    | "ru";
   if (savedLanguage) return savedLanguage;
 
   const browserLang = navigator.language.split("-")[0];
-  if (["en", "fr", "es", "de", "it", "ar"].includes(browserLang)) {
-    return browserLang as "en" | "fr" | "es" | "de" | "it" | "ar";
+  if (["en", "fr", "es", "de", "it", "ar", "ru"].includes(browserLang)) {
+    return browserLang as "en" | "fr" | "es" | "de" | "it" | "ar" | "ru";
   }
 
   return "en";

@@ -1,6 +1,6 @@
 import { translations } from "@/i18n";
 
-type Language = "en" | "fr" | "es" | "de" | "it" | "ar";
+type Language = "en" | "fr" | "es" | "de" | "it" | "ar" | "ru";
 
 export function useAppTranslation(language: Language) {
   const t = (key: string) => {

@@ -28,6 +28,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         'de': '/de',
         'it': '/it',
         'ar': '/ar',
+        'ru': '/ru',
         'x-default': '/',
       },
     },
@@ -57,6 +58,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       // Arabic
       "ملابس الطقس", "توصيات الملابس", "أزياء حسب الطقس", "ماذا ألبس", "مساعد الملابس", "خزانة ملابس ذكية",
       "موضة", "ملابس", "طقس", "أزياء", "ستايل", "فاشون", "خزانة", "موسم", "لبس",
+      // Русский
+      "погодный гардероб", "образ на сегодня", "мода по погоде", "что надеть", "модный ассистент", "умный гардероб",
+      "мода", "одежда", "погода", "стиль", "гардероб", "тенденции", "сезон", "наряд", "одеваться",
       // Trending Terms
       "AI fashion", "sustainable fashion", "smart clothing", "eco-friendly outfits", "minimalist wardrobe",
       "capsule wardrobe", "weather-smart fashion", "climate-adaptive clothing", "outfit inspiration", "style assistant",

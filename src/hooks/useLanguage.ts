@@ -6,7 +6,7 @@ import { getTranslation } from "@/i18n";
 import { usePathname } from "next/navigation";
 
 const DEFAULT_LANGUAGE: Language = "en";
-const SUPPORTED_LANGUAGES: Language[] = ["en", "fr", "es", "de", "it", "ar"];
+const SUPPORTED_LANGUAGES: Language[] = ["en", "fr", "es", "de", "it", "ar", "ru" ];
 
 export function useLanguage(): [Language, (lang: Language) => void] {
   const pathname = usePathname();

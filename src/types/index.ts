@@ -1,4 +1,4 @@
-export type Language = "en" | "fr" | "es" | "de" | "it" | "ar";
+export type Language = "en" | "fr" | "es" | "de" | "it" | "ar" | "ru";
 
 export interface Location {
   name: string;

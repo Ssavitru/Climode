@@ -7,7 +7,7 @@ import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 interface TemperaturePreferenceProps {
   onChange?: (preference: "cold" | "normal" | "warm") => void;
-  language?: "en" | "fr" | "es" | "de" | "it" | "ar";
+  language?: "en" | "fr" | "es" | "de" | "it" | "ar" | "ru";
 }
 
 export function TemperaturePreference({

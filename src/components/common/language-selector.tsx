@@ -20,6 +20,7 @@ const languageToCountry: Record<Language, string> = {
   de: "DE",
   it: "IT",
   ar: "SA",
+  ru: "RU",
 };
 
 export function LanguageSelector({
@@ -48,7 +49,7 @@ export function LanguageSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const languages: Language[] = ["en", "fr", "es", "de", "it", "ar"];
+  const languages: Language[] = ["en", "fr", "es", "de", "it", "ar", "ru"];
 
   return (
     <div

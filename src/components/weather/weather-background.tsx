@@ -35,33 +35,26 @@ export function WeatherBackground({
     if (!city) return;
 
     async function fetchImage() {
-      try {
-        const cityName = city.split(",")[0];
-        const response = await fetch(
-          `/api/cityImage?city=${encodeURIComponent(cityName)}&country=${city.split(",")[1]}&lang=${language}`
-        );
-        
-        if (!response.ok) throw new Error("Failed to fetch image");
-        
-        const data: ImageData = await response.json();
-        
-        // Save current image as old image before updating
-        if (imageUrl) {
-          setOldImageUrl(imageUrl);
-          setIsOldImageVisible(true);
-        }
-        
-        // Update with new image
-        setImageUrl(data.url);
-        setPhotographer({
-          name: data.credit.name,
-          url: data.credit.url,
-        });
-        
-      } catch (error) {
-        console.error("Error fetching image:", error);
-      }
+  try {
+    const cityName = city.split(",")[0];
+    const response = await fetch(
+      `/api/cityImage?city=${encodeURIComponent(cityName)}&country=${city.split(",")[1]}&lang=${language}`
+    );
+    if (!response.ok) throw new Error("Failed to fetch image");
+    const data: ImageData = await response.json();
+    if (imageUrl) {
+      setOldImageUrl(imageUrl);
+      setIsOldImageVisible(true);
     }
+    setImageUrl(data.url);
+    setPhotographer({
+      name: data.credit?.name || "",
+      url: data.credit?.url || "",
+    });
+  } catch (error) {
+    console.error("Error fetching image:", error);
+  }
+}
 
     fetchImage();
   }, [city, language]);

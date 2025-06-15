@@ -5,7 +5,7 @@ import Negotiator from "negotiator";
 import { type Language, defaultLanguage } from "@/i18n";
 import { withRateLimit } from "./middleware/rate-limit";
 
-const LOCALES: Language[] & string[] = ['en', 'fr', 'es', 'de', 'it', 'ar'] as const;
+const LOCALES: Language[] & string[] = ['en', 'fr', 'es', 'de', 'it', 'ar', 'ru'] as const;
 
 function getLocale(request: NextRequest): string {
   try {

@@ -43,6 +43,7 @@ const languageMap: { [key: string]: string } = {
   de: "de",
   it: "it",
   ar: "ar",
+  ru: "ru",
 };
 
 // Get weather condition name that matches Google Weather style
